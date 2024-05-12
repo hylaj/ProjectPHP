@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.category_view'|trans({'%id%': category.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.category_view'|trans({'%id%': category.id|default('')}) }}</h1>
+    {% if category is defined and category|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ category.id }}</dd>
+            <dt>{{ 'label.title'|trans }}</dt>
+            <dd>{{ category.title }}</dd>
+            <dt>{{ 'label.created_at'|trans }}</dt>
+            <dd>{{ category.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label.books'|trans }}</dt>
+
+            {% for book in books %}
+                <dd>{{ book.title }}</dd>
+            {% endfor %}
+        </dl>
+    {% else %}
+        <p> {{ 'message.empty_list' }}</p>
+    {% endif %}
+    <a href="{{ url('category_index') }}">{{ 'label.go_back'|trans }}</a>
+{% endblock %}

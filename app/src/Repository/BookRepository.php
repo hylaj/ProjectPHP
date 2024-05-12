@@ -6,6 +6,7 @@
 namespace App\Repository;
 
 use App\Entity\Book;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -56,6 +57,18 @@ class BookRepository extends ServiceEntityRepository
             ->orderBy('book.createdAt', 'DESC');
     }
 
+    /**
+     * @param Category $category
+     * @return array
+     */
+    public function findTasksByCategory(Category $category): array
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->andWhere('book.category= :category')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->getResult();
+    }
     /**
      * Get or create new query builder.
      *
