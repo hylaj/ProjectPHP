@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.book_details'|trans({'%id%': book.id|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.book_details'|trans({'%id%': book.id|default('')}) }}</h1>
+    {% if book is defined and book|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ book.id }}</dd>
+            <dt>{{ 'label.created_at'|trans }}</dt>
+            <dd>{{ book.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label.title'|trans }}</dt>
+            <dd>{{  book.title }}</dd>
+            <dt>{{ 'label.author'|trans }}</dt>
+            <dd>{{  book.author }}</dd>
+        </dl>
+        <p>
+            <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message.record_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}
