@@ -42,6 +42,15 @@ class Book
     private ?string $author = null;
 
     /**
+     * Category.
+     *
+     * @var Category
+     */
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Id
@@ -109,5 +118,24 @@ class Book
     public function setAuthor(?string $author): void
     {
         $this->author = $author;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category|null $category
+     *
+     * @return void
+     */
+    public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
+
     }
 }

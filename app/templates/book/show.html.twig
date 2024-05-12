@@ -16,6 +16,8 @@
             <dd>{{  book.title }}</dd>
             <dt>{{ 'label.author'|trans }}</dt>
             <dd>{{  book.author }}</dd>
+            <dt>{{ 'label.category'|trans }}</dt>
+            <dd>{{  book.category.title }}</dd>
         </dl>
         <p>
             <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
