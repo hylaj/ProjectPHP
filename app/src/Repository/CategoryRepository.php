@@ -40,12 +40,15 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-/**
- * @return QueryBuilder
- */
+    /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
 public function queryAll(): QueryBuilder
 {
     return $this->getOrCreateQueryBuilder()
+        ->select('category')
         ->orderBy('category.createdAt', 'DESC');
 }
 
