@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Entity\Book;
 use App\Repository\CategoryRepository;
 use App\Repository\BookRepository;
+use App\Service\CategoryServiceInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,19 +23,23 @@ use Symfony\Component\Routing\Attribute\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @param CategoryRepository $categoryRepository
-     * @param PaginatorInterface $paginator
-     * @param int $page
-     * @return Response
+     * Constructor.
+     */
+    public function __construct(private readonly CategoryServiceInterface $categoryService)
+    {
+    }
+
+    /**
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
      */
     #[Route(name: 'category_index', methods: 'GET')]
-    public function index(CategoryRepository $categoryRepository, PaginatorInterface $paginator, #[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $paginator->paginate(
-            $categoryRepository->queryAll(),
-            $page,
-            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $pagination = $this->categoryService->getPaginatedList($page);
 
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);
     }// end index()
