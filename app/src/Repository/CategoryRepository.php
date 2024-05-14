@@ -48,7 +48,7 @@ class CategoryRepository extends ServiceEntityRepository
 public function queryAll(): QueryBuilder
 {
     return $this->getOrCreateQueryBuilder()
-        ->select('category')
+        ->select('partial category.{id, createdAt, title}')
         ->orderBy('category.createdAt', 'DESC');
 }
 
@@ -93,4 +93,15 @@ private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): Qu
 // ->getOneOrNullResult()
 // ;
 // }
+    /**
+     * @param Category $category
+     *
+     * @return void
+     */
+    public function save(Category $category): void
+    {
+        assert($this->_em instanceof EntityManager);
+        $this->_em->persist($category);
+        $this->_em->flush();
+    }
 }// end class

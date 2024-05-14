@@ -5,6 +5,7 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -26,20 +27,23 @@ class CategoryService implements CategoryServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+
     /**
      * Constructor.
      *
      * @param CategoryRepository $categoryRepository Category repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param PaginatorInterface $paginator          Paginator
      */
     public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator)
     {
-    }
+
+    }//end __construct()
+
 
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param integer $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -50,5 +54,21 @@ class CategoryService implements CategoryServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-    }
-}
+
+    }//end getPaginatedList()
+
+
+    /**
+     * Save entity.
+     *
+     * @param Category $category Category entity
+     */
+    public function save(Category $category): void
+    {
+        $category->setCreatedAt(new \DateTimeImmutable());
+        $this->categoryRepository->save($category);
+
+    }//end save()
+
+
+}//end class

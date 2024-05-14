@@ -42,6 +42,10 @@
         <source>message.book_not_found</source>
         <target>Book not found.</target>
       </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Created successfully</target>
+      </trans-unit>
       <trans-unit id="title.book_list">
         <source>title.book_list</source>
         <target>Book list</target>
@@ -49,6 +53,10 @@
       <trans-unit id="title.category_list">
         <source>title.category_list</source>
         <target>Category list</target>
+      </trans-unit>
+      <trans-unit id="title.category_create">
+        <source>title.category_create</source>
+        <target>Create category</target>
       </trans-unit>
       <trans-unit id="title.book_view">
         <source>title.book_view</source>
@@ -65,6 +73,10 @@
       <trans-unit id="action.show">
         <source>action.show</source>
         <target>More details</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>Save</target>
       </trans-unit>
     </body>
   </file>
