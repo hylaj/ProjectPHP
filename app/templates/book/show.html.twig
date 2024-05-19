@@ -26,7 +26,10 @@
         </p>
     {% else %}
         <p>
-            {{ 'message.book_not_found'|trans }}
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.book_not_found'|trans
+            } %}
         </p>
     {% endif %}
 {% endblock %}

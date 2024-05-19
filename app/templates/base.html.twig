@@ -14,14 +14,11 @@
 </head>
 <body>
 <main role="main" class="container-fluid">
-    {% for type, messages in app.session.flashBag.all %}
-        {% for message in messages %}
-            <div class="alert alert-{{ type }}" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% block body %}{% endblock %}
+    <div class="container-fluid">
+        {% include 'default/_flash_messages.html.twig' %}
+        {% block body %}{% endblock %}
+    </div>
+
 </main>
 {% block javascripts %}
     {# {% block importmap %}{{ importmap('app') }}{% endblock %}#}

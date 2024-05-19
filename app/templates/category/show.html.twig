@@ -23,9 +23,12 @@
             {% endfor %}
         </dl>
     {% else %}
-        <div class="alert alert-info" role="alert">
-        <p> {{ 'message.empty_list' }}</p>
-        </div>
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.book_not_found'|trans
+            } %}
+        </p>
     {% endif %}
     <a href="{{ url('category_index') }}">{{ 'action.go_back'|trans }}</a>
 {% endblock %}

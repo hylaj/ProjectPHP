@@ -45,8 +45,11 @@
         <td><a href="{{ url('category_create') }}" title="{{ 'action.create'|trans }}">{{ 'action.create'|trans }}</a></td>
 
     {% else %}
-        <div class="alert alert-info" role="alert">
-        <p>{{ 'message.empty_list'|trans }}</p>
-        </div>
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
+        </p>
     {% endif %}
 {% endblock %}
