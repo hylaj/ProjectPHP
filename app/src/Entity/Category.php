@@ -10,7 +10,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Class Category.
  *
@@ -30,7 +30,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    private ?int $id;
 
     /**
      * Created at.
@@ -38,7 +38,8 @@ class Category
      * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[Gedmo\Timestampable(on: 'create')]
+    private ?\DateTimeImmutable $createdAt;
 
     /**
      * Title.
@@ -46,10 +47,24 @@ class Category
      * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $title = null;
+    private ?string $title;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updatedAt = null;
+    /**
+     * Updated at.
+     *
+     * @var DateTimeImmutable|null
+     */
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'update')]
+    private ?\DateTimeImmutable $updatedAt=null;
+
+    /**
+     * Slug.
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 64)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug=null;
 
     /**
      * Getter for Id.
@@ -111,6 +126,7 @@ class Category
         return $this->updatedAt;
     }
 
+
     /**
      * Setter for updated at.
      *
@@ -118,7 +134,26 @@ class Category
      */
     public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $updatedAt;
+    }
+    /**
+     * Getter for slug.
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Setter for slug.
+     *
+     * @param string|null $slug
+     * @return $this
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
     }
 
 }

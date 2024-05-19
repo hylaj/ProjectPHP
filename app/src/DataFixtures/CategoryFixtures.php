@@ -30,7 +30,6 @@ class CategoryFixtures extends AbstractBaseFixtures
                     $this->faker->dateTimeBetween('-100 days', '-1 days')
                 )
             );
-
             return $category;
         });
 

@@ -16,6 +16,8 @@
             <dd>{{ category.createdAt|format_date('long') }}</dd>
             <dt>{{ 'label.updated_at'|trans }}</dt>
             <dd>{{ category.updatedAt|format_date('long') }}</dd>
+            <dt>{{ 'label.slug'|trans }}</dt>
+            <dd>{{ category.slug }}</dd>
             <dt>{{ 'label.books'|trans }}</dt>
 
             {% for book in books %}
