@@ -38,6 +38,18 @@
         <source>label.books</source>
         <target>Książki</target>
       </trans-unit>
+      <trans-unit id="label.slug">
+        <source>label.slug</source>
+        <target>Slug</target>
+      </trans-unit>
+      <trans-unit id="label.edit">
+        <source>label.edit</source>
+        <target>Edycja</target>
+      </trans-unit>
+      <trans-unit id="label.delete">
+        <source>label.delete</source>
+        <target>Usuwanie</target>
+      </trans-unit>
       <trans-unit id="message.empty_list">
         <source>message.empty_list</source>
         <target>Lista jest pusta.</target>
@@ -49,6 +61,14 @@
       <trans-unit id="message.created_successfully">
         <source>message.created_successfully</source>
         <target>Pomyślnie utworzono</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Pomyślnie usunięto</target>
+      </trans-unit>
+      <trans-unit id="message.form_error">
+        <source>message.form_error</source>
+        <target>Błąd formularza</target>
       </trans-unit>
       <trans-unit id="title.book_list">
         <source>title.book_list</source>
@@ -62,6 +82,14 @@
         <source>title.category_create</source>
         <target>Utwórz kategorię</target>
       </trans-unit>
+      <trans-unit id="title.category_delete">
+        <source>title.category_delete</source>
+        <target>Usuń kategorię</target>
+      </trans-unit>
+      <trans-unit id="title.category_edit">
+        <source>title.category_edit</source>
+        <target>Edytuj kategorię</target>
+      </trans-unit>
       <trans-unit id="title.book_view">
         <source>title.book_view</source>
         <target>Książka "%title%"</target>
@@ -70,8 +98,8 @@
         <source>title.category_view</source>
         <target>Kategoria "%title%"</target>
       </trans-unit>
-      <trans-unit id="action.go_back">
-        <source>action.go_back</source>
+      <trans-unit id="action.back_to_list">
+        <source>action.back_to_list</source>
         <target>Powrót</target>
       </trans-unit>
       <trans-unit id="action.show">
@@ -81,6 +109,18 @@
       <trans-unit id="action.save">
         <source>action.save</source>
         <target>Zapisz</target>
+      </trans-unit>
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Usuń</target>
+      </trans-unit>
+      <trans-unit id="action.edit">
+        <source>action.edit</source>
+        <target>Edytuj</target>
+      </trans-unit>
+      <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>Utwórz</target>
       </trans-unit>
     </body>
   </file>

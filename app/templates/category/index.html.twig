@@ -19,6 +19,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'category.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'category.updatedAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.slug'|trans, 'category.slug') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
                 <th>{{ 'label.edit'|trans }}</th>
                 <th>{{ 'label.delete'|trans }}</th>
@@ -31,6 +32,7 @@
                     <td>{{ category.title }}</td>
                     <td>{{ category.createdAt|format_date('long') }}</td>
                     <td>{{ category.updatedAt|format_date('long') }}</td>
+                    <td>{{ category.slug }}</td>
                     <td><a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a></td>
                     <td><a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a></td>
                     <td><a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>

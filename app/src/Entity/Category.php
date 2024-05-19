@@ -56,7 +56,7 @@ class Category
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt=null;
+    private ?\DateTimeImmutable $updatedAt;
 
     /**
      * Slug.
@@ -64,7 +64,7 @@ class Category
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Gedmo\Slug(fields: ['title'])]
-    private ?string $slug=null;
+    private ?string $slug;
 
     /**
      * Getter for Id.
