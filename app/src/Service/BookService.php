@@ -5,6 +5,7 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Repository\BookRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,6 +26,7 @@ class BookService implements BookServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+
     /**
      * Constructor.
      *
@@ -33,12 +35,14 @@ class BookService implements BookServiceInterface
      */
     public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator)
     {
-    }
+
+    }//end __construct()
+
 
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param integer $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -49,5 +53,16 @@ class BookService implements BookServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
+
+    }//end getPaginatedList()
+
+
+    /**
+     * @param Category $category
+     * @return array
+     */
+    public function getBooksByCategory(Category $category): array
+    {
+        return $this->bookRepository->findTasksByCategory($category);
     }
-}
+}//end class

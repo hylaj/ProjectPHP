@@ -65,10 +65,24 @@ class CategoryService implements CategoryServiceInterface
      */
     public function save(Category $category): void
     {
+        if(null === $category->getId()){
+            $category->setCreatedAt(new \DateTimeImmutable());
+        }
         $category->setCreatedAt(new \DateTimeImmutable());
         $this->categoryRepository->save($category);
 
     }//end save()
 
+    /**
+     * Delete entity.
+     *
+     * @param Category $category
+     *
+     * @return void
+     */
+    public function delete(Category $category): void
+    {
+        $this->categoryRepository->delete($category);
+    }
 
 }//end class

@@ -14,6 +14,8 @@
             <dd>{{ category.title }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ category.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label.updated_at'|trans }}</dt>
+            <dd>{{ category.updatedAt|format_date('long') }}</dd>
             <dt>{{ 'label.books'|trans }}</dt>
 
             {% for book in books %}
@@ -21,7 +23,9 @@
             {% endfor %}
         </dl>
     {% else %}
+        <div class="alert alert-info" role="alert">
         <p> {{ 'message.empty_list' }}</p>
+        </div>
     {% endif %}
     <a href="{{ url('category_index') }}">{{ 'action.go_back'|trans }}</a>
 {% endblock %}

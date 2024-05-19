@@ -26,6 +26,10 @@
         <source>label.created_at</source>
         <target>Data utworzenia</target>
       </trans-unit>
+      <trans-unit id="label.updated_at">
+        <source>label.updated_at</source>
+        <target>Data aktualizacji</target>
+      </trans-unit>
       <trans-unit id="label.tags">
         <source>label.tags</source>
         <target>Tagi</target>

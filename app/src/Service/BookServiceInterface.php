@@ -5,6 +5,7 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -20,5 +21,11 @@ interface BookServiceInterface
      * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedList(int $page): PaginationInterface;
+
+    /**
+     * @param Category $category
+     * @return array
+     */
+    public function getBooksByCategory(Category $category): array;
 
 }
