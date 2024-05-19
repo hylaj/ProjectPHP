@@ -66,6 +66,10 @@
         <source>message.deleted_successfully</source>
         <target>Deleted successfully</target>
       </trans-unit>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Edited successfully</target>
+      </trans-unit>
       <trans-unit id="message.form_error">
         <source>message.form_error</source>
         <target>Form error</target>
@@ -97,6 +101,18 @@
       <trans-unit id="title.category_view">
         <source>title.category_view</source>
         <target>Category "%title%"</target>
+      </trans-unit>
+      <trans-unit id="title.book_delete">
+        <source>title.book_delete</source>
+        <target>Delete book %id%</target>
+      </trans-unit>
+      <trans-unit id="title.book_edit">
+        <source>title.book_edit</source>
+        <target>Edit book %id%</target>
+      </trans-unit>
+      <trans-unit id="title.book_create">
+        <source>title.book_create</source>
+        <target>Create book</target>
       </trans-unit>
       <trans-unit id="action.back_to_list">
         <source>action.back_to_list</source>

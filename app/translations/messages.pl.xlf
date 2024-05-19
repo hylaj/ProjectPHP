@@ -66,6 +66,10 @@
         <source>message.deleted_successfully</source>
         <target>Pomyślnie usunięto</target>
       </trans-unit>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Pomyślnie edytowano</target>
+      </trans-unit>
       <trans-unit id="message.form_error">
         <source>message.form_error</source>
         <target>Błąd formularza</target>
@@ -97,6 +101,18 @@
       <trans-unit id="title.category_view">
         <source>title.category_view</source>
         <target>Kategoria "%title%"</target>
+      </trans-unit>
+      <trans-unit id="title.book_delete">
+        <source>title.book_delete</source>
+        <target>Usuń książkę %id%</target>
+      </trans-unit>
+      <trans-unit id="title.book_edit">
+        <source>title.book_edit</source>
+        <target>Edytuj książkę %id%</target>
+      </trans-unit>
+      <trans-unit id="title.book_create">
+        <source>title.book_create</source>
+        <target>Dodaj książkę</target>
       </trans-unit>
       <trans-unit id="action.back_to_list">
         <source>action.back_to_list</source>

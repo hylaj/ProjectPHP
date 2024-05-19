@@ -6,18 +6,16 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Service\BookService;
-use Symfony\Bridge\Twig\Node\FormThemeNode;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CategoryType;
 use App\Repository\BookRepository;
+use App\Service\BookService;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -142,7 +140,7 @@ class CategoryController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('message.created_successfully')
+                $this->translator->trans('message.edited_successfully')
             );
 
             return $this->redirectToRoute('category_index');
