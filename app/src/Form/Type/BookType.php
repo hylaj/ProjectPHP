@@ -4,6 +4,7 @@
  */
 
 namespace App\Form\Type;
+use App\Entity\Tag;
 
 use App\Entity\Book;
 use App\Entity\Category;
@@ -45,7 +46,7 @@ class BookType extends AbstractType
             [
                 'label' => 'label.author',
                 'required' => true,
-                'attr' => ['max_length' => 255],
+                'attr' => ['max_length' => 64],
             ])
         ->add(
             'category',
@@ -58,8 +59,22 @@ class BookType extends AbstractType
                 'label' => 'label.category',
                 'placeholder' => 'label.none',
                 'required' => true,
-            ]);
-
+            ])
+        ->add(
+            'tags',
+            EntityType::class,
+            [
+                'class' => Tag::class,
+                'choice_label' => function ($tag): string {
+                    return $tag->getTitle();
+                },
+                'label' => 'label.tags',
+                'placeholder' => 'label.none',
+                'required' => false,
+                'expanded' => true,
+                'multiple' => true,
+            ]
+        );
     }
 
     /**

@@ -78,10 +78,6 @@ class BookService implements BookServiceInterface
      */
     public function save(Book $book): void
     {
-
-        if(null === $book->getId()){
-            $book->setCreatedAt(new \DateTimeImmutable());
-        }
         $this->bookRepository->save($book);
 
     }//end save()
@@ -98,5 +94,6 @@ class BookService implements BookServiceInterface
     {
         $this->bookRepository->delete($book);
     }
+
 
 }//end class

@@ -1,26 +1,23 @@
 <?php
 /**
- * Category entity.
+ *Tag entity.
  */
-
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * Class Category.
- *
- * @psalm-suppress MissingConstructor
+ *Class Tag.
  */
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: 'categories')]
-#[ORM\UniqueConstraint(name: 'uq_categories_title', columns: ['title'])]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
+#[ORM\Table(name: 'tags')]
 #[UniqueEntity(fields: ['title'])]
-class Category
+class Tag
 {
     /**
      * Primary key.
@@ -30,7 +27,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id=null;
+    private ?int $id = null;
 
     /**
      * Created at.
@@ -41,17 +38,6 @@ class Category
     #[Assert\Type(DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt;
-
-    /**
-     * Title.
-     *
-     * @var string|null
-     */
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\Type('string')]
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 64)]
-    private ?string $title;
 
     /**
      * Updated at.
@@ -72,6 +58,17 @@ class Category
     #[Assert\Length(min: 3, max: 64)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug;
+
+    /**
+     * Title.
+     *
+     * @var string|null
+     */
+    #[ORM\Column(type: 'string', length: 64)]
+    #[Assert\Type('string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 64)]
+    private ?string $title;
 
     /**
      * Getter for Id.
@@ -104,6 +101,46 @@ class Category
     }
 
     /**
+     * Getter for updated at.
+     *
+     * @return DateTimeImmutable|null Updated at
+     */
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Setter for updated at.
+     *
+     * @param DateTimeImmutable|null $updatedAt Updated at
+     */
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Getter for slug.
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Setter for slug.
+     *
+     * @param string|null $slug
+     * @return void
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
      * Getter for title.
      *
      * @return string|null Title
@@ -122,45 +159,4 @@ class Category
     {
         $this->title = $title;
     }
-
-    /**
-     * Getter for updated at.
-     *
-     * @return DateTimeImmutable|null Updated at
-     */
-    public function getUpdatedAt(): ?DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-
-    /**
-     * Setter for updated at.
-     *
-     * @param DateTimeImmutable|null $updatedAt Updated at
-     */
-    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-    /**
-     * Getter for slug.
-     * @return string|null
-     */
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Setter for slug.
-     *
-     * @param string|null $slug
-     * @return $this
-     */
-    public function setSlug(?string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
 }

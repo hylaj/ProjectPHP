@@ -30,6 +30,11 @@ class CategoryFixtures extends AbstractBaseFixtures
                     $this->faker->dateTimeBetween('-100 days', '-1 days')
                 )
             );
+            $category->setUpdatedAt(
+                \DateTimeImmutable::createFromMutable(
+                    $this->faker->dateTimeBetween('-100 days', '-1 days')
+                )
+            );
             return $category;
         });
 
