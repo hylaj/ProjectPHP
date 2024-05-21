@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ 'title.book_view'|trans({'%title%': book.title|default('')}) }}</h1>
     {% if book is defined and book|length %}
-        <dl class="dl-horizontal">
+        <dd class="dl-horizontal">
             <dt>{{ 'label.id'|trans }}</dt>
             <dd>{{ book.id }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
@@ -18,7 +18,12 @@
             <dd>{{  book.author }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  book.category.title }}</dd>
-        </dl>
+            <dt>{{ 'label.tags'|trans }}</dt>
+    {% if book.tags is defined and book.tags|length %}
+        {% for tag in book.tags %}
+             {{ tag.title }},
+            {% endfor %}
+        {%  endif %}
         <p>
             <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}

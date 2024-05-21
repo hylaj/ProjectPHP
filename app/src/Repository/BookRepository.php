@@ -7,6 +7,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Form\DataTransformer\TagsDataTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
@@ -36,7 +37,7 @@ class BookRepository extends ServiceEntityRepository
      *
      * @param ManagerRegistry $registry Manager registry
      */
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private readonly TagsDataTransformer $tagsDataTransformer)
     {
         parent::__construct($registry, Book::class);
     }
@@ -51,9 +52,11 @@ class BookRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder()
             ->select(
                 'partial book.{id, createdAt, title, author}',
-                'partial category.{id, title}'
+                'partial category.{id, title}',
+                'partial tags.{id, title}'
             )
             ->join('book.category', 'category')
+            ->leftJoin('book.tags', 'tags')
             ->orderBy('book.createdAt', 'DESC');
     }
 
@@ -61,7 +64,7 @@ class BookRepository extends ServiceEntityRepository
      * @param Category $category
      * @return array
      */
-    public function findTasksByCategory(Category $category): array
+    public function findBooksByCategory(Category $category): array
     {
         return $this->getOrCreateQueryBuilder()
             ->andWhere('book.category= :category')

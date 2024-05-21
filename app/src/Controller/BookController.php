@@ -59,6 +59,7 @@ class BookController extends AbstractController
     )]
     public function show(Book $book): Response
     {
+
         return $this->render(
             'book/show.html.twig',
             ['book' => $book]

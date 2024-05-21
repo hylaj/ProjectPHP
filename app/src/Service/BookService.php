@@ -7,11 +7,14 @@ namespace App\Service;
 
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Entity\Tag;
 use App\Repository\BookRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Rector\Symfony\Contract\Tag\TagInterface;
 
 /**
  * Class TaskService.
@@ -66,7 +69,7 @@ class BookService implements BookServiceInterface
      */
     public function getBooksByCategory(Category $category): array
     {
-        return $this->bookRepository->findTasksByCategory($category);
+        return $this->bookRepository->findBooksByCategory($category);
     }
 
     /**

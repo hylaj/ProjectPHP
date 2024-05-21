@@ -8,6 +8,7 @@ use App\Entity\Tag;
 
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,6 +30,19 @@ class BookType extends AbstractType
      * @param array<string, mixed> $options Form options
      *
      * @see FormTypeExtensionInterface::buildForm()
+     */
+
+    /**
+     * Constructor.
+     *
+     * @param TagsDataTransformer $tagsDataTransformer Tags data transformer
+     */
+    public function __construct(private readonly TagsDataTransformer $tagsDataTransformer)
+    {
+    }
+
+    /**
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -62,18 +76,16 @@ class BookType extends AbstractType
             ])
         ->add(
             'tags',
-            EntityType::class,
+            TextType::class,
             [
-                'class' => Tag::class,
-                'choice_label' => function ($tag): string {
-                    return $tag->getTitle();
-                },
                 'label' => 'label.tags',
-                'placeholder' => 'label.none',
                 'required' => false,
-                'expanded' => true,
-                'multiple' => true,
+                'attr' => ['max_length' => 128],
             ]
+        );
+
+        $builder->get('tags')->addModelTransformer(
+            $this->tagsDataTransformer
         );
     }
 
