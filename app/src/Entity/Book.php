@@ -7,6 +7,7 @@ namespace App\Entity;
 
 
 use App\Repository\BookRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -79,7 +80,7 @@ class Book
      * @var ArrayCollection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
-    #[ORM\JoinTable(name: 'tasks_tags')]
+    #[ORM\JoinTable(name: 'books_tags')]
     private Collection $tags;
 
     /**

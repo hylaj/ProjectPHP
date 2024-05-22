@@ -21,7 +21,8 @@
             <dt>{{ 'label.tags'|trans }}</dt>
     {% if book.tags is defined and book.tags|length %}
         {% for tag in book.tags %}
-             {{ tag.title }},
+             {{ tag.title }}
+            {# {{ book.tags.title|join(', ') }} #}
             {% endfor %}
         {%  endif %}
         <p>
