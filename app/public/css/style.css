@@ -1,0 +1,18 @@
+.btn-styled {
+    background-color: #f8f9fa; /* Jasnoszary kolor tła */
+    border-color: #f8f9fa; /* Kolor ramki tła */
+    color: #1a324b; /* Kolor tekstu */
+}
+
+.btn-styled:hover {
+    background-color: #e9ecef; /* Jaśniejszy kolor tła przy najechaniu myszką */
+    border-color: #e9ecef; /* Jaśniejszy kolor ramki tła przy najechaniu myszką */
+    color: #f18f2e; /* Kolor tekstu pozostaje bez zmian */
+}
+.navbar-brand:hover {
+    color: #f18f2e; /* Zmiana koloru tekstu na biały po najechaniu myszką na dowolną opcję menu */
+    text-decoration: none; /* Usunięcie podkreślenia po najechaniu myszką na dowolną opcję menu */
+}
+.navbar-brand{
+    color: #2e5c8d;
+}

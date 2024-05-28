@@ -5,37 +5,41 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.book_list'|trans }}</h1>
+
+    <h2 class="mb-4 text-primary">{{ 'title.book_list'|trans }}</h2>
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
 
-        <table class="table table-striped">
+        <table class="table table-bordered table-striped ">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'book.id') }}</th>
+               {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'book.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'book.createdAt') }}</th>
+               #}
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title')  }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
-                <th>{{ 'label.edit'|trans }}</th>
+                {# <th>{{ 'label.edit'|trans }}</th>
                 <th>{{ 'label.delete'|trans }}</th>
+                #}
             </tr>
             </thead>
             <tbody>
             {% for book in pagination.items %}
                 <tr>
-                    <td>{{ book.id }}</td>
+                    {#  <td>{{ book.id }}</td>
                     <td>{{ book.createdAt|format_date('long')}}</td>
+                    #}
                     <td>{{ book.title }}</td>
                     <td>{{ book.author }}</td>
                     <td>{{ book.category.title }}</td>
-                    <td><a href="{{ url('book_show', {id: book.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a></td>
-                    <td><a href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a></td>
-                    <td><a href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>
+                    <td><a class="btn btn-styled btn-sm" href="{{ url('book_show', {id: book.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a>
+                    <a class="btn btn-styled btn-sm" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                        <a class="btn btn-styled btn-sm" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>

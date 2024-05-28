@@ -120,7 +120,7 @@
       </trans-unit>
       <trans-unit id="action.show">
         <source>action.show</source>
-        <target> Zobacz więcej</target>
+        <target>Więcej</target>
       </trans-unit>
       <trans-unit id="action.save">
         <source>action.save</source>
