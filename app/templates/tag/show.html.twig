@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.tag_view'|trans({'%title%': tag.title|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.tag_wiev'|trans({'%title%': tag.title|default('')}) }}</h1>
+    {% if tag is defined and tag|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.id'|trans }}</dt>
+            <dd>{{ tag.id }}</dd>
+            <dt>{{ 'label.title'|trans }}</dt>
+            <dd>{{ tag.title }}</dd>
+            <dt>{{ 'label.created_at'|trans }}</dt>
+            <dd>{{ tag.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label.updated_at'|trans }}</dt>
+            <dd>{{ tag.updatedAt|format_date('long') }}</dd>
+            <dt>{{ 'label.slug'|trans }}</dt>
+            <dd>{{ tag.slug }}</dd>
+        {#     <dt>{{ 'label.books'|trans }}</dt>
+
+            {% for tag in tags %}
+                <dd>{{ tag.title }}</dd>
+            {% endfor %}
+        </dl>
+        #}
+    {% else %}
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.tag_not_found'|trans
+            } %}
+        </p>
+    {% endif %}
+    <a href="{{ url('tag_index') }}">{{ 'action.back_to_list'|trans }}</a>
+{% endblock %}

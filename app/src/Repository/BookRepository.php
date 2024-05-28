@@ -7,6 +7,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Entity\Tag;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
@@ -134,5 +135,6 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
 
 }

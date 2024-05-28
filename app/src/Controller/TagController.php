@@ -1,15 +1,15 @@
 <?php
 /**
- * Category Controller.
+ * Tag Controller.
  */
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\Tag;
 use App\Form\Type\CategoryType;
-use App\Repository\BookRepository;
-use App\Service\BookService;
-use App\Service\CategoryServiceInterface;
+use App\Form\Type\TagType;
+use App\Repository\TagRepository;
+use App\Service\TagServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,17 +21,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  *
  */
-#[Route('/category')]
-class CategoryController extends AbstractController
+#[Route('/tag')]
+class TagController extends AbstractController
 {
 
     /**
      * Constructor.
      *
-     * @param CategoryServiceInterface $categoryService Category service
+     * @param TagServiceInterface $tagService Tag service
      * @param TranslatorInterface      $translator  Translator
      */
-    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly TagServiceInterface $tagService, private readonly TranslatorInterface $translator)
     {
     }
 
@@ -43,35 +43,34 @@ class CategoryController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route(name: 'category_index', methods: 'GET')]
+    #[Route(name: 'tag_index', methods: 'GET')]
     public function index(#[MapQueryParameter] int $page=1): Response
     {
-        $pagination = $this->categoryService->getPaginatedList($page);
+        $pagination = $this->tagService->getPaginatedList($page);
 
-        return $this->render('category/index.html.twig', ['pagination' => $pagination]);
+        return $this->render('tag/index.html.twig', ['pagination' => $pagination]);
 
     }//end index()
 
-
-    /**
-     * @param  Category       $category
-     * @param  BookRepository $bookRepository
+  /**
+     * @param  Tag       $tag
+     * @param  TagRepository $tagRepository
      * @return Response
-     */
+*/
     #[Route(
         '/{id}',
-        name: 'category_show',
+        name: 'tag_show',
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    public function show(Category $category, BookService $bookService): Response
+    public function show(Tag $tag /*, TagService $tagService*/): Response
     {
-        $books = $bookService->getBooksByCategory($category);
+      //  $books = $tagService->getBooksByCategory($tag);
         return $this->render(
-            'category/show.html.twig',
+            'tag/show.html.twig',
             [
-                'category' => $category,
-                'books'    => $books,
+                'tag' => $tag,
+               // 'books'    => $books,
             ]
         );
 
@@ -87,28 +86,28 @@ class CategoryController extends AbstractController
      */
     #[Route(
         '/create',
-        name:'category_create',
+        name:'tag_create',
         methods: 'GET|POST',
     )]
     public function create(Request $request): Response
     {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
+        $tag = new Tag();
+        $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->categoryService->save($category);
+            $this->tagService->save($tag);
 
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.created_successfully')
             );
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('tag_index');
         }
 
         return $this->render(
-            'category/create.html.twig',
+            'tag/create.html.twig',
             ['form'=> $form->createView()]
         );
     }
@@ -117,40 +116,40 @@ class CategoryController extends AbstractController
      * Edit action.
      *
      * @param Request  $request  HTTP request
-     * @param Category $category Category entity
+     * @param Tag $tag Tag entity
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/edit', name: 'category_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    public function edit(Request $request, Category $category): Response
+    #[Route('/{id}/edit', name: 'tag_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    public function edit(Request $request, Tag $tag): Response
     {
         $form =$this->createForm(
-            CategoryType::class,
-            $category,
+            TagType::class,
+            $tag,
             [
                 'method' => 'PUT',
-                'action' => $this->generateUrl('category_edit', ['id' => $category->getId()]),
+                'action' => $this->generateUrl('tag_edit', ['id' => $tag->getId()]),
             ]
         );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $this->categoryService->save($category);
+            $this->tagService->save($tag);
 
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.edited_successfully')
             );
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('tag_index');
         }
 
         return $this->render(
-            'category/edit.html.twig',
+            'tag/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'category' => $category
+                'tag' => $tag
             ]
         );
     }
@@ -159,42 +158,35 @@ class CategoryController extends AbstractController
      * Delete action.
      *
      * @param Request  $request  HTTP request
-     * @param Category $category Category entity
+     * @param Tag $tag Tag entity
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    public function delete(Request $request, Category $category): Response
+    #[Route('/{id}/delete', name: 'tag_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    public function delete(Request $request, Tag $tag): Response
     {
-        if(!$this->categoryService->canBeDeleted($category)){
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.category_contains_books')
-            );
-            return $this->redirectToRoute('category_index');
-        }
-        $form = $this->createForm(FormType::class, $category, [
+        $form = $this->createForm(FormType::class, $tag, [
             'method' => 'DELETE',
-            'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+            'action' => $this->generateUrl('tag_delete', ['id' => $tag->getId()]),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->categoryService->delete($category);
+            $this->tagService->delete($tag);
 
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.deleted_successfully')
             );
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('tag_index');
         }
 
         return $this->render(
-            'category/delete.html.twig',
+            'tag/delete.html.twig',
             [
                 'form' => $form->createView(),
-                'category' => $category,
+                'tag' => $tag,
             ]
         );
     }

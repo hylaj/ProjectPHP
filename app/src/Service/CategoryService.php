@@ -14,7 +14,7 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * Class TaskService.
+ * Class CategoryService.
  */
 class CategoryService implements CategoryServiceInterface
 {
