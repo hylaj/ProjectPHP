@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.tag_wiev'|trans({'%title%': tag.title|default('')}) }}</h1>
+    <h1>{{ 'title.tag_view'|trans({'%title%': tag.title|default('')}) }}</h1>
     {% if tag is defined and tag|length %}
         <dl class="dl-horizontal">
             <dt>{{ 'label.id'|trans }}</dt>
@@ -18,13 +18,7 @@
             <dd>{{ tag.updatedAt|format_date('long') }}</dd>
             <dt>{{ 'label.slug'|trans }}</dt>
             <dd>{{ tag.slug }}</dd>
-        {#     <dt>{{ 'label.books'|trans }}</dt>
 
-            {% for tag in tags %}
-                <dd>{{ tag.title }}</dd>
-            {% endfor %}
-        </dl>
-        #}
         <dd><a class="btn btn-styled btn-sm" href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
             <a class="btn btn-styled btn-sm" href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></dd>
     {% else %}

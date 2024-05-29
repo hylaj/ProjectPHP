@@ -6,14 +6,13 @@
 
 {% block body %}
 
-    <h2 class="mb-4 text-primary">{{ 'title.book_list'|trans }}</h2>
+    <div class="row">
+        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.book_list'|trans }}</h2></div>
+        <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('book_create') }}" title="{{ 'action.create_book'|trans }}">{{ 'action.create_book'|trans }}</a></div>
+    </div>
     {% if pagination is defined and pagination.items|length %}
 
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-
-        <table class="table table-bordered table-striped ">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
                {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'book.id') }}</th>
@@ -48,7 +47,7 @@
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
-        <td><a href="{{ url('book_create') }}" title="{{ 'action.create'|trans }}">{{ 'action.create'|trans }}</a></td>
+
     {% else %}
         <p>
             {% include 'default/_single_alert_message.html.twig' with {

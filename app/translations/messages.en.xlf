@@ -138,6 +138,70 @@
         <source>action.create</source>
         <target>Create</target>
       </trans-unit>
+      <trans-unit id="message.category_contains_books">
+        <source>message.category_contains_books</source>
+        <target>This category contains books</target>
+      </trans-unit>
+      <trans-unit id="action.logout">
+        <source>action.logout</source>
+        <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="action.login">
+        <source>action.login</source>
+        <target>Log in</target>
+      </trans-unit>
+      <trans-unit id="title.tag_delete">
+        <source>title.tag_delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="title.tag_view">
+        <source>title.tag_view</source>
+        <target>View tag</target>
+      </trans-unit>
+        <trans-unit id="message.tag_not_found">
+          <source>message.tag_not_found</source>
+          <target>Tag not found</target>
+        </trans-unit>
+        <trans-unit id="title.tag_edit">
+          <source>title.tag_edit</source>
+          <target>Edit</target>
+        </trans-unit>
+      <trans-unit id="title.tag_create">
+        <source>title.tag_create</source>
+        <target>Create new tag</target>
+      </trans-unit>
+      <trans-unit id="title.tag_list">
+        <source>title.tag_list</source>
+        <target>Tag list</target>
+      </trans-unit>
+      <trans-unit id="action.create_tag">
+        <source>action.create_tag</source>
+        <target>Create new tag</target>
+      </trans-unit>
+      <trans-unit id="action.create_book">
+        <source>action.create_book</source>
+        <target>Create new book</target>
+      </trans-unit>
+      <trans-unit id="action.create_category">
+        <source>action.create_category</source>
+        <target>Create new category</target>
+      </trans-unit>
+      <trans-unit id="label.page_title">
+        <source>label.page_title</source>
+        <target>Online library</target>
+      </trans-unit>
+      <trans-unit id="action.books">
+        <source>action.books</source>
+        <target>Books</target>
+      </trans-unit>
+      <trans-unit id="action.categories">
+        <source>action.categories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="action.tags">
+        <source>action.tags</source>
+        <target>Tags</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

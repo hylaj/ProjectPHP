@@ -9,6 +9,7 @@ use App\Entity\Tag;
 use App\Form\Type\CategoryType;
 use App\Form\Type\TagType;
 use App\Repository\TagRepository;
+use App\Service\TagService;
 use App\Service\TagServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -63,17 +64,14 @@ class TagController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
-    public function show(Tag $tag /*, TagService $tagService*/): Response
+    public function show(Tag $tag): Response
     {
-      //  $books = $tagService->getBooksByCategory($tag);
         return $this->render(
             'tag/show.html.twig',
             [
-                'tag' => $tag,
-               // 'books'    => $books,
+                'tag' => $tag
             ]
         );
-
     }//end show()
 
 

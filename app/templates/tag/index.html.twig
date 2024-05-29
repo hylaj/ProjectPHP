@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.tag_list'|trans }}</h1>
+    <div class="row">
+        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.tag_list'|trans }}</h2></div>
+        <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('tag_create') }}" title="{{ 'action.create_tag'|trans }}">{{ 'action.create_tag'|trans }}</a></div>
+    </div>
     {% if pagination is defined and pagination.items|length %}
 
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-
-        <table class="table table-striped">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
                {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'tag.id') }}</th>#}
@@ -44,7 +43,6 @@
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
-        <td><a href="{{ url('tag_create') }}" title="{{ 'action.create'|trans }}">{{ 'action.create'|trans }}</a></td>
 
     {% else %}
         <p>

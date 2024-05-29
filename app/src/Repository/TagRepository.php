@@ -101,8 +101,9 @@ class TagRepository extends ServiceEntityRepository
      */
     public function queryAll(): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()->select('partial tag.{id, createdAt, title, slug, updatedAt}')->orderBy('tag.createdAt', 'DESC');
-
+        return $this->getOrCreateQueryBuilder()
+            ->select('partial tag.{id, createdAt, title, slug, updatedAt}')
+            ->orderBy('tag.createdAt', 'DESC');
     }
     /**
      * Delete entity.
@@ -118,4 +119,5 @@ class TagRepository extends ServiceEntityRepository
         $this->_em->remove($tag);
         $this->_em->flush();
     }
+
 }//end class

@@ -12,23 +12,35 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {% endblock %}
 </head>
+
 <body>
-<header>
-        <nav class="navbar navbar-light mb-4" style="background-color: rgba(218,237,253,0.55);">
-            <div class="container-fluid d-flex justify-content-end">
-                <a href="{{ url('book_index') }}" class="navbar-brand">Books</a>
-                <a href="{{ url('category_index') }}" class="navbar-brand">Categories</a>
-                <a href="{{ url('tag_index') }}" class="navbar-brand">Tags</a>
-            </div>
-        </nav>
-</header>
+
+    <header>
+            <nav class="navbar navbar-light" style="background-color: rgba(216,225,231,0.87);">
+                <div class="justify-content-start mx-4 py-2"><a style="color: #2e5c8d" class="navbar-brand">{{ 'label.page_title'|trans }}</a></div>
+                <div class="justify-content-end mx-4 py-2">
+                    <a href="{{ url('book_index') }}" class="navbar-brand">{{ 'action.books'|trans }}</a>
+                    <a href="{{ url('category_index') }}" class="navbar-brand">{{ 'action.categories'|trans  }}</a>
+                    <a href="{{ url('tag_index') }}" class="navbar-brand">{{ 'action.tags'|trans  }}</a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a class="navbar-brand" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a>
+                    {% else %}
+                            <a class="navbar-brand" href="{{ url('app_login') }}">{{ 'action.login'|trans }}</a>
+                    {% endif %}
+                </div>
+            </nav>
+    </header>
+
 <main role="main" class="container-fluid">
     <div class="container-fluid">
         {% include 'default/_flash_messages.html.twig' %}
         {% block body %}{% endblock %}
     </div>
-
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="fixed-bottom text-end px-4"><p>Currently logged in as {{ app.user.firstName }}</p></div>
+    {% endif %}
 </main>
+
 {% block javascripts %}
     {# {% block importmap %}{{ importmap('app') }}{% endblock %}#}
     <script
@@ -42,5 +54,6 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
 {% endblock %}
+
 </body>
 </html>
