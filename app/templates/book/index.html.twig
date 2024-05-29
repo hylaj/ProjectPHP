@@ -22,8 +22,8 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title')  }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
-                {# <th>{{ 'label.edit'|trans }}</th>
+                {# <th>{{ 'label.actions'|trans }}</th>
+                 <th>{{ 'label.edit'|trans }}</th>
                 <th>{{ 'label.delete'|trans }}</th>
                 #}
             </tr>
@@ -34,12 +34,12 @@
                     {#  <td>{{ book.id }}</td>
                     <td>{{ book.createdAt|format_date('long')}}</td>
                     #}
-                    <td>{{ book.title }}</td>
+                    <td><a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">{{ book.title }}</a></td>
                     <td>{{ book.author }}</td>
-                    <td>{{ book.category.title }}</td>
-                    <td><a class="btn btn-styled btn-sm" href="{{ url('book_show', {id: book.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a>
-                    <a class="btn btn-styled btn-sm" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
-                        <a class="btn btn-styled btn-sm" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>
+                    <td><a class="text-decoration-none" href="{{ url('category_show', {id: book.category.id}) }}">{{ book.category.title }}</a></td>
+                    {# <td><a class="btn btn-styled btn-sm" href="{{ url('book_show', {id: book.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a>
+                   <a class="btn btn-styled btn-sm" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                        <a class="btn btn-styled btn-sm" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>#}
                 </tr>
             {% endfor %}
             </tbody>

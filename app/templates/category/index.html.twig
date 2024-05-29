@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.category_list'|trans }}</h1>
+    <h2 class="mb-4 text-primary">{{ 'title.category_list'|trans }}</h2>
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -15,27 +15,27 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
+               {#  <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th> #}
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'category.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'category.updatedAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.slug'|trans, 'category.slug') }}</th>
+              {# <th>{{ knp_pagination_sortable(pagination, 'label.slug'|trans, 'category.slug') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
                 <th>{{ 'label.edit'|trans }}</th>
-                <th>{{ 'label.delete'|trans }}</th>
+                <th>{{ 'label.delete'|trans }}</th>#}
             </tr>
             </thead>
             <tbody>
             {% for category in pagination.items %}
                 <tr>
-                    <td>{{ category.id }}</td>
-                    <td>{{ category.title }}</td>
+                {#  <td>{{ category.id }}</td>#}
+                    <td><a class="text-decoration-none" href="{{ url('category_show', {id: category.id}) }}"> {{ category.title }}</a></td>
                     <td>{{ category.createdAt|format_date('long') }}</td>
                     <td>{{ category.updatedAt|format_date('long') }}</td>
-                    <td>{{ category.slug }}</td>
+                   {#  <td>{{ category.slug }}</td>
                     <td><a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a></td>
                     <td><a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a></td>
-                    <td><a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>
+                    <td><a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>#}
                 </tr>
             {% endfor %}
             </tbody>
