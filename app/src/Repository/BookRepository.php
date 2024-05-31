@@ -8,6 +8,7 @@ namespace App\Repository;
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
@@ -52,7 +53,7 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-                'partial book.{id, createdAt, title, author}',
+                'partial book.{id, createdAt, title, author, itemAuthor}',
                 'partial category.{id, title}',
                 'partial tags.{id, title}'
             )
@@ -136,5 +137,21 @@ class BookRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * Query tasks by author.
+     *
+     * @param User $user User entity
+     *
+     * @return QueryBuilder Query builder
+     */
+    public function queryByAuthor(User $user): QueryBuilder
+    {
+        $queryBuilder = $this->queryAll();
+
+        $queryBuilder->andWhere('book.itemAuthor = :itemAuthor')
+            ->setParameter('itemAuthor', $user);
+
+        return $queryBuilder;
+    }
 
 }

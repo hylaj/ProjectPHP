@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 
@@ -29,7 +30,6 @@ class BookController extends AbstractController
     public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator)
     {
     }
-
     /**
      * Index action.
      *
@@ -40,7 +40,10 @@ class BookController extends AbstractController
     #[Route(name: 'book_index', methods: 'GET')]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $this->bookService->getPaginatedList($page);
+        $pagination = $this->bookService->getPaginatedList(
+            $page,
+            $this->getUser()
+        );
 
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
     }
@@ -57,9 +60,9 @@ class BookController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
+    #[IsGranted('VIEW', subject: 'book')]
     public function show(Book $book): Response
     {
-
         return $this->render(
             'book/show.html.twig',
             ['book' => $book]
@@ -79,8 +82,12 @@ class BookController extends AbstractController
     )]
     public function create(Request $request): Response
     {
+        $user = $this->getUser();
         $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
+        $book->setItemAuthor($user);
+        $form = $this->createForm(
+            BookType::class,
+            $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -109,6 +116,7 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'book_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('VIEW', subject: 'book')]
     public function edit(Request $request, Book $book): Response
     {
         $form =$this->createForm(
@@ -151,6 +159,7 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'book_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
+    #[IsGranted('VIEW', subject: 'book')]
     public function delete(Request $request, Book $book): Response
     {
         $form = $this->createForm(FormType::class, $book, [

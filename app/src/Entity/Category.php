@@ -74,6 +74,17 @@ class Category
     private ?string $slug;
 
     /**
+     * Item Author.
+     *
+     * @var User|null
+     */
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Type(User::class)]
+    private ?User $itemAuthor;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Id
@@ -161,6 +172,16 @@ class Category
     public function setSlug(?string $slug): void
     {
         $this->slug = $slug;
+    }
+
+    public function getItemAuthor(): ?User
+    {
+        return $this->itemAuthor;
+    }
+
+    public function setItemAuthor(?User $itemAuthor): void
+    {
+        $this->itemAuthor = $itemAuthor;
     }
 
 }

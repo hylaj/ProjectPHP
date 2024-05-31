@@ -57,6 +57,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'admin1234'
                 )
             );
+            $user->setFirstName($this->faker->firstName);
 
             return $user;
         });

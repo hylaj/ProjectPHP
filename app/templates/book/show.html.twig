@@ -20,13 +20,22 @@
             <dd>{{  book.category.title }}</dd>
             <dt>{{ 'label.tags'|trans }}</dt>
     {% if book.tags is defined and book.tags|length %}
-        {% for tag in book.tags %}
+       <dd> {% for tag in book.tags %}
              {{ tag.title }}
             {# {{ book.tags.title|join(', ') }} #}
-            {% endfor %}
+           {% endfor %}</dd>
+        <dt>{{ 'label.item_author'|trans }}</dt>
+        <dd>{{ book.itemAuthor.firstName}}</dd>
         {%  endif %}
-       <dd><a class="btn btn-styled" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
-        <a class="btn btn-styled" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></dd>
+
+       <dd>
+            {% if is_granted('EDIT', book) %}
+                <a class="btn btn-styled" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+            {% endif %}
+            {% if is_granted('DELETE', book) %}
+                <a class="btn btn-styled" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+            {% endif %}
+       </dd>
         <p>
             <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}

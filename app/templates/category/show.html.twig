@@ -23,7 +23,10 @@
             {% for book in books %}
                 <dd><a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">{{ book.title }}</a></dd>
             {% endfor %}
+            <dt>{{ 'label.item_author'|trans }}</dt>
+            <dd>{{ category.itemAuthor.firstName}}</dd>
         </dl>
+
         <dd><a class="btn btn-styled" href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
             <a class="btn btn-styled" href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></dd>
     {% else %}

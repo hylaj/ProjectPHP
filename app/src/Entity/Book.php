@@ -84,6 +84,17 @@ class Book
     private Collection $tags;
 
     /**
+     * Item Author.
+     *
+     * @var User|null
+     */
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Type(User::class)]
+    private ?User $itemAuthor;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -219,4 +230,23 @@ class Book
     {
         $this->tags->removeElement($tag);
     }
+
+    /**
+     * @return User|null
+     */
+    public function getItemAuthor(): ?User
+    {
+        return $this->itemAuthor;
+    }
+
+    /**
+     * @param User|null $itemAuthor
+     * @return void
+     */
+    public function setItemAuthor(?User $itemAuthor): void
+    {
+        $this->itemAuthor = $itemAuthor;
+
+    }
+
 }

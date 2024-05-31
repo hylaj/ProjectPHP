@@ -8,6 +8,7 @@ namespace App\Service;
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\User;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -15,14 +16,6 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
  */
 interface BookServiceInterface
 {
-    /**
-     * Get paginated list.
-     *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
-     */
-    public function getPaginatedList(int $page): PaginationInterface;
 
     /**
      * @param Category $category
@@ -44,5 +37,14 @@ interface BookServiceInterface
      * @return void
      */
     public function delete(Book $book): void;
+    /**
+     * Get paginated list.
+     *
+     * @param int  $page   Page number
+     * @param User $author Author
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
+    public function getPaginatedList(int $page, User $author): PaginationInterface;
 
 }

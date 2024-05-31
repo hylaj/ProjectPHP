@@ -8,6 +8,7 @@ namespace App\Service;
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Repository\BookRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\Exception\ORMException;
@@ -48,20 +49,19 @@ class BookService implements BookServiceInterface
     /**
      * Get paginated list.
      *
-     * @param integer $page Page number
+     * @param int  $page   Page number
+     * @param User $author Author
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page): PaginationInterface
+    public function getPaginatedList(int $page, User $author): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->bookRepository->queryAll(),
+            $this->bookRepository->queryByAuthor($author),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-
-    }//end getPaginatedList()
-
+    }
 
     /**
      * @param Category $category
