@@ -42,7 +42,7 @@ class BookController extends AbstractController
     {
         $pagination = $this->bookService->getPaginatedList(
             $page,
-            $this->getUser()
+          //  $this->getUser()
         );
 
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
@@ -60,7 +60,7 @@ class BookController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
-    #[IsGranted('VIEW', subject: 'book')]
+   // #[IsGranted('VIEW', subject: 'book')]
     public function show(Book $book): Response
     {
         return $this->render(
@@ -80,6 +80,7 @@ class BookController extends AbstractController
         name:'book_create',
         methods: 'GET|POST',
     )]
+    #[IsGranted('CREATE')]
     public function create(Request $request): Response
     {
         $user = $this->getUser();
@@ -116,7 +117,7 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'book_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    #[IsGranted('VIEW', subject: 'book')]
+    #[IsGranted('EDIT', subject: 'book')]
     public function edit(Request $request, Book $book): Response
     {
         $form =$this->createForm(
@@ -159,7 +160,7 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'book_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    #[IsGranted('VIEW', subject: 'book')]
+    #[IsGranted('DELETE', subject: 'book')]
     public function delete(Request $request, Book $book): Response
     {
         $form = $this->createForm(FormType::class, $book, [

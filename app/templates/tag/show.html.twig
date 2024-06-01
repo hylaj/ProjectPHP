@@ -19,8 +19,19 @@
             <dt>{{ 'label.slug'|trans }}</dt>
             <dd>{{ tag.slug }}</dd>
 
-        <dd><a class="btn btn-styled btn-sm" href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
-            <a class="btn btn-styled btn-sm" href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></dd>
+        <dd>
+            {% if is_granted('EDIT', tag) %}
+                <a class="btn btn-styled btn-sm" href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+            {% endif %}
+            {% if is_granted('DELETE', tag) %}
+                <a class="btn btn-styled btn-sm" href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+            {% endif %}
+     </dd>
+        <p>
+            <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
     {% else %}
         <p>
             {% include 'default/_single_alert_message.html.twig' with {
@@ -29,5 +40,4 @@
             } %}
         </p>
     {% endif %}
-    <a href="{{ url('tag_index') }}">{{ 'action.back_to_list'|trans }}</a>
 {% endblock %}

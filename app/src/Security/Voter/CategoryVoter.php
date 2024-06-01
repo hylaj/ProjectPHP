@@ -1,11 +1,11 @@
 <?php
 /**
- * Book voter.
+ * Category voter.
  */
 
 namespace App\Security\Voter;
 
-use App\Entity\Book;
+use App\Entity\Category;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Class TaskVoter.
  */
-class BookVoter extends Voter
+class CategoryVoter extends Voter
 {
     /**
      * Edit permission.
@@ -64,7 +64,7 @@ class BookVoter extends Voter
             return true;
         }
         return in_array($attribute, [self::EDIT/*, self::VIEW*/, self::DELETE])
-            && $subject instanceof Book;
+            && $subject instanceof Category;
     }
 
     /**
@@ -88,64 +88,64 @@ class BookVoter extends Voter
             return $this->canCreate($user);
         }
 
-        if (!$subject instanceof Book) {
+        if (!$subject instanceof Category) {
             return false;
         }
 
         return match ($attribute) {
             self::EDIT => $this->canEdit($subject, $user),
-           // self::VIEW => $this->canView($subject, $user),
+            // self::VIEW => $this->canView($subject, $user),
             self::DELETE => $this->canDelete($subject, $user),
             default => false,
         };
     }
 
     /**
-     * Checks if user can edit book.
+     * Checks if user can edit Category.
      *
-     * @param Book          $book Book entity
+     * @param Category          $category Category entity
      * @param UserInterface $user User
      *
      * @return bool Result
      */
-    private function canEdit(Book $book, UserInterface $user): bool
+    private function canEdit(Category $category, UserInterface $user): bool
     {
         return ($this->security->isGranted('ROLE_ADMIN'));
-      //  return $book->getItemAuthor() === $user;
+        //  return $category->getItemAuthor() === $user;
     }
 
 
-   /*
-    * Checks if user can view book.
-    *
-    * @param Book          $book Book entity
-    * @param UserInterface $user User
-    *
-    * @return bool Result
+    /*
+     * Checks if user can view category.
+     *
+     * @param Category          $category Category entity
+     * @param UserInterface $user User
+     *
+     * @return bool Result
 
-   private function canView(Book $book, UserInterface $user): bool
-    {
-        return $book->getItemAuthor() === $user;
-    }
-*/
+    private function canView(Category $category, UserInterface $user): bool
+     {
+         return $Category->getItemAuthor() === $user;
+     }
+ */
 
     /**
-     * Checks if user can delete book.
+     * Checks if user can delete category.
      *
-     * @param Book          $book Book entity
+     * @param Category          $category Category entity
      * @param UserInterface $user User
      *
      * @return bool Result
      */
 
-    private function canDelete(Book $book, UserInterface $user): bool
+    private function canDelete(Category $category, UserInterface $user): bool
     {
         return ($this->security->isGranted('ROLE_ADMIN'));
-        //return return (($this->security->isGranted('ROLE_ADMIN')) && ($book->getItemAuthor() === $user));
+        //return return (($this->security->isGranted('ROLE_ADMIN')) && ($category->getItemAuthor() === $user));
     }
 
     /**
-     * Checks if user can create book.
+     * Checks if user can create category.
      *
      * @param UserInterface $user User
      *

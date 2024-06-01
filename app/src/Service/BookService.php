@@ -54,10 +54,11 @@ class BookService implements BookServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page, User $author): PaginationInterface
+    public function getPaginatedList(int $page/*, User $author*/): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->bookRepository->queryByAuthor($author),
+            //$this->bookRepository->queryByAuthor($author),
+            $this->bookRepository->queryAll(),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );

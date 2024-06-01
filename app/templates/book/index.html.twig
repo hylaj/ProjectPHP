@@ -8,7 +8,9 @@
 
     <div class="row">
         <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.book_list'|trans }}</h2></div>
-        <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('book_create') }}" title="{{ 'action.create_book'|trans }}">{{ 'action.create_book'|trans }}</a></div>
+       {% if is_granted('CREATE') %}
+           <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('book_create') }}" title="{{ 'action.create_book'|trans }}">{{ 'action.create_book'|trans }}</a></div>
+       {% endif %}
     </div>
     {% if pagination is defined and pagination.items|length %}
 
@@ -35,9 +37,9 @@
                     <td>{{ book.createdAt|format_date('long')}}</td>
                     #}
                     <td>
-                        {% if is_granted('VIEW', book) %}
+                        {# {% if is_granted('VIEW', book) %}#}
                         <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">{{ book.title }}</a>
-                        {% endif %}
+                      {#  {% endif %}#}
                     </td>
 
                     <td>{{ book.author }}</td>
