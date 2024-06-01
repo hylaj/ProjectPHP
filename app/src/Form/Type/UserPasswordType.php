@@ -1,6 +1,7 @@
 <?php
 /**
- * Category type.
+ * User Password type.
+ * 
  */
 
 namespace App\Form\Type;
@@ -9,18 +10,14 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Validator\Constraints\EqualTo;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Class CategoryType.
+ * User Password Type.
  */
-class UserType extends AbstractType
+class UserPasswordType extends AbstractType
 {
     /**
      * Builds the form.

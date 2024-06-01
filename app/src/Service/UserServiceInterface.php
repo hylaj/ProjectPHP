@@ -22,4 +22,11 @@ interface UserServiceInterface
      * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void;
+
+    /**
+     * Save entity.
+     *
+     * @param User $user User entity
+     */
+    public function save(User $user): void;
 }

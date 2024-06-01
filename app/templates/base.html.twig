@@ -24,6 +24,10 @@
                     <a href="{{ url('tag_index') }}" class="navbar-brand">{{ 'action.tags'|trans  }}</a>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <a class="navbar-brand" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a>
+                         {% if is_granted('ROLE_ADMIN') %}
+                             <a href="{{ url('password_edit', {id: app.user.id}) }}" class="navbar-brand">{{ 'action.password_edit'|trans  }}</a>
+                             <a href="{{ url('details_edit', {id: app.user.id}) }}" class="navbar-brand">{{ 'action.details_edit'|trans  }}</a>
+                        {% endif %}
                     {% else %}
                             <a class="navbar-brand" href="{{ url('app_login') }}">{{ 'action.login'|trans }}</a>
                     {% endif %}

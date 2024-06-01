@@ -47,4 +47,22 @@ class UserService implements UserServiceInterface
         $this->userRepository->upgradePassword($user, $newHashedPassword);
 
     }
+
+    /**
+     * Save entity.
+     *
+     * @param User $user User entity
+     */
+    public function save(User $user): void
+    {
+        /*
+        if(null === $category->getId()){
+            $category->setCreatedAt(new \DateTimeImmutable());
+        }
+        $category->setCreatedAt(new \DateTimeImmutable());
+        */
+
+        $this->userRepository->save($user);
+
+    }//end save()
 }

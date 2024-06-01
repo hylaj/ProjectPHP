@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.user_show'|trans({'%firstName%': user.firstName|default('')}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.user_show'|trans({'%fisrtNamee%': user.firstName|default('')}) }}</h1>
+    {% if user is defined and user|length %}
+        <dl class="dl-horizontal">
+        <dt>{{ 'label.id'|trans }}</dt>
+        <dd>{{ user.id }}</dd>
+        <dt>{{ 'label.firstName'|trans }}</dt>
+        <dd>{{ user.firstName }}</dd>
+        <dt>{{ 'label.email'|trans }}</dt>
+        <dd>{{ user.email }}</dd>
+
+
+        <dd>
+                <a class="btn btn-styled btn-sm" href="{{ url('password_edit', {id: user.id}) }}" title="{{ 'action.edit_password'|trans }}">{{ 'action.edit_password'|trans }}</a>
+        </dd>
+        <p>
+            <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.user_not_found'|trans
+            } %}
+        </p>
+    {% endif %}
+{% endblock %}

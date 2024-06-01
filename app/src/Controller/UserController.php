@@ -5,8 +5,10 @@
 
 namespace App\Controller;
 
-use App\Form\Type\UserType;
-use App\Service\CategoryServiceInterface;
+use App\Entity\User;
+use App\Form\Type\PasswordType;
+use App\Form\Type\UserDetailsType;
+use App\Form\Type\UserPasswordType;
 use App\Service\UserServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,10 +31,30 @@ class UserController extends AbstractController
      * @param UserServiceInterface $userService User service
      * @param TranslatorInterface      $translator  Translator
      */
-    public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
 
+    /**
+     * @param  User       $user
+     * @return Response
+     */
+    #[Route(
+        '/{id}',
+        name: 'user_show',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: 'GET'
+    )]
+    public function show(User $user): Response
+    {
+        return $this->render(
+            'user/show.html.twig',
+            [
+               'user' => $user
+            ]
+        );
+
+    }//end show()
 
     /**
      * @param Request $request
@@ -43,13 +64,22 @@ class UserController extends AbstractController
      * @return Response
      */
     #[Route('/{id}/edit-password', name: 'password_edit',requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
-    #[IsGranted('ROLE_USER')]
-    public function edit(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator): Response
+    #[IsGranted('ROLE_ADMIN')]
+    public function edit_password(Request $request, TranslatorInterface $translator): Response
     {
         $user=$this->getUser();
 
+        if ($user->getId() != $request->get('id')) {
+            throw $this->createAccessDeniedException('You cannot edit the password of another user.');
+           /* $this->addFlash(
+                'danger',
+                $this->translator->trans('message.password_of_another_user')
+            );
+            return $this->redirectToRoute('password_edit', ['id' => $user->getId()]);*/
+        }
+
         $form=$this->createForm(
-            UserType::class,
+            UserPasswordType::class,
             $user,
         [
             'method'=>'PUT',
@@ -61,7 +91,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $currentPassword = $form->get('currentPassword')->getData();
-            if (!$passwordHasher->isPasswordValid($user, $currentPassword)) {
+            if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
                 $this->addFlash(
                     'error',
                     $this->translator->trans('message.current_password_invalid')
@@ -71,18 +101,63 @@ class UserController extends AbstractController
             }
 
             $newPassword= $form->get('password')->getData();
-            $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
-            $this->userService->upgradePassword($user, $hashedPassword);
+            $hashedPassword =$this->passwordHasher->hashPassword($user, $newPassword);
+            $user->setPassword($hashedPassword);
+            $this->userService->save($user);
 
 
             $this->addFlash(
                 'success',
                 $translator->trans('message.edited_successfully')
             );
-            return $this->redirectToRoute('book_index');
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
         return $this->render(
             'user/edit-password.html.twig',
+            [
+                'form'=> $form->createView(),
+                'user' => $user
+            ]);
+
+    }
+    /**
+     * @param Request $request
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
+    #[Route('/{id}/edit-details', name: 'details_edit',requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function edit_details(Request $request, TranslatorInterface $translator): Response
+    {
+        $user=$this->getUser();
+
+        if ($user->getId() != $request->get('id')) {
+            throw $this->createAccessDeniedException('You cannot edit the details of another user.');
+        }
+
+        $form=$this->createForm(
+            UserDetailsType::class,
+            $user,
+            [
+                'method'=>'PUT',
+                'action' => $this->generateUrl('details_edit', ['id' => $user->getId()])
+            ]);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userService->save($user);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+        return $this->render(
+            'user/edit-details.html.twig',
             [
                 'form'=> $form->createView(),
                 'user' => $user
