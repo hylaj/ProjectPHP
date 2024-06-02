@@ -5,6 +5,7 @@
 
 namespace App\Service;
 use App\Entity\Rental;
+use App\Entity\User;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -31,7 +32,7 @@ interface RentalServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedListByOwner(int $page): PaginationInterface;
+    public function getPaginatedListByOwner(int $page, int $owner): PaginationInterface;
 
     /**
      * Save entity.

@@ -54,23 +54,42 @@ class RentalRepository extends ServiceEntityRepository
 
     }//end delete()
 
+
+    public function QueryAll(): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder()
+            ->select(
+            'partial rental.{id, owner, book, status, rentalDate}',
+            'partial user.{id, email}',
+            'partial book.{id, title}'
+        )
+            ->join('rental.owner', 'user')
+            ->join('rental.book', 'book');
+    }
+
+
     /**
      * @return QueryBuilder
      */
     public function queryByStatus(): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
-            ->select(
-                'partial rental.{id, owner, book, status, rentalDate}',
-                'partial user.{id, email}',
-                'partial book.{id, title}'
-            )
-            ->join('rental.owner', 'user')
-            ->join('rental.book', 'book')
+        return $this->QueryAll()
             ->where('rental.status= :status')
             ->setParameter('status', false);
 
-    }
+    }//end queryByStatus()
+
+
+    public function queryByOwner($owner): QueryBuilder
+    {
+        return $this->QueryAll()
+            ->where('rental.status= :status')
+            ->setParameter('status', true)
+            ->andWhere('rental.owner= :owner')
+            ->setParameter('owner', $owner);
+
+    }//end queryByOwner()
+
 
     /**
      * Get or create new query builder.
@@ -79,10 +98,11 @@ class RentalRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder Query builder
      */
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder=null): QueryBuilder
     {
-        return $queryBuilder ?? $this->createQueryBuilder('rental');
-    }
+        return ($queryBuilder ?? $this->createQueryBuilder('rental'));
+
+    }//end getOrCreateQueryBuilder()
 
 
     // **

@@ -123,4 +123,19 @@ class RentalController extends AbstractController
         );
     }
 
+    #[Route('/rented-books', name: 'rented_books', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[IsGranted('ROLE_USER')]
+    public function show(#[MapQueryParameter] int $page=1): Response
+    {
+        $owner=$this->getUser()->getId();
+        $pagination = $this->rentalService->getPaginatedListByOwner(
+            $page,
+            $owner,
+        );
+        return $this->render('rental/show.html.twig', ['pagination' => $pagination]);
+
+    }//end index()
+
+
+
 }//end class
