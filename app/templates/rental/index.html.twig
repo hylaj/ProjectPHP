@@ -18,6 +18,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.owner'|trans, 'rental.user.email') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title')  }}</th>
                 <th>{{ 'label.approve' }}</th>
+
             </tr>
             </thead>
             <tbody>
@@ -26,7 +27,10 @@
                     <td>{{ rental.id }}</td>
                     <td>{{ rental.owner.email }}</td>
                     <td>{{ rental.book.title }}</td>
-                    <td><a class="btn btn-styled" href="{{ url('rent_approve', {id: rental.id}) }}" title="{{ 'action.rent_approve'|trans }}">{{ 'action.rent_approve'|trans }}</a></td>
+                    <td>
+                        <a class="btn btn-styled" href="{{ url('rent_approve', {id: rental.id}) }}" title="{{ 'action.rent_approve'|trans }}">{{ 'action.rent_approve'|trans }}</a>
+                        <a class="btn btn-styled" href="{{ url('rent_deny', {id: rental.id}) }}" title="{{ 'action.rent_deny'|trans }}">{{ 'action.rent_deny'|trans }}</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
