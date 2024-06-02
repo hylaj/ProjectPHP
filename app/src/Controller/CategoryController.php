@@ -95,9 +95,14 @@ class CategoryController extends AbstractController
     public function create(Request $request): Response
     {
         $user = $this->getUser();
+
         $category = new Category();
+
         $category->setItemAuthor($user);
-        $form = $this->createForm(CategoryType::class, $category);
+
+        $form = $this->createForm(
+            CategoryType::class,
+            $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
