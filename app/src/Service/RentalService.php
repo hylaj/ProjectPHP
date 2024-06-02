@@ -1,26 +1,22 @@
 <?php
 /**
- * Book service.
+ * Rental service.
  */
 
 namespace App\Service;
 
-use App\Entity\Book;
-use App\Entity\Category;
-use App\Entity\Tag;
+use App\Entity\Rental;
 use App\Entity\User;
-use App\Repository\BookRepository;
-use App\Repository\TagRepository;
+use App\Repository\RentalRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Rector\Symfony\Contract\Tag\TagInterface;
 
 /**
- * Class BookService.
+ * Class RentalService.
  */
-class BookService implements BookServiceInterface
+class RentalService implements RentalServiceInterface
 {
     /**
      * Items per page.
@@ -33,71 +29,71 @@ class BookService implements BookServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
-     * @param BookRepository     $bookRepository Book repository
+     * @param RentalRepository     $rentalRepository Rental repository
      * @param PaginatorInterface $paginator      Paginator
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator)
-    {
-
-    }//end __construct()
-
+    public function __construct(private readonly RentalRepository $rentalRepository, private readonly PaginatorInterface $paginator)
+    {    }
 
     /**
-     * Get paginated list.
+     * Get paginated list by status.
      *
      * @param int  $page   Page number
-     * @param User $author Author
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page/*, User $author*/): PaginationInterface
+    public function getPaginatedListByStatus(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
-            //$this->bookRepository->queryByAuthor($author),
-            $this->bookRepository->queryAll(),
+            $this->rentalRepository->queryByStatus(),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
     }
 
     /**
-     * @param Category $category
-     * @return array
+     * Get paginated list by user.
+     *
+     * @param int  $page   Page number
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getBooksByCategory(Category $category): array
+    public function getPaginatedListByOwner(int $page): PaginationInterface
     {
-        return $this->bookRepository->findBooksByCategory($category);
+        return $this->paginator->paginate(
+            $this->rentalRepository->queryByOwner(),
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE
+        );
     }
 
     /**
      * Save entity.
      *
-     * @param Book $book Book entity
+     * @param Rental $rental Rental entity
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function save(Book $book): void
+    public function save(Rental $rental): void
     {
-        $this->bookRepository->save($book);
+        $this->rentalRepository->save($rental);
 
     }//end save()
 
     /**
      * Delete entity.
      *
-     * @param Book $book
+     * @param Rental $rental
      * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function delete(Book $book): void
+    public function delete(Rental $rental): void
     {
-        $this->bookRepository->delete($book);
+        $this->rentalRepository->delete($rental);
     }
-
 
 }//end class

@@ -89,10 +89,13 @@ class Book
      * @var User|null
      */
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
+    #[ORM\JoinColumn(nullable: true)]
     #[Assert\Type(User::class)]
     private ?User $itemAuthor;
+
+    #[ORM\Column]
+    #[Assert\NotBlank]
+    private ?bool $available = true;
 
     /**
      * Constructor.
@@ -246,6 +249,17 @@ class Book
     public function setItemAuthor(?User $itemAuthor): void
     {
         $this->itemAuthor = $itemAuthor;
+
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): void
+    {
+        $this->available = $available;
 
     }
 

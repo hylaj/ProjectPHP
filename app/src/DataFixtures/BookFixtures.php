@@ -17,6 +17,8 @@ use Faker\Generator;
  */
 class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
+
+
     /**
      * Load data.
      */
@@ -49,8 +51,11 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                     $book->addTag($tag);
                 }
 
-                $author = $this->getRandomReference('users');
-                $book->setItemAuthor($author);
+/*
+                for ($i = rand(1, 2); $i < 2; $i++) {
+                    $author = $this->getRandomReference('users');
+                    $book->setItemAuthor($author);
+                }*/
 
                 return $book;
             }
@@ -71,8 +76,13 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
      */
     public function getDependencies(): array
     {
-        return [CategoryFixtures::class, TagFixtures::class, UserFixtures::class];
-    }
+        return [
+            CategoryFixtures::class,
+            TagFixtures::class,
+            UserFixtures::class,
+        ];
+
+    }//end getDependencies()
 
 
 }//end class

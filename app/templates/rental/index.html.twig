@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.rental_list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.rental_list'|trans }}</h2></div>
+    </div>
+    {% if pagination is defined and pagination.items|length %}
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'rental.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.owner'|trans, 'rental.user.email') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title')  }}</th>
+                <th>{{ 'label.approve' }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rental in pagination.items %}
+                <tr>
+                    <td>{{ rental.id }}</td>
+                    <td>{{ rental.owner.email }}</td>
+                    <td>{{ rental.book.title }}</td>
+                    <td><a class="btn btn-styled" href="{{ url('rent_approve', {id: rental.id}) }}" title="{{ 'action.rent_approve'|trans }}">{{ 'action.rent_approve'|trans }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+
+{% endblock %}
