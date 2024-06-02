@@ -15,25 +15,43 @@
 
 <body>
 
-    <header>
-            <nav class="navbar navbar-light" style="background-color: rgba(216,225,231,0.87);">
-                <div class="justify-content-start mx-4 py-2"><a style="color: #2e5c8d" class="navbar-brand">{{ 'label.page_title'|trans }}</a></div>
-                <div class="justify-content-end mx-4 py-2">
-                    <a href="{{ url('book_index') }}" class="navbar-brand">{{ 'action.books'|trans }}</a>
-                    <a href="{{ url('category_index') }}" class="navbar-brand">{{ 'action.categories'|trans  }}</a>
-                    <a href="{{ url('tag_index') }}" class="navbar-brand">{{ 'action.tags'|trans  }}</a>
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a class="navbar-brand" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a>
-                         {% if is_granted('ROLE_ADMIN') %}
-                             <a href="{{ url('password_edit', {id: app.user.id}) }}" class="navbar-brand">{{ 'action.password_edit'|trans  }}</a>
-                             <a href="{{ url('details_edit', {id: app.user.id}) }}" class="navbar-brand">{{ 'action.details_edit'|trans  }}</a>
+<nav class="navbar navbar-light navbar-expand-lg" style="background-color: rgba(216,225,231,0.87);">
+    <div class="container-fluid">
+        <a class="navbar-brand">{{ 'label.page_title'|trans }}</a>
+        <div class="d-flex ms-auto">
+            <ul class="navbar-nav d-flex flex-row">
+                <li class="nav-item dropdown navbar-brand">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ 'action.account'|trans }}</a>
+                    <ul class="dropdown-menu">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li><a href="{{ url('user_show', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.user_show'|trans }}</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ url('password_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.password_edit'|trans }}</a></li>
+                                <li><a href="{{ url('details_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.details_edit'|trans }}</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{{ url('app_login') }}">{{ 'action.login'|trans }}</a></li>
+                            <li><a class="dropdown-item" href="{{ url('register') }}">{{ 'action.register'|trans }}</a></li>
                         {% endif %}
-                    {% else %}
-                            <a class="navbar-brand" href="{{ url('app_login') }}">{{ 'action.login'|trans }}</a>
-                    {% endif %}
-                </div>
-            </nav>
-    </header>
+                    </ul>
+                </li>
+                <li class="nav-item navbar-brand">
+                    <a href="{{ url('book_index') }}" class="nav-link">{{ 'action.books'|trans }}</a>
+                </li>
+                <li class="nav-item navbar-brand">
+                    <a href="{{ url('category_index') }}" class="nav-link">{{ 'action.categories'|trans }}</a>
+                </li>
+                <li class="nav-item navbar-brand">
+                    <a href="{{ url('tag_index') }}" class="nav-link">{{ 'action.tags'|trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
 
 <main role="main" class="container-fluid">
     <div class="container-fluid">

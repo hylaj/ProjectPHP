@@ -202,6 +202,78 @@
         <source>action.tags</source>
         <target>Tags</target>
       </trans-unit>
+      <trans-unit id="message.enter_current_password">
+        <source>message.enter_current_password</source>
+        <target>Enter your current password</target>
+      </trans-unit>
+      <trans-unit id="message.already_logged_in">
+        <source>message.already_logged_in</source>
+        <target>You are already logged in</target>
+      </trans-unit>
+      <trans-unit id="message.current_password_invalid">
+        <source>message.current_password_invalid</source>
+        <target>The current password is invalid</target>
+      </trans-unit>
+      <trans-unit id="title.user_show">
+        <source>title.user_show</source>
+        <target>Profile</target>
+      </trans-unit>
+      <trans-unit id="label.firstName">
+        <source>label.firstName</source>
+        <target>First Name</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="action.edit_password">
+        <source>action.edit_password</source>
+        <target>Change Password</target>
+      </trans-unit>
+      <trans-unit id="message.user_not_found">
+        <source>message.user_not_found</source>
+        <target>User not found</target>
+      </trans-unit>
+      <trans-unit id="title.password_edit">
+        <source>title.password_edit</source>
+        <target>Change Password</target>
+      </trans-unit>
+      <trans-unit id="title.details_edit">
+        <source>title.details_edit</source>
+        <target>Edit Details</target>
+      </trans-unit>
+      <trans-unit id="action.account">
+        <source>action.account</source>
+        <target>Account</target>
+      </trans-unit>
+      <trans-unit id="action.user_show">
+        <source>action.user_show</source>
+        <target>Profile</target>
+      </trans-unit>
+      <trans-unit id="action.password_edit">
+        <source>action.password_edit</source>
+        <target>Change Password</target>
+      </trans-unit>
+      <trans-unit id="action.details_edit">
+        <source>action.details_edit</source>
+        <target>Edit Details</target>
+      </trans-unit>
+      <trans-unit id="action.register">
+        <source>action.register</source>
+        <target>Register</target>
+      </trans-unit>
+      <trans-unit id="label.item_author">
+        <source>label.item_author</source>
+        <target>Added by</target>
+      </trans-unit>
+      <trans-unit id="title.register">
+        <source>title.register</source>
+        <target>Register</target>
+      </trans-unit>
+      <trans-unit id="message.category_not_found">
+        <source>message.category_not_found</source>
+        <target>Category not found</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

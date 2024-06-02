@@ -144,11 +144,11 @@
             </trans-unit>
             <trans-unit id="action.logout">
               <source>action.logout</source>
-              <target>Wyloguj</target>
+              <target>Wyloguj się</target>
             </trans-unit>
             <trans-unit id="action.login">
               <source>action.login</source>
-              <target>Zaloguj</target>
+              <target>Zaloguj się</target>
             </trans-unit>
             <trans-unit id="title.tag_delete">
               <source>title.tag_delete</source>
@@ -198,6 +198,79 @@
               <source>action.tags</source>
               <target>Tagi</target>
             </trans-unit>
+      <trans-unit id="message.enter_current_password">
+        <source>message.enter_current_password</source>
+        <target>Wprowadź swoje obecne hasło</target>
+      </trans-unit>
+      <trans-unit id="message.already_logged_in">
+        <source>message.already_logged_in</source>
+        <target>Jesteś już zalogowany</target>
+      </trans-unit>
+      <trans-unit id="message.current_password_invalid">
+        <source>message.current_password_invalid</source>
+        <target>Obecne hasło jest nieprawidłowe</target>
+      </trans-unit>
+      <trans-unit id="title.user_show">
+        <source>title.user_show</source>
+        <target>Profil</target>
+      </trans-unit>
+      <trans-unit id="label.firstName">
+        <source>label.firstName</source>
+        <target>Imię</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="action.edit_password">
+        <source>action.edit_password</source>
+        <target>Zmień hasło</target>
+      </trans-unit>
+      <trans-unit id="message.user_not_found">
+        <source>message.user_not_found</source>
+        <target>Użytkownik nie znaleziony</target>
+      </trans-unit>
+      <trans-unit id="title.password_edit">
+        <source>title.password_edit</source>
+        <target>Zmień hasło</target>
+      </trans-unit>
+      <trans-unit id="title.details_edit">
+        <source>title.details_edit</source>
+        <target>Edytuj szczegóły</target>
+      </trans-unit>
+      <trans-unit id="action.account">
+        <source>action.account</source>
+        <target>Konto</target>
+      </trans-unit>
+      <trans-unit id="action.user_show">
+        <source>action.user_show</source>
+        <target>Profil</target>
+      </trans-unit>
+      <trans-unit id="action.password_edit">
+        <source>action.password_edit</source>
+        <target>Zmień hasło</target>
+      </trans-unit>
+      <trans-unit id="action.details_edit">
+        <source>action.details_edit</source>
+        <target>Edytuj dane</target>
+      </trans-unit>
+      <trans-unit id="action.register">
+        <source>action.register</source>
+        <target>Rejestracja</target>
+      </trans-unit>
+      <trans-unit id="label.item_author">
+        <source>label.item_author</source>
+        <target>Dodane przez</target>
+      </trans-unit>
+      <trans-unit id="title.register">
+        <source>title.register</source>
+        <target>Rejestracja</target>
+      </trans-unit>
+      <trans-unit id="message.category_not_found">
+        <source>message.category_not_found</source>
+        <target>Kategoria nie znaleziona</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
