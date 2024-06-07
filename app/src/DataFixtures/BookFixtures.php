@@ -35,10 +35,8 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 $book = new Book();
                 $book->setTitle($this->faker->sentence(2));
                 $book->setAuthor($this->faker->name);
-                $book->setCreatedAt(
-                    \DateTimeImmutable::createFromMutable(
+                $book->setReleaseDate(
                         $this->faker->dateTimeBetween('-100 days', '-1 days')
-                    )
                 );
                 $category = $this->getRandomReference('categories');
                 $book->setCategory($category);
@@ -50,6 +48,7 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 foreach ($tags as $tag) {
                     $book->addTag($tag);
                 }
+                $book->setDescription($this->faker->text(1000));
 
 /*
                 for ($i = rand(1, 2); $i < 2; $i++) {

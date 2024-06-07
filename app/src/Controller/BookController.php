@@ -85,7 +85,6 @@ class BookController extends AbstractController
     {
         $user = $this->getUser();
         $book = new Book();
-        $book->setItemAuthor($user);
         $form = $this->createForm(
             BookType::class,
             $book);

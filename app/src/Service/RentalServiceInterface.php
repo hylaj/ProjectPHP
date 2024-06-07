@@ -4,11 +4,13 @@
  */
 
 namespace App\Service;
+use App\Entity\Book;
 use App\Entity\Rental;
 use App\Entity\User;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface RentalServiceInterface.
@@ -53,5 +55,9 @@ interface RentalServiceInterface
      */
     public function delete(Rental $rental): void;
 
+    public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental):void;
+
+    public function canBeRented(Book $book):bool;
+    public function setStatus(bool $status, Rental $rental): void;
 
 }

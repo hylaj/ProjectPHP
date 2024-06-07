@@ -9,6 +9,8 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * @extends ServiceEntityRepository<Rental>
@@ -17,6 +19,9 @@ class RentalRepository extends ServiceEntityRepository
 {
 
 
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Rental::class);
@@ -59,7 +64,7 @@ class RentalRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-            'partial rental.{id, owner, book, status, rentalDate}',
+            'partial rental.{id, owner, book, status, rentalDate, comment}',
             'partial user.{id, email}',
             'partial book.{id, title}'
         )
@@ -84,9 +89,10 @@ class RentalRepository extends ServiceEntityRepository
     {
         return $this->QueryAll()
             ->where('rental.status= :status')
-            ->setParameter('status', true)
-            ->andWhere('rental.owner= :owner')
-            ->setParameter('owner', $owner);
+           /* ->setParameter('status', true)*/
+            ->Where('rental.owner= :owner')
+            ->setParameter('owner', $owner)
+            ->orderBy('rental.status', 'DESC');
 
     }//end queryByOwner()
 

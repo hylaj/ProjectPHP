@@ -9,6 +9,8 @@ use App\Entity\Tag;
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Form\DataTransformer\TagsDataTransformer;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -82,7 +84,27 @@ class BookType extends AbstractType
                 'required' => false,
                 'attr' => ['max_length' => 128],
             ]
-        );
+
+        )
+            ->add(
+                'releaseDate',
+                DateType::class,
+                [
+                    'label' => 'label.release_date',
+                    'required' => false,
+                    'placeholder' => [
+                        'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+                        ],
+                    'format' => 'yyyy-MM-dd',
+                ])
+            ->add(
+                'description',
+                TextType::class,
+                [
+                    'label' => 'label.description',
+                    'required' => false,
+                    'attr' => ['max_length' => 1000],
+                ]);
 
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer

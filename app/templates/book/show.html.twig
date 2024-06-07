@@ -10,12 +10,14 @@
         <dd class="dl-horizontal">
             <dt>{{ 'label.id'|trans }}</dt>
             <dd>{{ book.id }}</dd>
-            <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ book.createdAt|format_date('long') }}</dd>
+            <dt>{{ 'label.release_date'|trans }}</dt>
+            <dd>{{ book.releaseDate|format_date('long') }}</dd>
             <dt>{{ 'label.title'|trans }}</dt>
             <dd>{{  book.title }}</dd>
             <dt>{{ 'label.author'|trans }}</dt>
             <dd>{{  book.author }}</dd>
+        <dt>{{ 'label.description'|trans }}</dt>
+        <dd>{{  book.description }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  book.category.title }}</dd>
             <dt>{{ 'label.tags'|trans }}</dt>
@@ -24,8 +26,6 @@
              {{ tag.title }}
             {# {{ book.tags.title|join(', ') }} #}
            {% endfor %}</dd>
-        <dt>{{ 'label.item_author'|trans }}</dt>
-        {%  if book.itemAuthor != null %}   <dd>{{ book.itemAuthor.firstName}}</dd>{% endif %}
         {%  endif %}
 
        <dd>

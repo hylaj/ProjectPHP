@@ -10,9 +10,13 @@ use App\Repository\BookRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\TextType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Date;
+
 /**
  *Class Book.
  */
@@ -29,12 +33,11 @@ class Book
     private ?int $id = null;
 
     /**
-     * Created at.
+     * Release Date.
      */
-    #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\Type(DateTimeImmutable::class)]
-    #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $createdAt;
+    #[ORM\Column(type: 'date')]
+    #[Assert\Type(\DateTime::class)]
+    private ?\DateTime $releaseDate;
     /**
      * Title.
      */
@@ -83,19 +86,14 @@ class Book
     #[ORM\JoinTable(name: 'books_tags')]
     private Collection $tags;
 
-    /**
-     * Item Author.
-     *
-     * @var User|null
-     */
-    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
-    #[ORM\JoinColumn(nullable: true)]
-    #[Assert\Type(User::class)]
-    private ?User $itemAuthor;
 
     #[ORM\Column]
-    #[Assert\NotBlank]
+    #[Assert\NotNull]
     private ?bool $available = true;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(max:1000)]
+    private ?string $description = null;
 
     /**
      * Constructor.
@@ -116,23 +114,24 @@ class Book
     }
 
     /**
-     * Getter for created at.
+     * Getter for release date.
      *
-     * @return \DateTimeImmutable|null Created at
+     * @return \DateTimeImmutable|null Release date
      */
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getReleaseDate(): ?\DateTime
     {
-        return $this->createdAt;
+        return $this->releaseDate;
     }
 
     /**
-     * Setter for created at.
+     * Setter for release date.
      *
-     * @param \DateTimeImmutable|null $createdAt Created at
+     * @param \DateTimeImmutable|null $createdAt Release date
+     *
      */
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): void
+    public function setReleaseDate(?\DateTime $releaseDate): void
     {
-        $this->createdAt = $createdAt;
+        $this->releaseDate = $releaseDate;
     }
 
     /**
@@ -234,23 +233,6 @@ class Book
         $this->tags->removeElement($tag);
     }
 
-    /**
-     * @return User|null
-     */
-    public function getItemAuthor(): ?User
-    {
-        return $this->itemAuthor;
-    }
-
-    /**
-     * @param User|null $itemAuthor
-     * @return void
-     */
-    public function setItemAuthor(?User $itemAuthor): void
-    {
-        $this->itemAuthor = $itemAuthor;
-
-    }
 
     public function isAvailable(): ?bool
     {
@@ -260,6 +242,17 @@ class Book
     public function setAvailable(bool $available): void
     {
         $this->available = $available;
+
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
 
     }
 

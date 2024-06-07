@@ -99,5 +99,7 @@ class BookService implements BookServiceInterface
         $this->bookRepository->delete($book);
     }
 
-
+    public function setAvailable(Book $book, bool $available): void{
+        $book->setAvailable($available);
+    }
 }//end class

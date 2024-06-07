@@ -17,28 +17,34 @@ class Rental
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
-    #[Assert\NotBlank]
-    private ?\DateTimeImmutable $rentalDate = null;
+    private ?\DateTimeImmutable $rentalDate;
 
-    #[ORM\ManyToOne]
+
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
+    #[Assert\Type(User::class)]
     private ?User $owner = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Book::class,fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
+    #[Assert\Type(Book::class)]
     private ?Book $book = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank]
-    private ?bool $status = null;
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    private ?bool $status = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Type('string')]
+    private ?string $comment = null;
 
     public function getId(): ?int
     {
@@ -77,7 +83,7 @@ class Rental
         $this->book = $book;
     }
 
-    public function isStatus(): ?bool
+    public function getStatus(): ?bool
     {
         return $this->status;
     }
@@ -85,6 +91,17 @@ class Rental
     public function setStatus(bool $status): void
     {
         $this->status = $status;
+
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): void
+    {
+        $this->comment = $comment;
 
     }
 }

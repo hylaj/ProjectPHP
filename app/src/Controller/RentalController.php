@@ -7,9 +7,11 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Rental;
+use App\Form\Type\RentalType;
 use App\Service\BookServiceInterface;
 use App\Service\RentalServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -21,14 +23,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class Rental Controller.
  */
-
+#[Route('/rental')]
 class RentalController extends AbstractController
 {
-
-
     /**
      * Constructor.
      */
+
     public function __construct(private readonly RentalServiceInterface $rentalService, private readonly TranslatorInterface $translator, private readonly BookServiceInterface $bookService)
     {
 
@@ -39,91 +40,96 @@ class RentalController extends AbstractController
      * @param  Request $request
      * @param  Book    $book
      * @return Response
-     */
+    */
     #[Route('/{id}/rent', name: 'rent', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[IsGranted('ROLE_USER')]
     public function rent(Request $request, Book $book): Response
     {
+        if (!$this->rentalService->canBeRented($book)){
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.book_not_available')
+            );
+            return $this->redirectToRoute('book_index');
+        }
+
         $rental = new Rental();
+        $this->rentalService->setRentalDetails(false, $this->getUser(), $book, $rental);
 
-        $user = $this->getUser();
-        $rental->setOwner($user);
+        $this->bookService->setAvailable($book, false);
+        $form=$this->createForm(
+            RentalType::class,
+            $rental,
+        [
+            'method' => 'POST',
+            'action' => $this->generateUrl('rent', ['id' => $book->getId()]),
+        ]);
+        $form->handleRequest($request);
 
-        $rental->setBook($book);
-        $rental->setStatus(false);
+        if ($form->isSubmitted() && $form->isValid()){
 
-        $book->setAvailable(false);
+            $this->bookService->save($book);
+            $this->rentalService->save($rental);
 
-        $this->rentalService->save($rental);
-        $this->bookService->save($book);
-
-        $this->addFlash(
-            'success',
-            $this->translator->trans('message.rented_successfully')
-        );
-
-        $id = $request->get('id');
-
-        return $this->redirectToRoute(
-            'book_show',
-            ['id' => $id]
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.rented_successfully')
+            );
+            return $this->redirectToRoute(
+                'rented_books'
+            );
+        }
+        return $this->render(
+            'rental/rent.html.twig',
+            [
+                'form' => $form->createView()
+            ]
         );
 
     }//end rent()
 
+    #[Route('/{id}/return', name:'return', requirements:['id' => '[1-9]\d*'], methods: 'GET|DELETE' )]
+    public function return(Request $request, Rental $rental): Response {
 
-    #[Route('/rent-index', name: 'rent_index', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function index(#[MapQueryParameter] int $page=1): Response
-    {
-        $pagination = $this->rentalService->getPaginatedListByStatus(
-            $page
+       /* if (!$this->rentalService->canBeReturned($rental)){
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.book_cannot_be_returned')
+            );
+            return $this->redirectToRoute('rented_books');
+        }*/
+
+        $form= $this->createForm(
+            FormType::class,
+            $rental,
+        [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('return', ['id' => $rental->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $this->bookService->setAvailable($rental->getBook(), true);
+            $this->rentalService->delete($rental);
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.returned_successfully')
+            );
+
+            return $this->redirectToRoute('rented_books');
+        }
+        return $this->render(
+            'rental/return.html.twig',
+            [
+                'form' => $form->createView(),
+                'rental' => $rental,
+            ]
         );
-        return $this->render('rental/index.html.twig', ['pagination' => $pagination]);
 
-    }//end index()
+}
 
-    #[Route('/{id}/rent-approve', name: 'rent_approve', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function approve(Request $request, Rental $rental): Response
-    {
-        $user = $rental->getOwner();
-
-        $rental->setStatus(true);
-        $book = $rental->getBook();
-        $book->setItemAuthor($user);
-        $this->rentalService->save($rental);
-        $this->bookService->save($book);
-
-        $this->addFlash(
-            'success',
-            $this->translator->trans('message.approved_successfully')
-        );
-        return $this->redirectToRoute(
-            'rent_index'
-        );
-    }
-
-    #[Route('/{id}/rent-deny', name: 'rent_deny', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT|DELETE')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function deny(Request $request, Rental $rental): Response
-    {
-        $book = $rental->getBook();
-
-        $book->setAvailable(true);
-        $this->rentalService->delete($rental);
-        $this->bookService->save($book);
-
-        $this->addFlash(
-            'success',
-            $this->translator->trans('message.denied_successfully')
-        );
-        return $this->redirectToRoute(
-            'rent_index'
-        );
-    }
-
-    #[Route('/rented-books', name: 'rented_books', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[Route('/list', name: 'rented_books', methods: 'GET')]
     #[IsGranted('ROLE_USER')]
     public function show(#[MapQueryParameter] int $page=1): Response
     {
@@ -135,6 +141,54 @@ class RentalController extends AbstractController
         return $this->render('rental/show.html.twig', ['pagination' => $pagination]);
 
     }//end index()
+
+
+    #[Route('/pending-approval', name: 'rental_pending_approval', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function index(#[MapQueryParameter] int $page=1): Response
+    {
+        $pagination = $this->rentalService->getPaginatedListByStatus(
+            $page
+        );
+        return $this->render('rental/index.html.twig', ['pagination' => $pagination]);
+
+    }//end index()
+
+
+    #[Route('/{id}/approve', name: 'rental_approve', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function approve(Rental $rental): Response
+    {
+        $this->rentalService->setStatus(true, $rental);
+        $this->rentalService->save($rental);
+
+        $this->addFlash(
+            'success',
+            $this->translator->trans('message.approved_successfully')
+        );
+        return $this->redirectToRoute(
+            'rental_pending_approval'
+        );
+    }
+
+    #[Route('/{id}/deny', name: 'rental_deny', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT|DELETE')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deny(Rental $rental): Response
+    {
+        $this->bookService->setAvailable($rental->getBook(), true);
+        $this->bookService->save($rental->getBook());
+        $this->rentalService->delete($rental);
+
+        $this->addFlash(
+            'success',
+            $this->translator->trans('message.denied_successfully')
+        );
+        return $this->redirectToRoute(
+            'rental_pending_approval'
+        );
+    }
+
+
 
 
 

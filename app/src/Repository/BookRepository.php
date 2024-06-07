@@ -53,13 +53,13 @@ class BookRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-                'partial book.{id, createdAt, title, author, itemAuthor, available}',
+                'partial book.{id, releaseDate, title, author, available, description}',
                 'partial category.{id, title}',
                 'partial tags.{id, title}'
             )
             ->join('book.category', 'category')
             ->leftJoin('book.tags', 'tags')
-            ->orderBy('book.createdAt', 'DESC');
+            ->orderBy('book.title', 'DESC');
     }
 
     /**
@@ -143,7 +143,7 @@ class BookRepository extends ServiceEntityRepository
      * @param User $user User entity
      *
      * @return QueryBuilder Query builder
-     */
+
     public function queryByAuthor(User $user): QueryBuilder
     {
         $queryBuilder = $this->queryAll();
@@ -152,6 +152,6 @@ class BookRepository extends ServiceEntityRepository
             ->setParameter('itemAuthor', $user);
 
         return $queryBuilder;
-    }
+    } */
 
 }

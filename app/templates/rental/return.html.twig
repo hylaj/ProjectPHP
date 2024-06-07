@@ -1,0 +1,6 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.return_book'|trans({'%id%': rental.id|default('')}),
+    form: form,
+    submit_label: 'action.return'|trans,
+    back_to_list_path: 'rented_books',
+} %}

@@ -29,7 +29,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <li><a href="{{ url('password_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.password_edit'|trans }}</a></li>
                                 <li><a href="{{ url('details_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.details_edit'|trans }}</a></li>
-                                <li><a href="{{ url('rent_index') }}" class="dropdown-item">{{ 'action.rent_approve'|trans }}</a></li>
+                                <li><a href="{{ url('rental_pending_approval') }}" class="dropdown-item">{{ 'action.pending_approval'|trans }}</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             {% endif %}
                             <li><a class="dropdown-item" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a></li>

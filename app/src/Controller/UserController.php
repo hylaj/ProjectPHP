@@ -9,7 +9,7 @@ use App\Entity\User;
 use App\Form\Type\PasswordType;
 use App\Form\Type\UserDetailsType;
 use App\Form\Type\UserPasswordType;
-use App\Form\Type\UserType;
+use App\Form\Type\RegistrationType;
 use App\Service\UserServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

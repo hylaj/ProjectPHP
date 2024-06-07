@@ -5,13 +5,17 @@
 
 namespace App\Service;
 
+use App\Entity\Book;
 use App\Entity\Rental;
 use App\Entity\User;
 use App\Repository\RentalRepository;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class RentalService.
@@ -29,19 +33,23 @@ class RentalService implements RentalServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+
     /**
      * Constructor.
      *
-     * @param RentalRepository     $rentalRepository Rental repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param RentalRepository   $rentalRepository Rental repository
+     * @param PaginatorInterface $paginator        Paginator
      */
     public function __construct(private readonly RentalRepository $rentalRepository, private readonly PaginatorInterface $paginator)
-    {    }
+    {
+
+    }//end __construct()
+
 
     /**
      * Get paginated list by status.
      *
-     * @param int  $page   Page number
+     * @param integer $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -52,12 +60,14 @@ class RentalService implements RentalServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-    }
+
+    }//end getPaginatedListByStatus()
+
 
     /**
      * Get paginated list by user.
      *
-     * @param int  $page   Page number
+     * @param integer $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -68,12 +78,14 @@ class RentalService implements RentalServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-    }
+
+    }//end getPaginatedListByOwner()
+
 
     /**
      * Save entity.
      *
-     * @param Rental $rental Rental entity
+     * @param  Rental $rental Rental entity
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -83,10 +95,11 @@ class RentalService implements RentalServiceInterface
 
     }//end save()
 
+
     /**
      * Delete entity.
      *
-     * @param Rental $rental
+     * @param  Rental $rental
      * @return void
      * @throws ORMException
      * @throws OptimisticLockException
@@ -94,6 +107,55 @@ class RentalService implements RentalServiceInterface
     public function delete(Rental $rental): void
     {
         $this->rentalRepository->delete($rental);
+
+    }//end delete()
+
+
+    /**
+     * @param  Book $book
+     * @return boolean
+     */
+    public function canBeRented(Book $book):bool
+    {
+        try {
+            $result = $book->isAvailable();
+
+            return !($result === false);
+        } catch (NoResultException | NonUniqueResultException) {
+            return false;
+        }
+
+    }//end canBeRented()
+
+    /**
+     * @param  Book $book
+     * @return boolean
+     *
+    public function canBeReturned(Rental $rental):bool
+    {
+        try {
+            $result = $rental->getStatus();
+
+            return !($result === false);
+        } catch (NoResultException | NonUniqueResultException) {
+            return false;
+        }
+
+    }//end canBeRented()
+     * */
+
+    public function setStatus(bool $status, Rental $rental): void {
+        $rental->setStatus($status);
     }
+
+
+    public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental):void
+    {
+        $rental->setBook($book);
+        $rental->setOwner($owner);
+        $rental->setStatus($status);
+
+    }//end setRentalDetails()
+
 
 }//end class
