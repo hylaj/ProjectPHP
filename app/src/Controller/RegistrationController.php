@@ -39,13 +39,10 @@ class RegistrationController extends AbstractController
     }//end __construct()
 
 
-        /**
-    * @param  Request                     $request
-    * @param  UserPasswordHasherInterface $passwordHasher
-    * @param  EntityManagerInterface      $entityManager
-    * @param  TranslatorInterface         $translator
-    * @return Response
-    */
+    /**
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/register', name: 'register', methods: ['GET', 'POST'])]
     public function register(Request $request): Response
     {

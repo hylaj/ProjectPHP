@@ -38,6 +38,7 @@ class Book
     #[ORM\Column(type: 'date')]
     #[Assert\Type(\DateTime::class)]
     private ?\DateTime $releaseDate;
+
     /**
      * Title.
      */
@@ -53,7 +54,7 @@ class Book
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 64)]
+    #[Assert\Length(min: 2, max: 64)]
     private ?string $author = null;
 
     /**
@@ -84,14 +85,25 @@ class Book
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'books_tags')]
+    #[Assert\Type(Tag::class)]
     private Collection $tags;
 
 
+    /**
+     * Available.
+     *
+     * @var bool|null
+     */
     #[ORM\Column]
     #[Assert\NotNull]
     private ?bool $available = true;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    /**
+     * Description
+     *
+     * @var string|null
+     */
+    #[ORM\Column(type: Types::TEXT, length: 1000, nullable: true)]
     #[Assert\Length(max:1000)]
     private ?string $description = null;
 

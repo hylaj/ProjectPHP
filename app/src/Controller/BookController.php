@@ -47,6 +47,8 @@ class BookController extends AbstractController
 
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
     }
+
+
     /**
      * Show action.
      *
@@ -54,13 +56,13 @@ class BookController extends AbstractController
      *
      * @return Response HTTP response
      */
+
     #[Route(
         '/{id}',
         name: 'book_show',
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
-   // #[IsGranted('VIEW', subject: 'book')]
     public function show(Book $book): Response
     {
         return $this->render(

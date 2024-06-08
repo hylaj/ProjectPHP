@@ -6,7 +6,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\Type\PasswordType;
 use App\Form\Type\UserDetailsType;
 use App\Form\Type\UserPasswordType;
 use App\Form\Type\RegistrationType;
@@ -15,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -44,12 +44,8 @@ class UserController extends AbstractController
      * @param  User $user
      * @return Response
      */
-    #[Route(
-        '/{id}',
-        name: 'user_show',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: 'GET'
-    )]
+    #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
+    #[IsGranted('VIEW_USER', subject: 'user')]
     public function show(User $user): Response
     {
         return $this->render(
@@ -59,29 +55,29 @@ class UserController extends AbstractController
 
     }//end show()
 
+    /**
+     * @param  User $user
+     * @return Response
+     */
+    #[Route('/list', name: 'user_index', methods: 'GET')]
+    #[IsGranted('VIEW_USER_LIST')]
+    public function index(#[MapQueryParameter] int $page = 1): Response
+    {
+        $pagination = $this->userService->getPaginatedList(
+            $page,
+        );
+        return $this->render('user/index.html.twig', ['pagination' => $pagination]);
+    }
+
 
     /**
-     * @param  Request                     $request
-     * @param  UserPasswordHasherInterface $passwordHasher
-     * @param  EntityManagerInterface      $entityManager
-     * @param  TranslatorInterface         $translator
+     * @param Request $request
      * @return Response
      */
     #[Route('/{id}/edit-password', name: 'password_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function edit_password(Request $request): Response
+    #[IsGranted('EDIT', subject: 'user')]
+    public function edit_password(Request $request, User $user): Response
     {
-        $user = $this->getUser();
-
-        if ($user->getId() != $request->get('id')) {
-            throw $this->createAccessDeniedException('You cannot edit the password of another user.');
-            /*
-                $this->addFlash(
-                'danger',
-                $this->translator->trans('message.password_of_another_user')
-                );
-            return $this->redirectToRoute('password_edit', ['id' => $user->getId()]);*/
-        }
 
         $form = $this->createForm(
             UserPasswordType::class,
@@ -94,7 +90,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $currentPassword = $form->get('currentPassword')->getData();
+            if ($this->getUser() === $user) {
+                $currentPassword = $form->get('currentPassword')->getData();
+
             if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
                 $this->addFlash(
                     'error',
@@ -102,9 +100,9 @@ class UserController extends AbstractController
                 );
 
                 return $this->redirectToRoute('password_edit', ['id' => $user->getId()]);
-            }
+            }}
 
-            $newPassword    = $form->get('password')->getData();
+            $newPassword = $form->get('password')->getData();
             $hashedPassword = $this->passwordHasher->hashPassword($user, $newPassword);
             $user->setPassword($hashedPassword);
             $this->userService->save($user);
@@ -128,22 +126,13 @@ class UserController extends AbstractController
 
 
     /**
-     * @param  Request                     $request
-     * @param  UserPasswordHasherInterface $passwordHasher
-     * @param  EntityManagerInterface      $entityManager
-     * @param  TranslatorInterface         $translator
+     * @param Request $request
      * @return Response
      */
     #[Route('/{id}/edit-details', name: 'details_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function edit_details(Request $request): Response
+    #[IsGranted('EDIT', subject: 'user')]
+    public function edit_details(Request $request, User $user): Response
     {
-        $user = $this->getUser();
-
-        if ($user->getId() != $request->get('id')) {
-            throw $this->createAccessDeniedException('You cannot edit the details of another user.');
-        }
-
         $form = $this->createForm(
             UserDetailsType::class,
             $user,
@@ -173,9 +162,5 @@ class UserController extends AbstractController
         );
 
     }//end edit_details()
-
-
-
-
 
 }//end class

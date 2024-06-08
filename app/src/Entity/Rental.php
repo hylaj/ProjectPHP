@@ -51,6 +51,9 @@ class Rental
         return $this->id;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getRentalDate(): ?\DateTimeImmutable
     {
         return $this->rentalDate;

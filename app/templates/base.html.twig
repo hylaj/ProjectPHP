@@ -23,10 +23,11 @@
                 <li class="nav-item dropdown navbar-brand">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ 'action.account'|trans }}</a>
                     <ul class="dropdown-menu">
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if is_granted('ROLE_USER') %}
                             <li><a href="{{ url('user_show', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.user_show'|trans }}</a></li>
                             <li><a href="{{ url('rented_books', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.rented_books'|trans }}</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ url('user_index') }}" class="dropdown-item">{{ 'action.user_list'|trans }}</a></li>
                                 <li><a href="{{ url('password_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.password_edit'|trans }}</a></li>
                                 <li><a href="{{ url('details_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.details_edit'|trans }}</a></li>
                                 <li><a href="{{ url('rental_pending_approval') }}" class="dropdown-item">{{ 'action.pending_approval'|trans }}</a></li>

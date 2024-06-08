@@ -45,10 +45,6 @@ class BookVoter extends Voter
      */
     private const CREATE = 'CREATE';
 
-    public function __construct(
-        private Security $security,
-    ) {
-    }
 
     /**
      * Determines if the attribute and subject are supported by this voter.
@@ -110,7 +106,7 @@ class BookVoter extends Voter
      */
     private function canEdit(Book $book, UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
       //  return $book->getItemAuthor() === $user;
     }
 
@@ -140,7 +136,7 @@ class BookVoter extends Voter
 
     private function canDelete(Book $book, UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
         //return return (($this->security->isGranted('ROLE_ADMIN')) && ($book->getItemAuthor() === $user));
     }
 
@@ -153,6 +149,6 @@ class BookVoter extends Voter
      */
     private function canCreate(UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
     }
 }
