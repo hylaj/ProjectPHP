@@ -45,11 +45,6 @@ class TagVoter extends Voter
      */
     private const CREATE = 'CREATE';
 
-    public function __construct(
-        private Security $security,
-    ) {
-    }
-
     /**
      * Determines if the attribute and subject are supported by this voter.
      *
@@ -110,7 +105,7 @@ class TagVoter extends Voter
      */
     private function canEdit(Tag $tag, UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
         //  return $tag->getItemAuthor() === $user;
     }
 
@@ -140,7 +135,7 @@ class TagVoter extends Voter
 
     private function canDelete(Tag $tag, UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
         //return return (($this->security->isGranted('ROLE_ADMIN')) && ($tag->getItemAuthor() === $user));
     }
 
@@ -153,6 +148,6 @@ class TagVoter extends Voter
      */
     private function canCreate(UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
     }
 }

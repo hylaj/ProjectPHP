@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.user_show'|trans({'%fisrtNamee%': user.firstName|default('')}) }}</h1>
+    <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.user_show'|trans({'%fisrtNamee%': user.firstName|default('')}) }}</h2></div>
     {% if user is defined and user|length %}
         <dl class="dl-horizontal">
         <dt>{{ 'label.id'|trans }}</dt>

@@ -236,7 +236,7 @@
       </trans-unit>
       <trans-unit id="title.details_edit">
         <source>title.details_edit</source>
-        <target>Edytuj szczegóły</target>
+        <target>Edytuj dane</target>
       </trans-unit>
       <trans-unit id="action.account">
         <source>action.account</source>
@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="action.register">
         <source>action.register</source>
-        <target>Rejestracja</target>
+        <target>Zarejestruj się</target>
       </trans-unit>
       <trans-unit id="label.item_author">
         <source>label.item_author</source>
@@ -266,10 +266,184 @@
         <source>title.register</source>
         <target>Rejestracja</target>
       </trans-unit>
+
       <trans-unit id="message.category_not_found">
         <source>message.category_not_found</source>
         <target>Kategoria nie znaleziona</target>
       </trans-unit>
+
+      <trans-unit id="message.book_not_available">
+        <source>message.book_not_available</source>
+        <target>Książka niedostępna</target>
+      </trans-unit>
+
+      <trans-unit id="message.rented_successfully">
+        <source>message.rented_successfully</source>
+        <target>Wypożyczono pomyślnie</target>
+      </trans-unit>
+
+      <trans-unit id="message.returned_successfully">
+        <source>message.returned_successfully</source>
+        <target>Zwrócono pomyślnie</target>
+      </trans-unit>
+
+      <trans-unit id="message.approved_successfully">
+        <source>message.approved_successfully</source>
+        <target>Zatwierdzono pomyślnie</target>
+      </trans-unit>
+
+      <trans-unit id="message.denied_successfully">
+        <source>message.denied_successfully</source>
+        <target>Odrzucono pomyślnie</target>
+      </trans-unit>
+
+      <trans-unit id="action.edit_details">
+        <source>action.edit_details</source>
+        <target>Edytuj dane</target>
+      </trans-unit>
+
+      <trans-unit id="title.user_list">
+        <source>title.user_list</source>
+        <target>Użytkownicy</target>
+      </trans-unit>
+
+      <trans-unit id="label.owner">
+        <source>label.owner</source>
+        <target>Użytkownik</target>
+      </trans-unit>
+
+      <trans-unit id="action.manage_user">
+        <source>action.manage_user</source>
+        <target>Zarządzaj</target>
+      </trans-unit>
+
+      <trans-unit id="action.admin">
+        <source>action.admin</source>
+        <target>Admin</target>
+      </trans-unit>
+
+      <trans-unit id="action.user_list">
+        <source>action.user_list</source>
+        <target>Użytkownicy</target>
+      </trans-unit>
+
+      <trans-unit id="action.pending_approval">
+        <source>action.pending_approval</source>
+        <target>Wypożyczenia</target>
+      </trans-unit>
+
+      <trans-unit id="action.rented_books">
+        <source>action.rented_books</source>
+        <target>Wypożyczone książki</target>
+      </trans-unit>
+
+      <trans-unit id="label.release_date">
+        <source>label.release_date</source>
+        <target>Data wydania</target>
+      </trans-unit>
+
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Opis</target>
+      </trans-unit>
+
+      <trans-unit id="action.rent">
+        <source>action.rent</source>
+        <target>Wypożycz</target>
+      </trans-unit>
+
+      <trans-unit id="label.available">
+        <source>label.available</source>
+        <target>Dostępny</target>
+      </trans-unit>
+
+      <trans-unit id="title.return_book">
+        <source>title.return_book</source>
+        <target>Zwróć książkę</target>
+      </trans-unit>
+
+      <trans-unit id="action.return">
+        <source>action.return</source>
+        <target>Zwróć</target>
+      </trans-unit>
+
+      <trans-unit id="title.rental_list">
+        <source>title.rental_list</source>
+        <target>Lista wypożyczeń</target>
+      </trans-unit>
+
+      <trans-unit id="action.book_return">
+        <source>action.book_return</source>
+        <target>Zwrot książki</target>
+      </trans-unit>
+
+      <trans-unit id="action.rental_cancel">
+        <source>action.rental_cancel</source>
+        <target>Anuluj wypożyczenie</target>
+      </trans-unit>
+
+      <trans-unit id="action.rental_approve">
+        <source>action.rental_approve</source>
+        <target>Zatwierdź</target>
+      </trans-unit>
+
+      <trans-unit id="action.rental_deny">
+        <source>action.rental_deny</source>
+        <target>Odrzuć</target>
+      </trans-unit>
+
+      <trans-unit id="title.rental_create">
+        <source>title.rental_create</source>
+        <target>Utwórz wypożyczenie</target>
+      </trans-unit>
+
+      <trans-unit id="label.availability">
+        <source>label.availability</source>
+        <target>Dostępność</target>
+      </trans-unit>
+
+      <trans-unit id="label.not_available">
+        <source>label.not_available</source>
+        <target>Niedostępny</target>
+      </trans-unit>
+      <trans-unit id="label.current_password">
+        <source>label.current_password</source>
+       <target>Aktualne hasło</target>
+      </trans-unit>
+      <trans-unit id="message.logged_in_as">
+        <source>message.logged_in_as</source>
+       <target>Jesteś zalogowany jako</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+        <source>label.password</source>
+       <target>Hasło</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+        <source>label.new_password</source>
+       <target>Nowe hasło</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+       <target>Powtórz nowe hasło</target>
+      </trans-unit>
+      <trans-unit id="action.sign_in">
+        <source>action.sign_in</source>
+       <target>Zaloguj się</target>
+      </trans-unit>
+<trans-unit id="label.manage_user">
+  <source>label.manage_user</source>
+  <target>Zarządzaj użytkownikiem</target>
+</trans-unit>
+
+<trans-unit id="label.comment">
+  <source>label.comment</source>
+  <target>Komentarz</target>
+</trans-unit>
+
+<trans-unit id="label.approval">
+  <source>label.approval</source>
+  <target>Zatwierdzenie</target>
+</trans-unit>
 
     </body>
   </file>

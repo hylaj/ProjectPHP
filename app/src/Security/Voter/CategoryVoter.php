@@ -45,11 +45,6 @@ class CategoryVoter extends Voter
      */
     private const CREATE = 'CREATE';
 
-    public function __construct(
-        private Security $security,
-    ) {
-    }
-
     /**
      * Determines if the attribute and subject are supported by this voter.
      *
@@ -110,7 +105,7 @@ class CategoryVoter extends Voter
      */
     private function canEdit(Category $category, UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
         //  return $category->getItemAuthor() === $user;
     }
 
@@ -140,7 +135,7 @@ class CategoryVoter extends Voter
 
     private function canDelete(Category $category, UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
         //return return (($this->security->isGranted('ROLE_ADMIN')) && ($category->getItemAuthor() === $user));
     }
 
@@ -153,6 +148,6 @@ class CategoryVoter extends Voter
      */
     private function canCreate(UserInterface $user): bool
     {
-        return ($this->security->isGranted('ROLE_ADMIN'));
+        return (in_array('ROLE_ADMIN', $user->getRoles()));
     }
 }

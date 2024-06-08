@@ -274,6 +274,184 @@
         <source>message.category_not_found</source>
         <target>Category not found</target>
       </trans-unit>
+
+
+
+<trans-unit id="message.book_not_available">
+  <source>message.book_not_available</source>
+  <target>Book not available</target>
+</trans-unit>
+
+<trans-unit id="message.rented_successfully">
+  <source>message.rented_successfully</source>
+  <target>Rented successfully</target>
+</trans-unit>
+
+<trans-unit id="message.returned_successfully">
+  <source>message.returned_successfully</source>
+  <target>Returned successfully</target>
+</trans-unit>
+
+<trans-unit id="message.approved_successfully">
+  <source>message.approved_successfully</source>
+  <target>Approved successfully</target>
+</trans-unit>
+
+<trans-unit id="message.denied_successfully">
+  <source>message.denied_successfully</source>
+  <target>Denied successfully</target>
+</trans-unit>
+
+<trans-unit id="action.edit_details">
+  <source>action.edit_details</source>
+  <target>Edit details</target>
+</trans-unit>
+
+<trans-unit id="title.user_list">
+  <source>title.user_list</source>
+  <target>User list</target>
+</trans-unit>
+
+<trans-unit id="label.owner">
+  <source>label.owner</source>
+  <target>Owner</target>
+</trans-unit>
+
+<trans-unit id="action.manage_user">
+  <source>action.manage_user</source>
+  <target>Manage user</target>
+</trans-unit>
+
+<trans-unit id="action.admin">
+  <source>action.admin</source>
+  <target>Admin</target>
+</trans-unit>
+
+<trans-unit id="action.user_list">
+  <source>action.user_list</source>
+  <target>User list</target>
+</trans-unit>
+
+<trans-unit id="action.pending_approval">
+  <source>action.pending_approval</source>
+  <target>Pending approval</target>
+</trans-unit>
+
+<trans-unit id="action.rented_books">
+  <source>action.rented_books</source>
+  <target>Rented books</target>
+</trans-unit>
+
+<trans-unit id="label.release_date">
+  <source>label.release_date</source>
+  <target>Release date</target>
+</trans-unit>
+
+<trans-unit id="label.description">
+  <source>label.description</source>
+  <target>Description</target>
+</trans-unit>
+
+<trans-unit id="action.rent">
+  <source>action.rent</source>
+  <target>Rent</target>
+</trans-unit>
+
+<trans-unit id="label.available">
+  <source>label.available</source>
+  <target>Available</target>
+</trans-unit>
+
+<trans-unit id="title.return_book">
+  <source>title.return_book</source>
+  <target>Return book</target>
+</trans-unit>
+
+<trans-unit id="action.return">
+  <source>action.return</source>
+  <target>Return</target>
+</trans-unit>
+
+<trans-unit id="title.rental_list">
+  <source>title.rental_list</source>
+  <target>Rental list</target>
+</trans-unit>
+
+<trans-unit id="action.book_return">
+  <source>action.book_return</source>
+  <target>Book return</target>
+</trans-unit>
+
+<trans-unit id="action.rental_cancel">
+  <source>action.rental_cancel</source>
+  <target>Rental cancel</target>
+</trans-unit>
+
+<trans-unit id="action.rental_approve">
+  <source>action.rental_approve</source>
+  <target>Rental approve</target>
+</trans-unit>
+
+<trans-unit id="action.rental_deny">
+  <source>action.rental_deny</source>
+  <target>Rental deny</target>
+</trans-unit>
+
+<trans-unit id="title.rental_create">
+  <source>title.rental_create</source>
+  <target>Rental create</target>
+</trans-unit>
+
+<trans-unit id="label.availability">
+  <source>label.availability</source>
+  <target>Availability</target>
+</trans-unit>
+
+<trans-unit id="label.not_available">
+  <source>label.not_available</source>
+  <target>Not available</target>
+</trans-unit>
+
+      <trans-unit id="label.current_password">
+        <source>label.current_password</source>
+       <target>Current password</target>
+      </trans-unit>
+      <trans-unit id="message.logged_in_as">
+        <source>message.logged_in_as</source>
+       <target>You are logged in as</target>
+      </trans-unit>
+
+      <trans-unit id="label.password">
+        <source>label.password</source>
+       <target>Password</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+        <source>label.new_password</source>
+       <target>New password</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+       <target>Repeat new password</target>
+      </trans-unit>
+      <trans-unit id="action.sign_in">
+        <source>action.sign_in</source>
+       <target>Sign in</target>
+      </trans-unit>
+<trans-unit id="label.manage_user">
+  <source>label.manage_user</source>
+  <target>Manage user</target>
+</trans-unit>
+
+<trans-unit id="label.comment">
+  <source>label.comment</source>
+  <target>Comment</target>
+</trans-unit>
+
+<trans-unit id="label.approval">
+  <source>label.approval</source>
+  <target>Approval</target>
+</trans-unit>
+
     </body>
   </file>
 </xliff>

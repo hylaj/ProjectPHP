@@ -6,7 +6,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\Type\PasswordType;
 use App\Form\Type\UserDetailsType;
 use App\Form\Type\UserPasswordType;
 use App\Form\Type\RegistrationType;
@@ -65,6 +64,9 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form->get('password')->getData();
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
+            $user->setPassword($hashedPassword);
             $this->userService->save($user);
 
             $this->addFlash(

@@ -56,6 +56,10 @@ class RentalController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function rent(Request $request, Book $book): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         if (!$this->rentalService->canBeRented($book)) {
             $this->addFlash(
                 'warning',
@@ -107,8 +111,13 @@ class RentalController extends AbstractController
      * @throws OptimisticLockException
      */
     #[Route('/{id}/return', name:'return', requirements:['id' => '[1-9]\d*'], methods: 'GET|DELETE' )]
+    #[IsGranted('ROLE_USER')]
     public function return(Request $request, Rental $rental): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(
             FormType::class,
             $rental,
@@ -150,6 +159,9 @@ class RentalController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function show(#[MapQueryParameter] int $page = 1): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
         $owner = $this->getUser()->getId();
         $pagination = $this->rentalService->getPaginatedListByOwner(
             $page,

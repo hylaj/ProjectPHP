@@ -57,8 +57,8 @@ class RegistrationType extends AbstractType
                 'invalid_message' => 'message.passwords_should_match',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => 'label.new_password'],
+                'second_options' => ['label' => 'label.repeat_password'],
             ]);
     }
 
