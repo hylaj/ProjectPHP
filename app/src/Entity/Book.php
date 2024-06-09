@@ -85,7 +85,6 @@ class Book
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'books_tags')]
-    #[Assert\Type(Tag::class)]
     private Collection $tags;
 
 

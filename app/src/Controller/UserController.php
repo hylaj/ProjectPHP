@@ -168,12 +168,12 @@ class UserController extends AbstractController
 
     }//end edit_details()
 
+
     #[Route('/{id}/promote', name: 'promote_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
-    #[IsGranted('PROMOTE', subject: 'user')]
+    #[IsGranted('MANAGE', subject: 'user')]
     public function promote(Request $request, User $user): Response
     {
-        if (in_array('ROLE_ADMIN', $user->getRoles()))
-        {
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
             $this->addFlash(
                 'warning',
                 $this->translator->trans('message.user_cannot_be_promoted')
@@ -187,12 +187,13 @@ class UserController extends AbstractController
             [
                 'method' => 'PUT',
                 'action' => $this->generateUrl('promote_user', ['id' => $user->getId()]),
-            ]);
+            ]
+        );
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
-            $user->setRoles(['ROLE_USER','ROLE_ADMIN']);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
             $this->userService->save($user);
             $this->addFlash(
                 'success',
@@ -210,14 +211,14 @@ class UserController extends AbstractController
             ]
         );
 
-    }
+    }//end promote()
+
 
     #[Route('/{id}/demote', name: 'demote_admin', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
-    #[IsGranted('PROMOTE', subject: 'user')]
+    #[IsGranted('MANAGE', subject: 'user')]
     public function demote(Request $request, User $user): Response
     {
-        if (!in_array('ROLE_ADMIN', $user->getRoles()) || !$this->userService->canBeDemoted('ROLE_ADMIN'))
-        {
+        if (!in_array('ROLE_ADMIN', $user->getRoles()) || !$this->userService->canBeDemoted('ROLE_ADMIN')) {
             $this->addFlash(
                 'warning',
                 $this->translator->trans('message.user_cannot_be_demoted')
@@ -231,11 +232,12 @@ class UserController extends AbstractController
             [
                 'method' => 'PUT',
                 'action' => $this->generateUrl('demote_admin', ['id' => $user->getId()]),
-            ]);
+            ]
+        );
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $user->setRoles(['ROLE_USER']);
             $this->userService->save($user);
             $this->addFlash(
@@ -254,7 +256,95 @@ class UserController extends AbstractController
             ]
         );
 
-    }
+    }//end demote()
+
+
+    #[Route('/{id}/block', name: 'block_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
+    #[IsGranted('MANAGE', subject: 'user')]
+    public function block(Request $request, User $user): Response
+    {
+        if ($user->isBlocked()) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.user_already_blocked')
+            );
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        $form = $this->createForm(
+            FormType::class,
+            $user,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('block_user', ['id' => $user->getId()]),
+            ]
+        );
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setBlocked(true);
+            $this->userService->save($user);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.blocked_successfully')
+            );
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render(
+            'user/block.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+
+    }//end block()
+
+
+    #[Route('/{id}/unblock', name: 'unblock_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
+    #[IsGranted('MANAGE', subject: 'user')]
+    public function unblock(Request $request, User $user): Response
+    {
+        if (!$user->isBlocked()) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.user_not_blocked')
+            );
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        $form = $this->createForm(
+            FormType::class,
+            $user,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('unblock_user', ['id' => $user->getId()]),
+            ]
+        );
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setBlocked(false);
+            $this->userService->save($user);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.unblocked_successfully')
+            );
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render(
+            'user/unblock.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+
+    }//end block()
 
 
 }//end class

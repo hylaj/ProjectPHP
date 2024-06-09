@@ -20,14 +20,14 @@ class UserVoter extends Voter
     private const EDIT = 'EDIT';
     private const VIEW_USER = 'VIEW_USER';
     private const VIEW_USER_LIST = 'VIEW_USER_LIST';
-    private const PROMOTE = 'PROMOTE';
+    private const MANAGE = 'MANAGE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         if ($attribute === self::VIEW_USER_LIST) {
             return true;
         }
-        return in_array($attribute, [self::EDIT, self::VIEW_USER, self::PROMOTE])
+        return in_array($attribute, [self::EDIT, self::VIEW_USER, self::MANAGE])
             && $subject instanceof User;
     }
 
@@ -49,7 +49,7 @@ class UserVoter extends Voter
         return match ($attribute) {
             self::VIEW_USER => $this->canViewUser($subject, $current_user),
             self::EDIT => $this->canEdit($subject, $current_user),
-            self::PROMOTE => $this->canPromote($subject, $current_user),
+            self::MANAGE => $this->canPromote($subject, $current_user),
             default => false,
         };
 

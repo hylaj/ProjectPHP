@@ -71,6 +71,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min:3, max:255)]
     private ?string $firstName;
 
+    #[ORM\Column(nullable: false)]
+    #[Assert\NotNull]
+    private ?bool $isBlocked = false;
+
 
     /**
      * Getter for id.
@@ -238,6 +242,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->firstName = $firstName;
 
     }//end setFirstName()
+
+    public function isBlocked(): ?bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setBlocked(bool $isBlocked): void
+    {
+        $this->isBlocked = $isBlocked;
+
+    }
 
 
 }//end class

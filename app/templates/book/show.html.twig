@@ -17,7 +17,7 @@
             <dt>{{ 'label.author'|trans }}</dt>
             <dd>{{  book.author }}</dd>
         <dt>{{ 'label.description'|trans }}</dt>
-        <dd>{{  book.description }}</dd>
+        <dd>{{  book.description|markdown_to_html }}</dd>
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{  book.category.title }}</dd>
             <dt>{{ 'label.tags'|trans }}</dt>
