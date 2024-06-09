@@ -5,12 +5,15 @@
 
 namespace App\Repository;
 
+use App\Dto\BookListFiltersDto;
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -49,9 +52,9 @@ class BookRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(BookListFiltersDto $filters): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder= $this->getOrCreateQueryBuilder()
             ->select(
                 'partial book.{id, releaseDate, title, author, available, description}',
                 'partial category.{id, title}',
@@ -60,6 +63,8 @@ class BookRepository extends ServiceEntityRepository
             ->join('book.category', 'category')
             ->leftJoin('book.tags', 'tags')
             ->orderBy('book.title', 'DESC');
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
     /**
@@ -135,6 +140,28 @@ class BookRepository extends ServiceEntityRepository
             ->setParameter(':category', $category)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder       $queryBuilder Query builder
+     * @param BookListFiltersDto $filters      Filters
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, BookListFiltersDto $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        if ($filters->tag instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters->tag);
+        }
+
+        return $queryBuilder;
     }
 
     /**

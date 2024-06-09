@@ -15,11 +15,11 @@
         <dt>{{ 'label.email'|trans }}</dt>
         <dd>{{ user.email }}</dd>
         <dt>{{ 'label.block'|trans }}</dt>
-        {% if user.isBlocked %}
+        <dd>{% if user.isBlocked %}
             {{ 'label.blocked'|trans }}
         {% else %}
             {{ 'label.active'|trans }}
-        {% endif %}
+            {% endif %}</dd>
 
         <dt>{{ 'label.role'|trans }}</dt>
         <dd> {% for role in user.roles %}

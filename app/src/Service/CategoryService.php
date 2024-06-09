@@ -107,4 +107,20 @@ class CategoryService implements CategoryServiceInterface
             return false;
         }
     }
+    //
+
+    /**
+     * Find by id.
+     *
+     * @param int $id Category id
+     *
+     * @return Category|null Category entity
+     *
+     * @throws NonUniqueResultException
+     */
+    public function findOneById(int $id): ?Category
+    {
+        return $this->categoryRepository->findOneById($id);
+    }
+
 }//end class

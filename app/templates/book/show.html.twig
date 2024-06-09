@@ -24,7 +24,6 @@
     {% if book.tags is defined and book.tags|length %}
        <dd> {% for tag in book.tags %}
              {{ tag.title }}
-            {# {{ book.tags.title|join(', ') }} #}
            {% endfor %}</dd>
         {%  endif %}
 
@@ -35,7 +34,7 @@
             {% if is_granted('DELETE', book) %}
                 <a class="btn btn-styled" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
             {% endif %}
-           {% if is_granted('RENT') and book.available == true %}
+           {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') and book.isAvailable() %}
                <a class="btn btn-styled" href="{{ url('rent', {id: book.id}) }}" title="{{ 'action.rent'|trans }}">{{ 'action.rent'|trans }}</a>
            {% endif %}
        </dd>

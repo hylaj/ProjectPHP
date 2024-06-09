@@ -5,14 +5,17 @@
 
 namespace App\Controller;
 
+use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
 use App\Form\Type\BookType;
+use App\Resolver\BookListInputFiltersDtoResolver;
 use App\Service\BookServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -38,10 +41,11 @@ class BookController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(name: 'book_index', methods: 'GET')]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryString(resolver: BookListInputFiltersDtoResolver::class)] BookListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->bookService->getPaginatedList(
             $page,
+            $filters
           //  $this->getUser()
         );
 

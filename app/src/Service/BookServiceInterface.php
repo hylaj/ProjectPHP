@@ -5,8 +5,10 @@
 
 namespace App\Service;
 
+use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Entity\Enum\BookStatus;
 use App\Entity\Tag;
 use App\Entity\User;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -45,6 +47,6 @@ interface BookServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page/*, User $author*/): PaginationInterface;
-    public function setAvailable(Book $book, bool $available): void;
+    public function getPaginatedList(int $page/*, User $author*/, BookListInputFiltersDto $filters): PaginationInterface;
+    public function setAvailable(Book $book, bool $status): void;
 }
