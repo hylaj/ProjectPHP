@@ -54,7 +54,6 @@ class UserPasswordType extends AbstractType
             ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
             'mapped' => false,
-            'invalid_message' => 'message.passwords_should_match',
             'options' => ['attr' => ['class' => 'password-field']],
             'required' => true,
             'first_options'  => ['label' => 'label.new_password'],

@@ -99,7 +99,7 @@ class UserController extends AbstractController
 
                 if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
                     $this->addFlash(
-                        'error',
+                        'warning',
                         $this->translator->trans('message.current_password_invalid')
                     );
 

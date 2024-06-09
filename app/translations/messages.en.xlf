@@ -452,6 +452,136 @@
   <target>Approval</target>
 </trans-unit>
 
+<trans-unit id="message.user_cannot_be_promoted">
+    <source>message.user_cannot_be_promoted</source>
+    <target>User cannot be promoted</target>
+  </trans-unit>
+
+  <trans-unit id="message.user_cannot_be_demoted">
+    <source>message.user_cannot_be_demoted</source>
+    <target>User cannot be demoted</target>
+  </trans-unit>
+
+  <trans-unit id="message.user_already_blocked">
+    <source>message.user_already_blocked</source>
+    <target>User is already blocked</target>
+  </trans-unit>
+
+  <trans-unit id="message.blocked_successfully">
+    <source>message.blocked_successfully</source>
+    <target>User has been successfully blocked</target>
+  </trans-unit>
+
+  <trans-unit id="message.user_not_blocked">
+    <source>message.user_not_blocked</source>
+    <target>User is not blocked</target>
+  </trans-unit>
+
+  <trans-unit id="message.unblocked_successfully">
+    <source>message.unblocked_successfully</source>
+    <target>User has been successfully unblocked</target>
+  </trans-unit>
+
+  <trans-unit id="title.promote_user">
+    <source>title.promote_user</source>
+    <target>Promote user</target>
+  </trans-unit>
+
+  <trans-unit id="action.promote">
+    <source>action.promote</source>
+    <target>Promote</target>
+  </trans-unit>
+
+  <trans-unit id="title.demote_admin">
+    <source>title.demote_admin</source>
+    <target>Demote admin</target>
+  </trans-unit>
+
+  <trans-unit id="action.demote">
+    <source>action.demote</source>
+    <target>Demote</target>
+  </trans-unit>
+
+  <trans-unit id="label.block">
+    <source>label.block</source>
+    <target>Block</target>
+  </trans-unit>
+
+  <trans-unit id="label.blocked">
+    <source>label.blocked</source>
+    <target>Blocked</target>
+  </trans-unit>
+
+  <trans-unit id="label.active">
+    <source>label.active</source>
+    <target>Active</target>
+  </trans-unit>
+
+  <trans-unit id="label.role">
+    <source>label.role</source>
+    <target>Role</target>
+  </trans-unit>
+
+  <trans-unit id="label.user">
+    <source>label.user</source>
+    <target>User</target>
+  </trans-unit>
+
+  <trans-unit id="label.admin">
+    <source>label.admin</source>
+    <target>Admin</target>
+  </trans-unit>
+
+  <trans-unit id="action.promote_user">
+    <source>action.promote_user</source>
+    <target>Promote user</target>
+  </trans-unit>
+
+  <trans-unit id="action.demote_admin">
+    <source>action.demote_admin</source>
+    <target>Demote admin</target>
+  </trans-unit>
+
+  <trans-unit id="action.unblock_user">
+    <source>action.unblock_user</source>
+    <target>Unblock user</target>
+  </trans-unit>
+
+  <trans-unit id="action.block_user">
+    <source>action.block_user</source>
+    <target>Block user</target>
+  </trans-unit>
+
+  <trans-unit id="label.roles">
+    <source>label.roles</source>
+    <target>Roles</target>
+  </trans-unit>
+
+  <trans-unit id="title.unblock_user">
+    <source>title.unblock_user</source>
+    <target>Unblock user</target>
+  </trans-unit>
+
+  <trans-unit id="action.unblock">
+    <source>action.unblock</source>
+    <target>Unblock</target>
+  </trans-unit>
+
+  <trans-unit id="title.block_user">
+    <source>title.block_user</source>
+    <target>Block user</target>
+  </trans-unit>
+
+  <trans-unit id="action.block">
+    <source>action.block</source>
+    <target>Block</target>
+  </trans-unit>
+
+  <trans-unit id="message.passwords_should_match">
+    <source>message.passwords_should_match</source>
+    <target>Passwords should match</target>
+  </trans-unit>
+
     </body>
   </file>
 </xliff>

@@ -445,6 +445,131 @@
   <target>Zatwierdzenie</target>
 </trans-unit>
 
+  <trans-unit id="message.user_cannot_be_promoted">
+    <source>message.user_cannot_be_promoted</source>
+    <target>Użytkownik nie może być awansowany</target>
+  </trans-unit>
+
+  <trans-unit id="message.user_cannot_be_demoted">
+    <source>message.user_cannot_be_demoted</source>
+    <target>Użytkownik nie może być zdegradowany</target>
+  </trans-unit>
+
+  <trans-unit id="message.user_already_blocked">
+    <source>message.user_already_blocked</source>
+    <target>Użytkownik jest już zablokowany</target>
+  </trans-unit>
+
+  <trans-unit id="message.blocked_successfully">
+    <source>message.blocked_successfully</source>
+    <target>Użytkownik został pomyślnie zablokowany</target>
+  </trans-unit>
+
+  <trans-unit id="message.user_not_blocked">
+    <source>message.user_not_blocked</source>
+    <target>Użytkownik nie jest zablokowany</target>
+  </trans-unit>
+
+  <trans-unit id="message.unblocked_successfully">
+    <source>message.unblocked_successfully</source>
+    <target>Użytkownik został pomyślnie odblokowany</target>
+  </trans-unit>
+
+  <trans-unit id="title.promote_user">
+    <source>title.promote_user</source>
+    <target>Awansuj użytkownika</target>
+  </trans-unit>
+
+  <trans-unit id="action.promote">
+    <source>action.promote</source>
+    <target>Awansuj</target>
+  </trans-unit>
+
+  <trans-unit id="title.demote_admin">
+    <source>title.demote_admin</source>
+    <target>Degraduj administratora</target>
+  </trans-unit>
+
+  <trans-unit id="action.demote">
+    <source>action.demote</source>
+    <target>Degraduj</target>
+  </trans-unit>
+
+  <trans-unit id="label.block">
+    <source>label.block</source>
+    <target>Zablokuj</target>
+  </trans-unit>
+
+  <trans-unit id="label.blocked">
+    <source>label.blocked</source>
+    <target>Zablokowany</target>
+  </trans-unit>
+
+  <trans-unit id="label.active">
+    <source>label.active</source>
+    <target>Aktywny</target>
+  </trans-unit>
+
+  <trans-unit id="label.role">
+    <source>label.role</source>
+    <target>Rola</target>
+  </trans-unit>
+
+  <trans-unit id="label.user">
+    <source>label.user</source>
+    <target>Użytkownik</target>
+  </trans-unit>
+
+  <trans-unit id="label.admin">
+    <source>label.admin</source>
+    <target>Administrator</target>
+  </trans-unit>
+
+  <trans-unit id="action.promote_user">
+    <source>action.promote_user</source>
+    <target>Awansuj użytkownika</target>
+  </trans-unit>
+
+  <trans-unit id="action.demote_admin">
+    <source>action.demote_admin</source>
+    <target>Degraduj administratora</target>
+  </trans-unit>
+
+  <trans-unit id="action.unblock_user">
+    <source>action.unblock_user</source>
+    <target>Odblokuj użytkownika</target>
+  </trans-unit>
+
+  <trans-unit id="action.block_user">
+    <source>action.block_user</source>
+    <target>Zablokuj użytkownika</target>
+  </trans-unit>
+
+  <trans-unit id="label.roles">
+    <source>label.roles</source>
+    <target>Role</target>
+  </trans-unit>
+
+  <trans-unit id="title.unblock_user">
+    <source>title.unblock_user</source>
+    <target>Odblokuj użytkownika</target>
+  </trans-unit>
+
+  <trans-unit id="action.unblock">
+    <source>action.unblock</source>
+    <target>Odblokuj</target>
+  </trans-unit>
+
+  <trans-unit id="title.block_user">
+    <source>title.block_user</source>
+    <target>Zablokuj użytkownika</target>
+  </trans-unit>
+
+  <trans-unit id="action.block">
+    <source>action.block</source>
+    <target>Zablokuj</target>
+  </trans-unit>
+
     </body>
   </file>
 </xliff>
