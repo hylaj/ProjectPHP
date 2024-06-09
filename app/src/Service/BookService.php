@@ -9,15 +9,14 @@ use App\Dto\BookListFiltersDto;
 use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
 use App\Entity\Category;
-use App\Entity\Tag;
 use App\Entity\User;
 use App\Repository\BookRepository;
-use App\Repository\TagRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Rector\Symfony\Contract\Tag\TagInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class BookService.
@@ -42,7 +41,13 @@ class BookService implements BookServiceInterface
      * @param BookRepository     $bookRepository Book repository
      * @param PaginatorInterface $paginator      Paginator
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService)
+    public function __construct(private readonly BookRepository $bookRepository,
+                                private readonly PaginatorInterface $paginator,
+                                private readonly CategoryServiceInterface $categoryService,
+                                private readonly TagServiceInterface $tagService,
+                                private readonly FileUploadServiceInterface $fileUploadService,
+                                private readonly string $targetDirectory,
+                                private readonly Filesystem $filesystem)
     {
     }//end __construct()
 
@@ -55,11 +60,10 @@ class BookService implements BookServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page/*, User $author*/, BookListInputFiltersDto $filters): PaginationInterface
+    public function getPaginatedList(int $page, BookListInputFiltersDto $filters): PaginationInterface
     {
         $filters = $this->prepareFilters($filters);
         return $this->paginator->paginate(
-            //$this->bookRepository->queryByAuthor($author),
             $this->bookRepository->queryAll($filters),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
@@ -119,4 +123,35 @@ class BookService implements BookServiceInterface
             null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
         );
     }
+
+
+    /**
+     * Create avatar.
+     *
+     */
+    public function createCover(UploadedFile $uploadedFile, Book $book): void
+    {
+        $coverFilename = $this->fileUploadService->upload($uploadedFile);
+
+        $book->setCoverFilename($coverFilename);
+       $this->bookRepository->save($book);
+    }
+
+    /**
+     * Update cover.
+     *
+     */
+    public function updateCover(UploadedFile $uploadedFile, Book $book): void
+    {
+        $filename = $book->getCoverFilename();
+
+        if (null !== $filename) {
+            $this->filesystem->remove(
+                $this->targetDirectory.'/'.$filename
+            );
+
+            $this->createCover($uploadedFile, $book);
+        }
+    }
+
 }//end class

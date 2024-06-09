@@ -334,7 +334,7 @@
 
       <trans-unit id="action.rented_books">
         <source>action.rented_books</source>
-        <target>Wypożyczone książki</target>
+        <target>Moja biblioteka</target>
       </trans-unit>
 
       <trans-unit id="label.release_date">
@@ -374,7 +374,7 @@
 
       <trans-unit id="action.book_return">
         <source>action.book_return</source>
-        <target>Zwrot książki</target>
+        <target>Zwróć książkę</target>
       </trans-unit>
 
       <trans-unit id="action.rental_cancel">
@@ -394,7 +394,7 @@
 
       <trans-unit id="title.rental_create">
         <source>title.rental_create</source>
-        <target>Utwórz wypożyczenie</target>
+        <target>Wypożycz książkę</target>
       </trans-unit>
 
       <trans-unit id="label.availability">
@@ -569,6 +569,21 @@
     <source>action.block</source>
     <target>Zablokuj</target>
   </trans-unit>
+
+    <trans-unit id="label.status">
+      <source>label.status</source>
+      <target>Status</target>
+    </trans-unit>
+
+      <trans-unit id="label.rental_approved">
+        <source>label.rental_approved</source>
+        <target>Wypożyczenie zatwierdzone przez administratora</target>
+      </trans-unit>
+
+        <trans-unit id="label.pending_approval">
+          <source>label.pending_approval</source>
+          <target>Oczekuje na zatwierdzenie</target>
+        </trans-unit>
 
     </body>
   </file>

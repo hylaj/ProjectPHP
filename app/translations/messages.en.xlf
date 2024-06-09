@@ -582,6 +582,21 @@
     <target>Passwords should match</target>
   </trans-unit>
 
+     <trans-unit id="label.status">
+       <source>label.status</source>
+       <target>Status</target>
+     </trans-unit>
+
+       <trans-unit id="label.rental_approved">
+         <source>label.rental_approved</source>
+         <target>Rental approved by admin</target>
+       </trans-unit>
+
+         <trans-unit id="label.pending_approval">
+           <source>label.pending_approval</source>
+           <target>Rental is pending approval</target>
+         </trans-unit>
+
     </body>
   </file>
 </xliff>

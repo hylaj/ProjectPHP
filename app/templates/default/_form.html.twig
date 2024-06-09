@@ -9,11 +9,11 @@ parameters:
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ page_title }}
+{{ page_title }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ page_title }}</h1>
+    <h2 class="py-4 text-primary"> {{ page_title }}</h2>
     {{ form_start(form) }}
     {% if false == form.vars.valid %}
         {% include 'default/_single_alert_message.html.twig' with {

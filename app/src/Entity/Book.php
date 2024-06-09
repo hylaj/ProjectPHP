@@ -106,6 +106,10 @@ class Book
     #[Assert\Length(max:1000)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 191, nullable: true)]
+    #[Assert\Type('string')]
+    private ?string $coverFilename = null;
+
     /**
      * Constructor.
      */
@@ -264,6 +268,17 @@ class Book
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+
+    }
+
+    public function getCoverFilename(): ?string
+    {
+        return $this->coverFilename;
+    }
+
+    public function setCoverFilename(?string $coverFilename): void
+    {
+        $this->coverFilename = $coverFilename;
 
     }
 

@@ -12,6 +12,7 @@ use App\Entity\Enum\BookStatus;
 use App\Entity\Tag;
 use App\Entity\User;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Interface BookServiceInterface.
@@ -49,4 +50,17 @@ interface BookServiceInterface
      */
     public function getPaginatedList(int $page/*, User $author*/, BookListInputFiltersDto $filters): PaginationInterface;
     public function setAvailable(Book $book, bool $status): void;
+
+    /**
+     * Create avatar.
+     *
+     */
+    public function createCover(UploadedFile $uploadedFile, Book $book): void;
+
+    /**
+     * @param UploadedFile $uploadedFile
+     * @param Book $book
+     * @return void
+     */
+    public function updateCover(UploadedFile $uploadedFile, Book $book): void;
 }

@@ -46,7 +46,6 @@ class BookController extends AbstractController
         $pagination = $this->bookService->getPaginatedList(
             $page,
             $filters
-          //  $this->getUser()
         );
 
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
@@ -89,7 +88,7 @@ class BookController extends AbstractController
     #[IsGranted('CREATE')]
     public function create(Request $request): Response
     {
-        $user = $this->getUser();
+
         $book = new Book();
         $form = $this->createForm(
             BookType::class,
@@ -97,6 +96,10 @@ class BookController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('file')->getData();
+            if ($file){
+                $this->bookService->createCover($file, $book);
+            }
             $this->bookService->save($book);
 
             $this->addFlash(
@@ -137,6 +140,11 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $file = $form->get('file')->getData();
+            if ($file){
+            $this->bookService->updateCover($file, $book);
+            }
+
             $this->bookService->save($book);
 
             $this->addFlash(
