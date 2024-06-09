@@ -17,6 +17,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'user.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.owner'|trans, 'user.email') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'user.firstName')  }}</th>
+                <th>{{ 'label.roles'|trans }}</th>
                 <th>{{ 'label.manage_user'|trans }}</th>
 
             </tr>
@@ -27,6 +28,10 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.firstName }}</td>
+                    <td> {% for role in user.roles %}
+                            {% if role == 'ROLE_USER' %}  {{ 'label.user'|trans }} {% endif %}
+                            {% if role == 'ROLE_ADMIN' %}  {{ 'label.admin'|trans }} {% endif %}
+                        {% endfor %}</td>
                     <td><a class="btn btn-styled" href="{{ url('user_show', {id: user.id}) }}" title="{{ 'action.manage_user'|trans }}">{{ 'action.manage_user'|trans }}</a></td>
                 </tr>
             {% endfor %}

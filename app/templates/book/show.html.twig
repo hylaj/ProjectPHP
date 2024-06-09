@@ -35,7 +35,7 @@
             {% if is_granted('DELETE', book) %}
                 <a class="btn btn-styled" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
             {% endif %}
-           {% if is_granted('ROLE_USER') and book.available == true %}
+           {% if is_granted('RENT') and book.available == true %}
                <a class="btn btn-styled" href="{{ url('rent', {id: book.id}) }}" title="{{ 'action.rent'|trans }}">{{ 'action.rent'|trans }}</a>
            {% endif %}
        </dd>

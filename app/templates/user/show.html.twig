@@ -14,14 +14,30 @@
         <dd>{{ user.firstName }}</dd>
         <dt>{{ 'label.email'|trans }}</dt>
         <dd>{{ user.email }}</dd>
+        <dt>{{ 'label.role'|trans }}</dt>
+        <dd> {% for role in user.roles %}
+               {% if role == 'ROLE_USER' %}  {{ 'label.user'|trans }} {% endif %}
+                {% if role == 'ROLE_ADMIN' %}  {{ 'label.admin'|trans }} {% endif %}
+            {% endfor %}</dd>
 
-
+        <dt>{{ 'label.manage_user'|trans }}</dt>
         <dd>
                 <a class="btn btn-styled btn-sm" href="{{ url('password_edit', {id: user.id}) }}" title="{{ 'action.edit_password'|trans }}">{{ 'action.edit_password'|trans }}</a>
         </dd>
         <dd>
             <a class="btn btn-styled btn-sm" href="{{ url('details_edit', {id: user.id}) }}" title="{{ 'action.edit_details'|trans }}">{{ 'action.edit_details'|trans }}</a>
         </dd>
+        {% if is_granted('PROMOTE', user) %}
+            {%  if 'ROLE_ADMIN' not in user.getRoles() %}
+        <dd>
+            <a class="btn btn-styled btn-sm" href="{{ url('promote_user', {id: user.id}) }}" title="{{ 'action.promote_user'|trans }}">{{ 'action.promote_user'|trans }}</a>
+        </dd>
+                {% else %}
+                    <dd>
+                        <a class="btn btn-styled btn-sm" href="{{ url('demote_admin', {id: user.id}) }}" title="{{ 'action.demote_admin'|trans }}">{{ 'action.demote_admin'|trans }}</a>
+                    </dd>
+            {% endif %}
+        {% endif %}
         <p>
             <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}

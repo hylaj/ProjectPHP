@@ -9,9 +9,12 @@ use App\Entity\User;
 use App\Form\Type\UserDetailsType;
 use App\Form\Type\UserPasswordType;
 use App\Form\Type\RegistrationType;
+use App\Form\Type\UserRoleType;
 use App\Service\UserServiceInterface;
+use Cassandra\Type\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -55,30 +58,31 @@ class UserController extends AbstractController
 
     }//end show()
 
+
     /**
      * @param  User $user
      * @return Response
      */
     #[Route('/list', name: 'user_index', methods: 'GET')]
     #[IsGranted('VIEW_USER_LIST')]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryParameter] int $page=1): Response
     {
         $pagination = $this->userService->getPaginatedList(
             $page,
         );
         return $this->render('user/index.html.twig', ['pagination' => $pagination]);
-    }
+
+    }//end index()
 
 
     /**
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     #[Route('/{id}/edit-password', name: 'password_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
     public function edit_password(Request $request, User $user): Response
     {
-
         $form = $this->createForm(
             UserPasswordType::class,
             $user,
@@ -93,16 +97,17 @@ class UserController extends AbstractController
             if ($this->getUser() === $user) {
                 $currentPassword = $form->get('currentPassword')->getData();
 
-            if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
-                $this->addFlash(
-                    'error',
-                    $this->translator->trans('message.current_password_invalid')
-                );
+                if (!$this->passwordHasher->isPasswordValid($user, $currentPassword)) {
+                    $this->addFlash(
+                        'error',
+                        $this->translator->trans('message.current_password_invalid')
+                    );
 
-                return $this->redirectToRoute('password_edit', ['id' => $user->getId()]);
-            }}
+                    return $this->redirectToRoute('password_edit', ['id' => $user->getId()]);
+                }
+            }
 
-            $newPassword = $form->get('password')->getData();
+            $newPassword    = $form->get('password')->getData();
             $hashedPassword = $this->passwordHasher->hashPassword($user, $newPassword);
             $user->setPassword($hashedPassword);
             $this->userService->save($user);
@@ -126,7 +131,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @param Request $request
+     * @param  Request $request
      * @return Response
      */
     #[Route('/{id}/edit-details', name: 'details_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
@@ -162,5 +167,94 @@ class UserController extends AbstractController
         );
 
     }//end edit_details()
+
+    #[Route('/{id}/promote', name: 'promote_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
+    #[IsGranted('PROMOTE', subject: 'user')]
+    public function promote(Request $request, User $user): Response
+    {
+        if (in_array('ROLE_ADMIN', $user->getRoles()))
+        {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.user_cannot_be_promoted')
+            );
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        $form = $this->createForm(
+            FormType::class,
+            $user,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('promote_user', ['id' => $user->getId()]),
+            ]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setRoles(['ROLE_USER','ROLE_ADMIN']);
+            $this->userService->save($user);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render(
+            'user/promote.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+
+    }
+
+    #[Route('/{id}/demote', name: 'demote_admin', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
+    #[IsGranted('PROMOTE', subject: 'user')]
+    public function demote(Request $request, User $user): Response
+    {
+        if (!in_array('ROLE_ADMIN', $user->getRoles()) || !$this->userService->canBeDemoted('ROLE_ADMIN'))
+        {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.user_cannot_be_demoted')
+            );
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        $form = $this->createForm(
+            FormType::class,
+            $user,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('demote_admin', ['id' => $user->getId()]),
+            ]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setRoles(['ROLE_USER']);
+            $this->userService->save($user);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
+
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+        }
+
+        return $this->render(
+            'user/demote.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+            ]
+        );
+
+    }
+
 
 }//end class

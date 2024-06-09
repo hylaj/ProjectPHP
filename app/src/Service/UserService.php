@@ -73,11 +73,27 @@ class UserService implements UserServiceInterface
     }//end save()
 
 
-    public function getPaginatedList(int $page): PaginationInterface {
+    public function getPaginatedList(int $page): PaginationInterface
+    {
         return $this->paginator->paginate(
             $this->userRepository->queryAll(),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-    }
+
+    }//end getPaginatedList()
+
+
+    public function canBeDemoted(string $role): bool
+    {
+        try {
+            $result = $this->userRepository->countByRole($role);
+
+            return ($result > 2);
+        } catch (NoResultException|NonUniqueResultException) {
+            return false;
+        }
+    }//end canBeDemoted()
+
+
 }//end class

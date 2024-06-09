@@ -18,10 +18,14 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
-    }
+
+    }//end __construct()
+
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
@@ -35,7 +39,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
-    }
+
+    }//end upgradePassword()
+
 
     /**
      * @param User $user
@@ -52,6 +58,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     }//end save()
 
+
     /**
      * Query all records.
      *
@@ -59,10 +66,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function queryAll(): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
-            ->select('partial user.{id, firstName, email, roles}')
-            ->orderBy('user.id', 'ASC');
-    }
+        return $this->getOrCreateQueryBuilder()->select('partial user.{id, firstName, email, roles}')->orderBy('user.id', 'ASC');
+
+    }//end queryAll()
+
+
     /**
      * Get or create new query builder.
      *
@@ -70,8 +78,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      *
      * @return QueryBuilder Query builder
      */
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder=null): QueryBuilder
     {
-        return $queryBuilder ?? $this->createQueryBuilder('user');
+        return ($queryBuilder ?? $this->createQueryBuilder('user'));
+
+    }//end getOrCreateQueryBuilder()
+
+
+    public function countByRole(string $role): int
+    {
+        $qb = $this->getOrCreateQueryBuilder();
+
+        return $qb->select($qb->expr()->COUNT('user.id'))
+            ->where('user.roles LIKE :role')
+            ->setParameter('role', '%"'.$role.'"%')
+            ->getQuery()
+            ->getSingleScalarResult();;
     }
-}
+}//end class
