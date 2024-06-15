@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 /**
  * Class Rental Controller.
  */
@@ -46,9 +45,10 @@ class RentalController extends AbstractController
      * Rent a book.
      *
      * @param Request $request HTTP Request
-     * @param Book $book Book entity
+     * @param Book    $book    Book entity
      *
      * @return Response HTTP Response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -65,6 +65,7 @@ class RentalController extends AbstractController
                 'warning',
                 $this->translator->trans('message.book_not_available')
             );
+
             return $this->redirectToRoute('book_index');
         }
 
@@ -90,8 +91,10 @@ class RentalController extends AbstractController
                 'success',
                 $this->translator->trans('message.rented_successfully')
             );
+
             return $this->redirectToRoute('rented_books');
         }
+
         return $this->render(
             'rental/rent.html.twig',
             [
@@ -104,13 +107,14 @@ class RentalController extends AbstractController
      * Return a rented book.
      *
      * @param Request $request HTTP Request
-     * @param Rental $rental Rental entity
+     * @param Rental  $rental  Rental entity
      *
      * @return Response HTTP Response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    #[Route('/{id}/return', name:'return', requirements:['id' => '[1-9]\d*'], methods: 'GET|DELETE' )]
+    #[Route('/{id}/return', name: 'return', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     #[IsGranted('ROLE_USER')]
     public function return(Request $request, Rental $rental): Response
     {
@@ -139,6 +143,7 @@ class RentalController extends AbstractController
 
             return $this->redirectToRoute('rented_books');
         }
+
         return $this->render(
             'rental/return.html.twig',
             [
@@ -167,9 +172,9 @@ class RentalController extends AbstractController
             $page,
             $owner,
         );
+
         return $this->render('rental/show.html.twig', ['pagination' => $pagination]);
     }
-
 
     /**
      * List rentals pending approval.
@@ -183,9 +188,9 @@ class RentalController extends AbstractController
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->rentalService->getPaginatedListByStatus($page);
+
         return $this->render('rental/index.html.twig', ['pagination' => $pagination]);
     }
-
 
     /**
      * Approve a rental.
@@ -193,6 +198,7 @@ class RentalController extends AbstractController
      * @param Rental $rental Rental entity
      *
      * @return Response HTTP Response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -207,6 +213,7 @@ class RentalController extends AbstractController
             'success',
             $this->translator->trans('message.approved_successfully')
         );
+
         return $this->redirectToRoute('rental_pending_approval');
     }
 
@@ -216,6 +223,7 @@ class RentalController extends AbstractController
      * @param Rental $rental Rental entity
      *
      * @return Response HTTP Response
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -231,6 +239,7 @@ class RentalController extends AbstractController
             'success',
             $this->translator->trans('message.denied_successfully')
         );
+
         return $this->redirectToRoute('rental_pending_approval');
     }
-}//end class
+}// end class

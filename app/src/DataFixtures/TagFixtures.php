@@ -47,6 +47,7 @@ class TagFixtures extends AbstractBaseFixtures implements DependentFixtureInterf
 
         $this->manager->flush();
     }
+
     /**
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.
@@ -58,7 +59,5 @@ class TagFixtures extends AbstractBaseFixtures implements DependentFixtureInterf
     public function getDependencies(): array
     {
         return [UserFixtures::class];
-
-    }//end getDependencies()
-
+    }// end getDependencies()
 }

@@ -4,13 +4,13 @@
  */
 
 namespace App\Service;
+
 use App\Entity\Book;
 use App\Entity\Rental;
 use App\Entity\User;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface RentalServiceInterface.
@@ -20,17 +20,16 @@ interface RentalServiceInterface
     /**
      * Get paginated list by status.
      *
-     * @param int  $page   Page number
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedListByStatus(int $page): PaginationInterface;
 
-
     /**
      * Get paginated list by user.
      *
-     * @param int  $page   Page number
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -40,6 +39,7 @@ interface RentalServiceInterface
      * Save entity.
      *
      * @param Rental $rental Rental entity
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -48,16 +48,14 @@ interface RentalServiceInterface
     /**
      * Delete entity.
      *
-     * @param Rental $rental
-     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
     public function delete(Rental $rental): void;
 
-    public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental):void;
+    public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void;
 
-    public function canBeRented(Book $book):bool;
+    public function canBeRented(Book $book): bool;
+
     public function setStatus(bool $status, Rental $rental): void;
-
 }

@@ -6,10 +6,7 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
-use App\Form\Type\CategoryType;
 use App\Form\Type\TagType;
-use App\Repository\TagRepository;
-use App\Service\TagService;
 use App\Service\TagServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -20,45 +17,34 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- *
- */
 #[Route('/tag')]
 class TagController extends AbstractController
 {
-
     /**
      * Constructor.
      *
      * @param TagServiceInterface $tagService Tag service
-     * @param TranslatorInterface      $translator  Translator
+     * @param TranslatorInterface $translator Translator
      */
     public function __construct(private readonly TagServiceInterface $tagService, private readonly TranslatorInterface $translator)
     {
     }
 
-
     /**
      * Index action.
      *
-     * @param integer $page Page number
+     * @param int $page Page number
      *
      * @return Response HTTP response
      */
     #[Route(name: 'tag_index', methods: 'GET')]
-    public function index(#[MapQueryParameter] int $page=1): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->tagService->getPaginatedList($page);
 
         return $this->render('tag/index.html.twig', ['pagination' => $pagination]);
+    }// end index()
 
-    }//end index()
-
-  /**
-     * @param  Tag       $tag
-     * @param  TagRepository $tagRepository
-     * @return Response
-*/
     #[Route(
         '/{id}',
         name: 'tag_show',
@@ -70,11 +56,10 @@ class TagController extends AbstractController
         return $this->render(
             'tag/show.html.twig',
             [
-                'tag' => $tag
+                'tag' => $tag,
             ]
         );
-    }//end show()
-
+    }// end show()
 
     /**
      * Create action.
@@ -85,7 +70,7 @@ class TagController extends AbstractController
      */
     #[Route(
         '/create',
-        name:'tag_create',
+        name: 'tag_create',
         methods: 'GET|POST',
     )]
     #[IsGranted('CREATE')]
@@ -108,15 +93,15 @@ class TagController extends AbstractController
 
         return $this->render(
             'tag/create.html.twig',
-            ['form'=> $form->createView()]
+            ['form' => $form->createView()]
         );
     }
 
     /**
      * Edit action.
      *
-     * @param Request  $request  HTTP request
-     * @param Tag $tag Tag entity
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag entity
      *
      * @return Response HTTP response
      */
@@ -124,7 +109,7 @@ class TagController extends AbstractController
     #[IsGranted('EDIT', subject: 'tag')]
     public function edit(Request $request, Tag $tag): Response
     {
-        $form =$this->createForm(
+        $form = $this->createForm(
             TagType::class,
             $tag,
             [
@@ -134,8 +119,7 @@ class TagController extends AbstractController
         );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->tagService->save($tag);
 
             $this->addFlash(
@@ -150,7 +134,7 @@ class TagController extends AbstractController
             'tag/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'tag' => $tag
+                'tag' => $tag,
             ]
         );
     }
@@ -158,8 +142,8 @@ class TagController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request  $request  HTTP request
-     * @param Tag $tag Tag entity
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag entity
      *
      * @return Response HTTP response
      */
@@ -192,4 +176,4 @@ class TagController extends AbstractController
             ]
         );
     }
-}//end class
+}// end class

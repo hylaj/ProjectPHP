@@ -9,39 +9,23 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 
 /**
  * @extends ServiceEntityRepository<Rental>
  */
 class RentalRepository extends ServiceEntityRepository
 {
-
-
-    /**
-     * @param ManagerRegistry $registry
-     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Rental::class);
+    }// end __construct()
 
-    }//end __construct()
-
-
-    /**
-     * @param Rental $rental
-     *
-     * @return void
-     */
     public function save(Rental $rental): void
     {
         assert($this->_em instanceof EntityManager);
         $this->_em->persist($rental);
         $this->_em->flush();
-
-    }//end save()
-
+    }// end save()
 
     /**
      * Delete entity.
@@ -56,46 +40,36 @@ class RentalRepository extends ServiceEntityRepository
         assert($this->_em instanceof EntityManager);
         $this->_em->remove($rental);
         $this->_em->flush();
-
-    }//end delete()
-
+    }// end delete()
 
     public function QueryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-            'partial rental.{id, owner, book, status, rentalDate, comment}',
-            'partial user.{id, email}',
-            'partial book.{id, title}'
-        )
+                'partial rental.{id, owner, book, status, rentalDate, comment}',
+                'partial user.{id, email}',
+                'partial book.{id, title}'
+            )
             ->join('rental.owner', 'user')
             ->join('rental.book', 'book');
     }
 
-
-    /**
-     * @return QueryBuilder
-     */
     public function queryByStatus(): QueryBuilder
     {
         return $this->QueryAll()
             ->where('rental.status= :status')
             ->setParameter('status', false);
-
-    }//end queryByStatus()
-
+    }// end queryByStatus()
 
     public function queryByOwner($owner): QueryBuilder
     {
         return $this->QueryAll()
             ->where('rental.status= :status')
-           /* ->setParameter('status', true)*/
+           /* ->setParameter('status', true) */
             ->Where('rental.owner= :owner')
             ->setParameter('owner', $owner)
             ->orderBy('rental.status', 'DESC');
-
-    }//end queryByOwner()
-
+    }// end queryByOwner()
 
     /**
      * Get or create new query builder.
@@ -104,12 +78,10 @@ class RentalRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder Query builder
      */
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder=null): QueryBuilder
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
-        return ($queryBuilder ?? $this->createQueryBuilder('rental'));
-
-    }//end getOrCreateQueryBuilder()
-
+        return $queryBuilder ?? $this->createQueryBuilder('rental');
+    }// end getOrCreateQueryBuilder()
 
     // **
     // * @return Rental[] Returns an array of Rental objects
@@ -134,4 +106,4 @@ class RentalRepository extends ServiceEntityRepository
     // ->getOneOrNullResult()
     // ;
     // }
-}//end class
+}// end class

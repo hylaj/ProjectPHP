@@ -49,6 +49,7 @@
         "twig/intl-extra": "^3.10",
         "twig/markdown-extra": "*",
         "twig/twig": "^2.12|^3.0"
+
     },
     "config": {
         "allow-plugins": {
@@ -117,12 +118,12 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.6",
-        "escapestudios/symfony2-coding-standard": "^3.13",
+        "escapestudios/symfony2-coding-standard": "*",
         "fakerphp/faker": "^1.23",
-        "friendsofphp/php-cs-fixer": "^3.56",
+        "friendsofphp/php-cs-fixer": "*",
         "phpunit/phpunit": "^9.5",
-        "rector/rector": "^1.0",
-        "squizlabs/php_codesniffer": "^3.9",
+        "rector/rector": "*",
+        "squizlabs/php_codesniffer": "*",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
         "symfony/debug-bundle": "6.4.*",

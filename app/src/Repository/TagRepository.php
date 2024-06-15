@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Category;
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
@@ -17,17 +16,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TagRepository extends ServiceEntityRepository
 {
-
-
-    /**
-     * @param ManagerRegistry $registry
-     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
-
-    }//end __construct()
-
+    }// end __construct()
 
     // **
     // * @return Tag[] Returns an array of Tag objects
@@ -53,10 +45,7 @@ class TagRepository extends ServiceEntityRepository
     // ;
     // }
 
-
     /**
-     * @param string $title
-     * @return Tag|null
      * @throws NonUniqueResultException
      */
     public function findOneByTitle(string $title): ?Tag
@@ -67,6 +56,7 @@ class TagRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
     /**
      * Get or create new query builder.
      *
@@ -80,9 +70,6 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Tag $tag
-     *
-     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -91,13 +78,12 @@ class TagRepository extends ServiceEntityRepository
         assert($this->_em instanceof EntityManager);
         $this->_em->persist($tag);
         $this->_em->flush();
-
-    }//end save()
+    }// end save()
 
     /**
      * Query all records.
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
@@ -105,6 +91,7 @@ class TagRepository extends ServiceEntityRepository
             ->select('tag')
             ->orderBy('tag.createdAt', 'DESC');
     }
+
     /**
      * Delete entity.
      *
@@ -119,5 +106,4 @@ class TagRepository extends ServiceEntityRepository
         $this->_em->remove($tag);
         $this->_em->flush();
     }
-
-}//end class
+}// end class

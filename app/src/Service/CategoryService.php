@@ -29,7 +29,6 @@ class CategoryService implements CategoryServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
@@ -38,14 +37,12 @@ class CategoryService implements CategoryServiceInterface
      */
     public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator, private readonly BookRepository $bookRepository)
     {
-
-    }//end __construct()
-
+    }// end __construct()
 
     /**
      * Get paginated list.
      *
-     * @param integer $page Page number
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -56,9 +53,7 @@ class CategoryService implements CategoryServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-
-    }//end getPaginatedList()
-
+    }// end getPaginatedList()
 
     /**
      * Save entity.
@@ -75,15 +70,10 @@ class CategoryService implements CategoryServiceInterface
         */
 
         $this->categoryRepository->save($category);
-
-    }//end save()
+    }// end save()
 
     /**
      * Delete entity.
-     *
-     * @param Category $category
-     *
-     * @return void
      */
     public function delete(Category $category): void
     {
@@ -102,12 +92,11 @@ class CategoryService implements CategoryServiceInterface
         try {
             $result = $this->bookRepository->countByCategory($category);
 
-            return !($result > 0);
+            return $result <= 0;
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }
     }
-    //
 
     /**
      * Find by id.
@@ -122,5 +111,4 @@ class CategoryService implements CategoryServiceInterface
     {
         return $this->categoryRepository->findOneById($id);
     }
-
-}//end class
+}// end class

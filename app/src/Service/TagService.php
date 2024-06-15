@@ -5,15 +5,10 @@
 
 namespace App\Service;
 
-use App\Entity\Book;
-use App\Entity\Category;
 use App\Entity\Tag;
-use App\Repository\BookRepository;
 use App\Repository\TagRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -24,14 +19,14 @@ use Knp\Component\Pager\PaginatorInterface;
 class TagService implements TagServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
+
     /**
      * Constructor.
      *
-     * @param TagRepository     $tagRepository Tag repository
+     * @param TagRepository $tagRepository Tag repository
      */
     public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
     {
-
     }
 
     /**
@@ -45,23 +40,24 @@ class TagService implements TagServiceInterface
     {
         return $this->tagRepository->findOneByTitle($title);
     }
+
     /**
      * Save entity.
      *
      * @param Tag $tag Tag entity
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
     public function save(Tag $tag): void
     {
         $this->tagRepository->save($tag);
-
-    }//end save()
+    }// end save()
 
     /**
      * Get paginated list.
      *
-     * @param integer $page Page number
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -72,19 +68,16 @@ class TagService implements TagServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-
     }
+
     /**
      * Delete entity.
-     *
-     * @param Tag $tag
-     *
-     * @return void
      */
     public function delete(Tag $tag): void
     {
         $this->tagRepository->delete($tag);
     }
+
     /**
      * Find by id.
      *
@@ -98,5 +91,4 @@ class TagService implements TagServiceInterface
     {
         return $this->tagRepository->findOneById($id);
     }
-
 }

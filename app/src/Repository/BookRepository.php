@@ -12,8 +12,6 @@ use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
@@ -36,7 +34,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookRepository extends ServiceEntityRepository
 {
-
     /**
      * Constructor.
      *
@@ -54,7 +51,7 @@ class BookRepository extends ServiceEntityRepository
      */
     public function queryAll(BookListFiltersDto $filters): QueryBuilder
     {
-        $queryBuilder= $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
                 'partial book.{id, releaseDate, title, author, available, description}',
                 'partial category.{id, title}',
@@ -67,10 +64,6 @@ class BookRepository extends ServiceEntityRepository
         return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
-    /**
-     * @param Category $category
-     * @return array
-     */
     public function findBooksByCategory(Category $category): array
     {
         return $this->getOrCreateQueryBuilder()
@@ -79,6 +72,7 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
     /**
      * Get or create new query builder.
      *
@@ -92,9 +86,6 @@ class BookRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Book $book
-     *
-     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -103,8 +94,7 @@ class BookRepository extends ServiceEntityRepository
         assert($this->_em instanceof EntityManager);
         $this->_em->persist($book);
         $this->_em->flush();
-
-    }//end save()
+    }// end save()
 
     /**
      * Delete entity.
@@ -141,6 +131,7 @@ class BookRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
     /**
      * Apply filters to paginated list.
      *
@@ -164,21 +155,20 @@ class BookRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
-    /**
+    /*
      * Query tasks by author.
      *
      * @param User $user User entity
      *
      * @return QueryBuilder Query builder
-
-    public function queryByAuthor(User $user): QueryBuilder
-    {
-        $queryBuilder = $this->queryAll();
-
-        $queryBuilder->andWhere('book.itemAuthor = :itemAuthor')
-            ->setParameter('itemAuthor', $user);
-
-        return $queryBuilder;
-    } */
-
+     *
+     * public function queryByAuthor(User $user): QueryBuilder
+     * {
+     * $queryBuilder = $this->queryAll();
+     *
+     * $queryBuilder->andWhere('book.itemAuthor = :itemAuthor')
+     * ->setParameter('itemAuthor', $user);
+     *
+     * return $queryBuilder;
+     * } */
 }

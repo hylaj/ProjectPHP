@@ -4,7 +4,7 @@
  */
 
 namespace App\Form\Type;
-use App\Entity\Cover;
+
 use App\Entity\Book;
 use App\Entity\Category;
 use App\Form\DataTransformer\TagsDataTransformer;
@@ -29,9 +29,6 @@ class BookType extends AbstractType
      * This method is called for each type in the hierarchy starting from the
      * top most type. Type extensions can further modify the form.
      *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array<string, mixed> $options Form options
-     *
      * @see FormTypeExtensionInterface::buildForm()
      */
 
@@ -44,9 +41,6 @@ class BookType extends AbstractType
     {
     }
 
-    /**
-     * @return void
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -56,7 +50,8 @@ class BookType extends AbstractType
                 'label' => 'label.title',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ])
+            ]
+        )
         ->add(
             'author',
             TextType::class,
@@ -64,19 +59,19 @@ class BookType extends AbstractType
                 'label' => 'label.author',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ])
+            ]
+        )
         ->add(
             'category',
             EntityType::class,
             [
                 'class' => Category::class,
-                'choice_label' => function ($category): string {
-                    return $category->getTitle();
-                },
+                'choice_label' => fn($category): string => $category->getTitle(),
                 'label' => 'label.category',
                 'placeholder' => 'label.none',
                 'required' => true,
-            ])
+            ]
+        )
         ->add(
             'tags',
             TextType::class,
@@ -85,7 +80,6 @@ class BookType extends AbstractType
                 'required' => false,
                 'attr' => ['max_length' => 128],
             ]
-
         )
             ->add(
                 'releaseDate',
@@ -95,17 +89,19 @@ class BookType extends AbstractType
                     'required' => false,
                     'placeholder' => [
                         'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                        ],
+                    ],
                     'format' => 'yyyy-MM-dd',
-                ])
+                ]
+            )
             ->add(
                 'description',
                 TextareaType::class,
                 [
                     'label' => 'label.description',
                     'required' => false,
-                    'attr' => ['max_length' => 1000, 'class'=>'auto-expand'],
-                ])
+                    'attr' => ['max_length' => 1000, 'class' => 'auto-expand'],
+                ]
+            )
         ->add(
             'file',
             FileType::class,

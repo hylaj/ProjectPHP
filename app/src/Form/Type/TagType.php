@@ -5,7 +5,6 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Category;
 use App\Entity\Tag;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,7 +36,8 @@ class TagType extends AbstractType
                 'label' => 'label.title',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ]);
+            ]
+        );
     }
 
     /**

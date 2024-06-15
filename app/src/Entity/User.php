@@ -8,7 +8,6 @@ namespace App\Entity;
 use App\Entity\Enum\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,11 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(name: 'email_idx', columns: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-
     /**
      * Primary key.
-     *
-     * @var integer|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,13 +30,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Email.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
-    private ?string $email;
+    private ?string $email = null;
 
     /**
      * Roles.
@@ -52,41 +46,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Password.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
     #[Assert\Length(min: 6, max: 64)]
-    private ?string $password;
+    private ?string $password = null;
 
     /**
      * First Name.
-     *
-     * @var string|null
      */
     #[ORM\Column(length: 255, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Type('string')]
-    #[Assert\Length(min:3, max:255)]
-    private ?string $firstName;
+    #[Assert\Length(min: 3, max: 255)]
+    private ?string $firstName = null;
 
     #[ORM\Column(nullable: false)]
     #[Assert\NotNull]
     private ?bool $isBlocked = false;
 
-
     /**
      * Getter for id.
      *
-     * @return integer|null Id
+     * @return int|null Id
      */
     public function getId(): ?int
     {
         return $this->id;
-
-    }//end getId()
-
+    }// end getId()
 
     /**
      * Getter for email.
@@ -96,9 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getEmail(): ?string
     {
         return $this->email;
-
-    }//end getEmail()
-
+    }// end getEmail()
 
     /**
      * Setter for email.
@@ -108,9 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): void
     {
         $this->email = $email;
-
-    }//end setEmail()
-
+    }// end setEmail()
 
     /**
      * A visual identifier that represents this user.
@@ -122,9 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
-
-    }//end getUserIdentifier()
-
+    }// end getUserIdentifier()
 
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
@@ -134,9 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername(): string
     {
         return (string) $this->email;
-
-    }//end getUsername()
-
+    }// end getUsername()
 
     /**
      * Getter for roles.
@@ -152,9 +131,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles[] = UserRole::ROLE_USER->value;
 
         return array_unique($roles);
-
-    }//end getRoles()
-
+    }// end getRoles()
 
     /**
      * Setter for roles.
@@ -164,9 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): void
     {
         $this->roles = $roles;
-
-    }//end setRoles()
-
+    }// end setRoles()
 
     /**
      * Getter for password.
@@ -178,9 +153,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): ?string
     {
         return $this->password;
-
-    }//end getPassword()
-
+    }// end getPassword()
 
     /**
      * Setter for password.
@@ -190,9 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
-
-    }//end setPassword()
-
+    }// end setPassword()
 
     /**
      * Returning a salt is only needed, if you are not using a modern
@@ -203,9 +174,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSalt(): ?string
     {
         return null;
-
-    }//end getSalt()
-
+    }// end getSalt()
 
     /**
      * Removes sensitive information from the token.
@@ -216,32 +185,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-
-    }//end eraseCredentials()
-
+    }// end eraseCredentials()
 
     /**
-     * Getter for firstName
-     *
-     * @return string|null
+     * Getter for firstName.
      */
     public function getFirstName(): ?string
     {
         return $this->firstName;
-
-    }//end getFirstName()
-
+    }// end getFirstName()
 
     /**
-     * Setter for firstName
-     *
-     * @param string|null $firstName
+     * Setter for firstName.
      */
     public function setFirstName(?string $firstName): void
     {
         $this->firstName = $firstName;
-
-    }//end setFirstName()
+    }// end setFirstName()
 
     public function isBlocked(): ?bool
     {
@@ -251,8 +211,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBlocked(bool $isBlocked): void
     {
         $this->isBlocked = $isBlocked;
-
     }
-
-
-}//end class
+}// end class

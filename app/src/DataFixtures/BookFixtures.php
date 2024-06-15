@@ -6,8 +6,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Book;
-use App\Entity\Category;
-use App\Entity\Tag;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
@@ -17,8 +15,6 @@ use Faker\Generator;
  */
 class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
-
-
     /**
      * Load data.
      */
@@ -36,7 +32,7 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 $book->setTitle($this->faker->sentence(2));
                 $book->setAuthor($this->faker->name);
                 $book->setReleaseDate(
-                        $this->faker->dateTimeBetween('-100 days', '-1 days')
+                    $this->faker->dateTimeBetween('-100 days', '-1 days')
                 );
                 $category = $this->getRandomReference('categories');
                 $book->setCategory($category);
@@ -50,20 +46,18 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 }
                 $book->setDescription($this->faker->text(1000));
 
-/*
-                for ($i = rand(1, 2); $i < 2; $i++) {
-                    $author = $this->getRandomReference('users');
-                    $book->setItemAuthor($author);
-                }*/
+                /*
+                                for ($i = rand(1, 2); $i < 2; $i++) {
+                                    $author = $this->getRandomReference('users');
+                                    $book->setItemAuthor($author);
+                                }*/
 
                 return $book;
             }
         );
 
         $this->manager->flush();
-
-    }//end loadData()
-
+    }// end loadData()
 
     /**
      * This method must return an array of fixtures classes
@@ -80,8 +74,5 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             TagFixtures::class,
             UserFixtures::class,
         ];
-
-    }//end getDependencies()
-
-
-}//end class
+    }// end getDependencies()
+}// end class

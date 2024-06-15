@@ -9,7 +9,6 @@ use App\Dto\BookListFiltersDto;
 use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
 use App\Entity\Category;
-use App\Entity\User;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
@@ -34,35 +33,34 @@ class BookService implements BookServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
      * @param BookRepository     $bookRepository Book repository
      * @param PaginatorInterface $paginator      Paginator
      */
-    public function __construct(private readonly BookRepository $bookRepository,
-                                private readonly PaginatorInterface $paginator,
-                                private readonly CategoryServiceInterface $categoryService,
-                                private readonly TagServiceInterface $tagService,
-                                private readonly FileUploadServiceInterface $fileUploadService,
-                                private readonly string $targetDirectory,
-                                private readonly Filesystem $filesystem)
-    {
-    }//end __construct()
-
+    public function __construct(
+        private readonly BookRepository $bookRepository,
+        private readonly PaginatorInterface $paginator,
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly TagServiceInterface $tagService,
+        private readonly FileUploadServiceInterface $fileUploadService,
+        private readonly string $targetDirectory,
+        private readonly Filesystem $filesystem
+    ) {
+    }// end __construct()
 
     /**
      * Get paginated list.
      *
-     * @param int  $page   Page number
-     * @param User $author Author
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedList(int $page, BookListInputFiltersDto $filters): PaginationInterface
     {
         $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
             $this->bookRepository->queryAll($filters),
             $page,
@@ -70,10 +68,6 @@ class BookService implements BookServiceInterface
         );
     }
 
-    /**
-     * @param Category $category
-     * @return array
-     */
     public function getBooksByCategory(Category $category): array
     {
         return $this->bookRepository->findBooksByCategory($category);
@@ -83,20 +77,18 @@ class BookService implements BookServiceInterface
      * Save entity.
      *
      * @param Book $book Book entity
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
     public function save(Book $book): void
     {
         $this->bookRepository->save($book);
-
-    }//end save()
+    }// end save()
 
     /**
      * Delete entity.
      *
-     * @param Book $book
-     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -105,7 +97,8 @@ class BookService implements BookServiceInterface
         $this->bookRepository->delete($book);
     }
 
-    public function setAvailable(Book $book, bool $status): void{
+    public function setAvailable(Book $book, bool $status): void
+    {
         $book->setAvailable($status);
     }
 
@@ -124,22 +117,19 @@ class BookService implements BookServiceInterface
         );
     }
 
-
     /**
      * Create avatar.
-     *
      */
     public function createCover(UploadedFile $uploadedFile, Book $book): void
     {
         $coverFilename = $this->fileUploadService->upload($uploadedFile);
 
         $book->setCoverFilename($coverFilename);
-       $this->bookRepository->save($book);
+        $this->bookRepository->save($book);
     }
 
     /**
      * Update cover.
-     *
      */
     public function updateCover(UploadedFile $uploadedFile, Book $book): void
     {
@@ -153,5 +143,4 @@ class BookService implements BookServiceInterface
             $this->createCover($uploadedFile, $book);
         }
     }
-
-}//end class
+}// end class

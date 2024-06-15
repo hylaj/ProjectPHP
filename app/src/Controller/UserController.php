@@ -8,11 +8,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\Type\UserDetailsType;
 use App\Form\Type\UserPasswordType;
-use App\Form\Type\RegistrationType;
-use App\Form\Type\UserRoleType;
 use App\Service\UserServiceInterface;
-use Cassandra\Type\UserType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,14 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- *
- */
 #[Route('/user')]
 class UserController extends AbstractController
 {
-
-
     /**
      * Constructor.
      *
@@ -39,14 +30,8 @@ class UserController extends AbstractController
      */
     public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
     {
+    }// end __construct()
 
-    }//end __construct()
-
-
-    /**
-     * @param  User $user
-     * @return Response
-     */
     #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     #[IsGranted('VIEW_USER', subject: 'user')]
     public function show(User $user): Response
@@ -55,30 +40,19 @@ class UserController extends AbstractController
             'user/show.html.twig',
             ['user' => $user]
         );
+    }// end show()
 
-    }//end show()
-
-
-    /**
-     * @param  User $user
-     * @return Response
-     */
     #[Route('/list', name: 'user_index', methods: 'GET')]
     #[IsGranted('VIEW_USER_LIST')]
-    public function index(#[MapQueryParameter] int $page=1): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->userService->getPaginatedList(
             $page,
         );
+
         return $this->render('user/index.html.twig', ['pagination' => $pagination]);
+    }// end index()
 
-    }//end index()
-
-
-    /**
-     * @param  Request $request
-     * @return Response
-     */
     #[Route('/{id}/edit-password', name: 'password_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
     public function edit_password(Request $request, User $user): Response
@@ -116,8 +90,9 @@ class UserController extends AbstractController
                 'success',
                 $this->translator->trans('message.edited_successfully')
             );
+
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
-        }//end if
+        }// end if
 
         return $this->render(
             'user/edit-password.html.twig',
@@ -126,14 +101,8 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
+    }// end edit_password()
 
-    }//end edit_password()
-
-
-    /**
-     * @param  Request $request
-     * @return Response
-     */
     #[Route('/{id}/edit-details', name: 'details_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
     public function edit_details(Request $request, User $user): Response
@@ -165,9 +134,7 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-
-    }//end edit_details()
-
+    }// end edit_details()
 
     #[Route('/{id}/promote', name: 'promote_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -178,6 +145,7 @@ class UserController extends AbstractController
                 'warning',
                 $this->translator->trans('message.user_cannot_be_promoted')
             );
+
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
@@ -210,9 +178,7 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-
-    }//end promote()
-
+    }// end promote()
 
     #[Route('/{id}/demote', name: 'demote_admin', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -223,6 +189,7 @@ class UserController extends AbstractController
                 'warning',
                 $this->translator->trans('message.user_cannot_be_demoted')
             );
+
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
@@ -255,9 +222,7 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-
-    }//end demote()
-
+    }// end demote()
 
     #[Route('/{id}/block', name: 'block_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -268,6 +233,7 @@ class UserController extends AbstractController
                 'warning',
                 $this->translator->trans('message.user_already_blocked')
             );
+
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
@@ -299,9 +265,7 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-
-    }//end block()
-
+    }// end block()
 
     #[Route('/{id}/unblock', name: 'unblock_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -312,6 +276,7 @@ class UserController extends AbstractController
                 'warning',
                 $this->translator->trans('message.user_not_blocked')
             );
+
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
@@ -343,8 +308,5 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-
-    }//end block()
-
-
-}//end class
+    }// end block()
+}// end class

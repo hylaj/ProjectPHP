@@ -5,9 +5,7 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Book;
 use App\Entity\User;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,9 +22,10 @@ class UserVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if ($attribute === self::VIEW_USER_LIST) {
+        if (self::VIEW_USER_LIST === $attribute) {
             return true;
         }
+
         return in_array($attribute, [self::EDIT, self::VIEW_USER, self::MANAGE])
             && $subject instanceof User;
     }
@@ -38,7 +37,7 @@ class UserVoter extends Voter
             return false;
         }
 
-        if ($attribute === self::VIEW_USER_LIST) {
+        if (self::VIEW_USER_LIST === $attribute) {
             return $this->canViewUserList($current_user);
         }
 
@@ -52,37 +51,33 @@ class UserVoter extends Voter
             self::MANAGE => $this->canPromote($subject, $current_user),
             default => false,
         };
-
     }
 
     private function canViewUser(UserInterface $user, UserInterface $current_user): bool
     {
-        if (in_array('ROLE_ADMIN', $current_user->getRoles())){
+        if (in_array('ROLE_ADMIN', $current_user->getRoles())) {
             return true;
-        }
-        else{
-            return ($current_user === $user);
+        } else {
+            return $current_user === $user;
         }
     }
+
     private function canViewUserList(UserInterface $current_user): bool
     {
-        return (in_array('ROLE_ADMIN', $current_user->getRoles()));
+        return in_array('ROLE_ADMIN', $current_user->getRoles());
     }
 
     private function canEdit(UserInterface $user, UserInterface $current_user): bool
     {
-        if (in_array('ROLE_ADMIN', $current_user->getRoles())){
+        if (in_array('ROLE_ADMIN', $current_user->getRoles())) {
             return true;
+        } else {
+            return in_array('ROLE_USER', $current_user->getRoles()) && ($user === $current_user);
         }
-        else return ((in_array('ROLE_USER', $current_user->getRoles()))&& ($user === $current_user));
     }
 
     private function canPromote(UserInterface $user, UserInterface $current_user): bool
     {
-        return ((in_array('ROLE_ADMIN', $current_user->getRoles())) && !($current_user === $user ));
-
-
+        return in_array('ROLE_ADMIN', $current_user->getRoles()) && $current_user !== $user;
     }
-
-
 }

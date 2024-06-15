@@ -7,7 +7,6 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
-use App\Repository\BookRepository;
 use App\Service\BookService;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,46 +18,34 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- *
- */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-
     /**
      * Constructor.
      *
      * @param CategoryServiceInterface $categoryService Category service
-     * @param TranslatorInterface      $translator  Translator
+     * @param TranslatorInterface      $translator      Translator
      */
     public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
     }
 
-
     /**
      * Index action.
      *
-     * @param integer $page Page number
+     * @param int $page Page number
      *
      * @return Response HTTP response
      */
     #[Route(name: 'category_index', methods: 'GET')]
-    public function index(#[MapQueryParameter] int $page=1): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->categoryService->getPaginatedList($page);
 
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);
+    }// end index()
 
-    }//end index()
-
-
-    /**
-     * @param  Category       $category
-     * @param  BookRepository $bookRepository
-     * @return Response
-     */
     #[Route(
         '/{id}',
         name: 'category_show',
@@ -68,6 +55,7 @@ class CategoryController extends AbstractController
     public function show(Category $category, BookService $bookService): Response
     {
         $books = $bookService->getBooksByCategory($category);
+
         return $this->render(
             'category/show.html.twig',
             [
@@ -75,9 +63,7 @@ class CategoryController extends AbstractController
                 'books'    => $books,
             ]
         );
-
-    }//end show()
-
+    }// end show()
 
     /**
      * Create action.
@@ -88,7 +74,7 @@ class CategoryController extends AbstractController
      */
     #[Route(
         '/create',
-        name:'category_create',
+        name: 'category_create',
         methods: 'GET|POST',
     )]
     #[IsGranted('CREATE')]
@@ -102,7 +88,8 @@ class CategoryController extends AbstractController
 
         $form = $this->createForm(
             CategoryType::class,
-            $category);
+            $category
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +105,7 @@ class CategoryController extends AbstractController
 
         return $this->render(
             'category/create.html.twig',
-            ['form'=> $form->createView()]
+            ['form' => $form->createView()]
         );
     }
 
@@ -134,7 +121,7 @@ class CategoryController extends AbstractController
     #[IsGranted('EDIT', subject: 'category')]
     public function edit(Request $request, Category $category): Response
     {
-        $form =$this->createForm(
+        $form = $this->createForm(
             CategoryType::class,
             $category,
             [
@@ -144,8 +131,7 @@ class CategoryController extends AbstractController
         );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->save($category);
 
             $this->addFlash(
@@ -160,7 +146,7 @@ class CategoryController extends AbstractController
             'category/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'category' => $category
+                'category' => $category,
             ]
         );
     }
@@ -177,11 +163,12 @@ class CategoryController extends AbstractController
     #[IsGranted('DELETE', subject: 'category')]
     public function delete(Request $request, Category $category): Response
     {
-        if(!$this->categoryService->canBeDeleted($category)){
+        if (!$this->categoryService->canBeDeleted($category)) {
             $this->addFlash(
                 'warning',
                 $this->translator->trans('message.category_contains_books')
             );
+
             return $this->redirectToRoute('category_index');
         }
         $form = $this->createForm(FormType::class, $category, [
@@ -209,4 +196,4 @@ class CategoryController extends AbstractController
             ]
         );
     }
-}//end class
+}// end class

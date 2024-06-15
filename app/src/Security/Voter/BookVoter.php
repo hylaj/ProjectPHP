@@ -45,7 +45,6 @@ class BookVoter extends Voter
      */
     private const CREATE = 'CREATE';
 
-
     /**
      * Determines if the attribute and subject are supported by this voter.
      *
@@ -56,10 +55,11 @@ class BookVoter extends Voter
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if ($attribute === self::CREATE) {
+        if (self::CREATE === $attribute) {
             return true;
         }
-        return in_array($attribute, [self::EDIT/*, self::VIEW*/, self::DELETE])
+
+        return in_array($attribute, [self::EDIT/* , self::VIEW */, self::DELETE])
             && $subject instanceof Book;
     }
 
@@ -80,7 +80,7 @@ class BookVoter extends Voter
             return false;
         }
 
-        if ($attribute === self::CREATE) {
+        if (self::CREATE === $attribute) {
             return $this->canCreate($user);
         }
 
@@ -90,7 +90,7 @@ class BookVoter extends Voter
 
         return match ($attribute) {
             self::EDIT => $this->canEdit($subject, $user),
-           // self::VIEW => $this->canView($subject, $user),
+            // self::VIEW => $this->canView($subject, $user),
             self::DELETE => $this->canDelete($subject, $user),
             default => false,
         };
@@ -106,23 +106,22 @@ class BookVoter extends Voter
      */
     private function canEdit(Book $book, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
-      //  return $book->getItemAuthor() === $user;
+        return in_array('ROLE_ADMIN', $user->getRoles());
+        //  return $book->getItemAuthor() === $user;
     }
 
+    /*
+     * Checks if user can view book.
+     *
+     * @param Book          $book Book entity
+     * @param UserInterface $user User
+     *
+     * @return bool Result
 
-   /*
-    * Checks if user can view book.
-    *
-    * @param Book          $book Book entity
-    * @param UserInterface $user User
-    *
-    * @return bool Result
-
-   private function canView(Book $book, UserInterface $user): bool
-    {
-        return $book->getItemAuthor() === $user;
-    }
+    private function canView(Book $book, UserInterface $user): bool
+     {
+         return $book->getItemAuthor() === $user;
+     }
 */
 
     /**
@@ -133,11 +132,10 @@ class BookVoter extends Voter
      *
      * @return bool Result
      */
-
     private function canDelete(Book $book, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
-        //return return (($this->security->isGranted('ROLE_ADMIN')) && ($book->getItemAuthor() === $user));
+        return in_array('ROLE_ADMIN', $user->getRoles());
+        // return return (($this->security->isGranted('ROLE_ADMIN')) && ($book->getItemAuthor() === $user));
     }
 
     /**
@@ -149,6 +147,6 @@ class BookVoter extends Voter
      */
     private function canCreate(UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
+        return in_array('ROLE_ADMIN', $user->getRoles());
     }
 }

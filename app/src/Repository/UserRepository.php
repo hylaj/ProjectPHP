@@ -18,14 +18,10 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
-
-    }//end __construct()
-
+    }// end __construct()
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
@@ -39,14 +35,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
-
-    }//end upgradePassword()
-
+    }// end upgradePassword()
 
     /**
-     * @param User $user
-     *
-     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -55,9 +46,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         assert($this->_em instanceof EntityManager);
         $this->_em->persist($user);
         $this->_em->flush();
-
-    }//end save()
-
+    }// end save()
 
     /**
      * Query all records.
@@ -69,9 +58,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->getOrCreateQueryBuilder()
             ->select('partial user.{id, firstName, email, roles}')
             ->orderBy('user.id', 'ASC');
-
-    }//end queryAll()
-
+    }// end queryAll()
 
     /**
      * Get or create new query builder.
@@ -80,12 +67,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      *
      * @return QueryBuilder Query builder
      */
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder=null): QueryBuilder
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
-        return ($queryBuilder ?? $this->createQueryBuilder('user'));
-
-    }//end getOrCreateQueryBuilder()
-
+        return $queryBuilder ?? $this->createQueryBuilder('user');
+    }// end getOrCreateQueryBuilder()
 
     public function countByRole(string $role): int
     {
@@ -95,6 +80,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->where('user.roles LIKE :role')
             ->setParameter('role', '%"'.$role.'"%')
             ->getQuery()
-            ->getSingleScalarResult();;
+            ->getSingleScalarResult();
     }
-}//end class
+}// end class

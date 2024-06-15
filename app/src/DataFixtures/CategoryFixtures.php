@@ -62,7 +62,5 @@ class CategoryFixtures extends AbstractBaseFixtures implements DependentFixtureI
     public function getDependencies(): array
     {
         return [UserFixtures::class];
-
-    }//end getDependencies()
-
+    }// end getDependencies()
 }

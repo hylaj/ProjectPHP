@@ -15,7 +15,6 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class RentalService.
@@ -33,7 +32,6 @@ class RentalService implements RentalServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
@@ -42,14 +40,12 @@ class RentalService implements RentalServiceInterface
      */
     public function __construct(private readonly RentalRepository $rentalRepository, private readonly PaginatorInterface $paginator)
     {
-
-    }//end __construct()
-
+    }// end __construct()
 
     /**
      * Get paginated list by status.
      *
-     * @param integer $page Page number
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -60,14 +56,12 @@ class RentalService implements RentalServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-
-    }//end getPaginatedListByStatus()
-
+    }// end getPaginatedListByStatus()
 
     /**
      * Get paginated list by user.
      *
-     * @param integer $page Page number
+     * @param int $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -78,84 +72,67 @@ class RentalService implements RentalServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-
-    }//end getPaginatedListByOwner()
-
+    }// end getPaginatedListByOwner()
 
     /**
      * Save entity.
      *
-     * @param  Rental $rental Rental entity
+     * @param Rental $rental Rental entity
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
     public function save(Rental $rental): void
     {
         $this->rentalRepository->save($rental);
-
-    }//end save()
-
+    }// end save()
 
     /**
      * Delete entity.
      *
-     * @param  Rental $rental
-     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
     public function delete(Rental $rental): void
     {
         $this->rentalRepository->delete($rental);
+    }// end delete()
 
-    }//end delete()
-
-
-    /**
-     * @param  Book $book
-     * @return boolean
-     */
-    public function canBeRented(Book $book):bool
+    public function canBeRented(Book $book): bool
     {
         try {
             $result = $book->isAvailable();
 
-            return !($result === false);
-        } catch (NoResultException | NonUniqueResultException) {
+            return false !== $result;
+        } catch (NoResultException|NonUniqueResultException) {
             return false;
         }
-
-    }//end canBeRented()
+    }// end canBeRented()
 
     /**
-     * @param  Book $book
-     * @return boolean
+     * @return bool
      *
-    public function canBeReturned(Rental $rental):bool
-    {
-        try {
-            $result = $rental->getStatus();
-
-            return !($result === false);
-        } catch (NoResultException | NonUniqueResultException) {
-            return false;
-        }
-
-    }//end canBeRented()
+     * public function canBeReturned(Rental $rental):bool
+     * {
+     * try {
+     * $result = $rental->getStatus();
+     *
+     * return !($result === false);
+     * } catch (NoResultException | NonUniqueResultException) {
+     * return false;
+     * }
+     *
+     * }//end canBeRented()
      * */
-
-    public function setStatus(bool $status, Rental $rental): void {
+    public function setStatus(bool $status, Rental $rental): void
+    {
         $rental->setStatus($status);
     }
 
-
-    public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental):void
+    public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void
     {
         $rental->setBook($book);
         $rental->setOwner($owner);
         $rental->setStatus($status);
-
-    }//end setRentalDetails()
-
-
-}//end class
+    }// end setRentalDetails()
+}// end class

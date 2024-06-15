@@ -3,14 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\RentalRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- *
- */
 #[ORM\Entity(repositoryClass: RentalRepository::class)]
 #[ORM\Table(name: 'rentals')]
 class Rental
@@ -21,10 +17,9 @@ class Rental
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\Type(DateTimeImmutable::class)]
+    #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $rentalDate;
-
+    private ?\DateTimeImmutable $rentalDate = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -32,7 +27,7 @@ class Rental
     #[Assert\Type(User::class)]
     private ?User $owner = null;
 
-    #[ORM\OneToOne(targetEntity: Book::class,fetch: 'EXTRA_LAZY')]
+    #[ORM\OneToOne(targetEntity: Book::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Type(Book::class)]
@@ -51,9 +46,6 @@ class Rental
         return $this->id;
     }
 
-    /**
-     * @return DateTimeImmutable|null
-     */
     public function getRentalDate(): ?\DateTimeImmutable
     {
         return $this->rentalDate;
@@ -62,7 +54,6 @@ class Rental
     public function setRentalDate(\DateTimeImmutable $rentalDate): void
     {
         $this->rentalDate = $rentalDate;
-
     }
 
     public function getOwner(): ?User
@@ -73,7 +64,6 @@ class Rental
     public function setOwner(User $owner): void
     {
         $this->owner = $owner;
-
     }
 
     public function getBook(): ?Book
@@ -94,7 +84,6 @@ class Rental
     public function setStatus(bool $status): void
     {
         $this->status = $status;
-
     }
 
     public function getComment(): ?string
@@ -105,6 +94,5 @@ class Rental
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
-
     }
 }

@@ -10,6 +10,7 @@ use App\Entity\Book;
 use App\Form\Type\BookType;
 use App\Resolver\BookListInputFiltersDtoResolver;
 use App\Service\BookServiceInterface;
+use App\Service\RatingServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 /**
  * Class BookController.
  */
@@ -30,9 +30,12 @@ class BookController extends AbstractController
     /**
      * Constructor.
      */
-    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator)
+    public function __construct(private readonly BookServiceInterface $bookService,
+                                private readonly TranslatorInterface $translator,
+                                private readonly RatingServiceInterface $ratingService)
     {
     }
+
     /**
      * Index action.
      *
@@ -51,7 +54,6 @@ class BookController extends AbstractController
         return $this->render('book/index.html.twig', ['pagination' => $pagination]);
     }
 
-
     /**
      * Show action.
      *
@@ -59,7 +61,6 @@ class BookController extends AbstractController
      *
      * @return Response HTTP response
      */
-
     #[Route(
         '/{id}',
         name: 'book_show',
@@ -68,11 +69,18 @@ class BookController extends AbstractController
     )]
     public function show(Book $book): Response
     {
+        $rating = $this->ratingService->getRatingByBook($book->getId());
+        //$rating = $this->ratingService->getAverageRatingByBook($book->getId());
         return $this->render(
             'book/show.html.twig',
-            ['book' => $book]
+            [
+                'book' => $book,
+                'rating' => $rating
+            ]
         );
-    }// end show()
+    }
+
+    // end show()
     /**
      * Create action.
      *
@@ -82,22 +90,22 @@ class BookController extends AbstractController
      */
     #[Route(
         '/create',
-        name:'book_create',
+        name: 'book_create',
         methods: 'GET|POST',
     )]
     #[IsGranted('CREATE')]
     public function create(Request $request): Response
     {
-
         $book = new Book();
         $form = $this->createForm(
             BookType::class,
-            $book);
+            $book
+        );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('file')->getData();
-            if ($file){
+            if ($file) {
                 $this->bookService->createCover($file, $book);
             }
             $this->bookService->save($book);
@@ -112,15 +120,15 @@ class BookController extends AbstractController
 
         return $this->render(
             'book/create.html.twig',
-            ['form'=> $form->createView()]
+            ['form' => $form->createView()]
         );
     }
 
     /**
      * Edit action.
      *
-     * @param Request  $request  HTTP request
-     * @param Book $book Book entity
+     * @param Request $request HTTP request
+     * @param Book    $book    Book entity
      *
      * @return Response HTTP response
      */
@@ -128,7 +136,7 @@ class BookController extends AbstractController
     #[IsGranted('EDIT', subject: 'book')]
     public function edit(Request $request, Book $book): Response
     {
-        $form =$this->createForm(
+        $form = $this->createForm(
             BookType::class,
             $book,
             [
@@ -138,11 +146,10 @@ class BookController extends AbstractController
         );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('file')->getData();
-            if ($file){
-            $this->bookService->updateCover($file, $book);
+            if ($file) {
+                $this->bookService->updateCover($file, $book);
             }
 
             $this->bookService->save($book);
@@ -159,7 +166,7 @@ class BookController extends AbstractController
             'book/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'book' => $book
+                'book' => $book,
             ]
         );
     }
@@ -167,8 +174,8 @@ class BookController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request  $request  HTTP request
-     * @param Book $book Book entity
+     * @param Request $request HTTP request
+     * @param Book    $book    Book entity
      *
      * @return Response HTTP response
      */

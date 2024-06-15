@@ -5,9 +5,7 @@
 
 namespace App\Service;
 
-use App\Entity\Category;
 use App\Entity\User;
-use App\Repository\BookRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -22,7 +20,6 @@ class UserService implements UserServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
@@ -30,15 +27,10 @@ class UserService implements UserServiceInterface
      */
     public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator)
     {
-
-    }//end __construct()
-
+    }// end __construct()
 
     /**
      * Update password.
-     *
-     * @param PasswordAuthenticatedUserInterface $user
-     * @param string                             $newHashedPassword
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -50,9 +42,7 @@ class UserService implements UserServiceInterface
         */
 
         $this->userRepository->upgradePassword($user, $newHashedPassword);
-
-    }//end upgradePassword()
-
+    }// end upgradePassword()
 
     /**
      * Save entity.
@@ -69,9 +59,7 @@ class UserService implements UserServiceInterface
         */
 
         $this->userRepository->save($user);
-
-    }//end save()
-
+    }// end save()
 
     public function getPaginatedList(int $page): PaginationInterface
     {
@@ -80,20 +68,16 @@ class UserService implements UserServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-
-    }//end getPaginatedList()
-
+    }// end getPaginatedList()
 
     public function canBeDemoted(string $role): bool
     {
         try {
             $result = $this->userRepository->countByRole($role);
 
-            return ($result > 2);
+            return $result > 2;
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }
-    }//end canBeDemoted()
-
-
-}//end class
+    }// end canBeDemoted()
+}// end class

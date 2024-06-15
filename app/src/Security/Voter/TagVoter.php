@@ -55,10 +55,11 @@ class TagVoter extends Voter
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if ($attribute === self::CREATE) {
+        if (self::CREATE === $attribute) {
             return true;
         }
-        return in_array($attribute, [self::EDIT/*, self::VIEW*/, self::DELETE])
+
+        return in_array($attribute, [self::EDIT/* , self::VIEW */, self::DELETE])
             && $subject instanceof Tag;
     }
 
@@ -79,7 +80,7 @@ class TagVoter extends Voter
             return false;
         }
 
-        if ($attribute === self::CREATE) {
+        if (self::CREATE === $attribute) {
             return $this->canCreate($user);
         }
 
@@ -98,17 +99,16 @@ class TagVoter extends Voter
     /**
      * Checks if user can edit tag.
      *
-     * @param Tag          $tag Tag entity
+     * @param Tag           $tag  Tag entity
      * @param UserInterface $user User
      *
      * @return bool Result
      */
     private function canEdit(Tag $tag, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
+        return in_array('ROLE_ADMIN', $user->getRoles());
         //  return $tag->getItemAuthor() === $user;
     }
-
 
     /*
      * Checks if user can view tag.
@@ -127,16 +127,15 @@ class TagVoter extends Voter
     /**
      * Checks if user can delete tag.
      *
-     * @param Tag          $tag Tag entity
+     * @param Tag           $tag  Tag entity
      * @param UserInterface $user User
      *
      * @return bool Result
      */
-
     private function canDelete(Tag $tag, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
-        //return return (($this->security->isGranted('ROLE_ADMIN')) && ($tag->getItemAuthor() === $user));
+        return in_array('ROLE_ADMIN', $user->getRoles());
+        // return return (($this->security->isGranted('ROLE_ADMIN')) && ($tag->getItemAuthor() === $user));
     }
 
     /**
@@ -148,6 +147,6 @@ class TagVoter extends Voter
      */
     private function canCreate(UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
+        return in_array('ROLE_ADMIN', $user->getRoles());
     }
 }

@@ -16,15 +16,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    /**
-     * @param ManagerRegistry $registry
-     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
-
-    }//end __construct()
-
+    }// end __construct()
 
     // **
     // * @return Category[] Returns an array of Category objects
@@ -41,20 +36,17 @@ class CategoryRepository extends ServiceEntityRepository
     // ;
     // }
 
-
     /**
      * Query all records.
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
             ->select('partial category.{id, createdAt, title, slug, updatedAt, itemAuthor}')
             ->orderBy('category.createdAt', 'DESC');
-
-    }//end queryAll()
-
+    }// end queryAll()
 
     // public function findOneBySomeField($value): ?Category
     // {
@@ -66,17 +58,10 @@ class CategoryRepository extends ServiceEntityRepository
     // ;
     // }
 
-
-    /**
-     * @param  QueryBuilder|null $queryBuilder
-     * @return QueryBuilder
-     */
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder=null): QueryBuilder
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
-        return ($queryBuilder ?? $this->createQueryBuilder('category'));
-
-    }//end getOrCreateQueryBuilder()
-
+        return $queryBuilder ?? $this->createQueryBuilder('category');
+    }// end getOrCreateQueryBuilder()
 
     // **
     // * @return Category[] Returns an array of Category objects
@@ -102,19 +87,12 @@ class CategoryRepository extends ServiceEntityRepository
     // ;
     // }
 
-
-    /**
-     * @param Category $category
-     *
-     * @return void
-     */
     public function save(Category $category): void
     {
         assert($this->_em instanceof EntityManager);
         $this->_em->persist($category);
         $this->_em->flush();
-
-    }//end save()
+    }// end save()
 
     /**
      * Delete entity.
@@ -130,4 +108,4 @@ class CategoryRepository extends ServiceEntityRepository
         $this->_em->remove($category);
         $this->_em->flush();
     }
-}//end class
+}// end class

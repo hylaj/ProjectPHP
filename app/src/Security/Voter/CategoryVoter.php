@@ -55,10 +55,11 @@ class CategoryVoter extends Voter
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        if ($attribute === self::CREATE) {
+        if (self::CREATE === $attribute) {
             return true;
         }
-        return in_array($attribute, [self::EDIT/*, self::VIEW*/, self::DELETE])
+
+        return in_array($attribute, [self::EDIT/* , self::VIEW */, self::DELETE])
             && $subject instanceof Category;
     }
 
@@ -79,7 +80,7 @@ class CategoryVoter extends Voter
             return false;
         }
 
-        if ($attribute === self::CREATE) {
+        if (self::CREATE === $attribute) {
             return $this->canCreate($user);
         }
 
@@ -98,17 +99,16 @@ class CategoryVoter extends Voter
     /**
      * Checks if user can edit Category.
      *
-     * @param Category          $category Category entity
-     * @param UserInterface $user User
+     * @param Category      $category Category entity
+     * @param UserInterface $user     User
      *
      * @return bool Result
      */
     private function canEdit(Category $category, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
+        return in_array('ROLE_ADMIN', $user->getRoles());
         //  return $category->getItemAuthor() === $user;
     }
-
 
     /*
      * Checks if user can view category.
@@ -127,16 +127,15 @@ class CategoryVoter extends Voter
     /**
      * Checks if user can delete category.
      *
-     * @param Category          $category Category entity
-     * @param UserInterface $user User
+     * @param Category      $category Category entity
+     * @param UserInterface $user     User
      *
      * @return bool Result
      */
-
     private function canDelete(Category $category, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
-        //return return (($this->security->isGranted('ROLE_ADMIN')) && ($category->getItemAuthor() === $user));
+        return in_array('ROLE_ADMIN', $user->getRoles());
+        // return return (($this->security->isGranted('ROLE_ADMIN')) && ($category->getItemAuthor() === $user));
     }
 
     /**
@@ -148,6 +147,6 @@ class CategoryVoter extends Voter
      */
     private function canCreate(UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles()));
+        return in_array('ROLE_ADMIN', $user->getRoles());
     }
 }

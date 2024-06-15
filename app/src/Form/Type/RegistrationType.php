@@ -1,7 +1,6 @@
 <?php
 /**
  * User Password type.
- *
  */
 
 namespace App\Form\Type;
@@ -14,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * User Password Type.
@@ -42,18 +40,20 @@ class RegistrationType extends AbstractType
                     'label' => 'label.firstName',
                     'required' => true,
                     'attr' => ['max_length' => 64],
-                ])
+                ]
+            )
             ->add(
                 'email',
                 EmailType::class,
                 [
-                    'label'=> 'label.email',
+                    'label' => 'label.email',
                     'required' => true,
                     'attr' => ['max_length' => 64],
-                ])
+                ]
+            )
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                //'mapped' => false,
+                // 'mapped' => false,
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
                 'first_options'  => ['label' => 'label.new_password'],

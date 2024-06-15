@@ -5,12 +5,9 @@
 
 namespace App\Entity;
 
-
 use App\Repository\BookRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -37,7 +34,7 @@ class Book
      */
     #[ORM\Column(type: 'date')]
     #[Assert\Type(\DateTime::class)]
-    private ?\DateTime $releaseDate;
+    private ?\DateTime $releaseDate = null;
 
     /**
      * Title.
@@ -59,8 +56,6 @@ class Book
 
     /**
      * Category.
-     *
-     * @var Category
      */
     #[ORM\ManyToOne(targetEntity: Category::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -70,13 +65,12 @@ class Book
 
     /**
      * Slug.
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Gedmo\Slug(fields: ['title'])]
     #[Assert\Type('string')]
     #[Assert\Length(min: 3, max: 64)]
-    private ?string $slug;
+    private ?string $slug = null;
 
     /**
      * Tags.
@@ -87,23 +81,18 @@ class Book
     #[ORM\JoinTable(name: 'books_tags')]
     private Collection $tags;
 
-
     /**
      * Available.
-     *
-     * @var bool|null
      */
     #[ORM\Column]
     #[Assert\NotNull]
     private ?bool $available = true;
 
     /**
-     * Description
-     *
-     * @var string|null
+     * Description.
      */
     #[ORM\Column(type: Types::TEXT, length: 1000, nullable: true)]
-    #[Assert\Length(max:1000)]
+    #[Assert\Length(max: 1000)]
     private ?string $description = null;
 
     #[ORM\Column(length: 191, nullable: true)]
@@ -140,9 +129,6 @@ class Book
 
     /**
      * Setter for release date.
-     *
-     * @param \DateTimeImmutable|null $createdAt Release date
-     *
      */
     public function setReleaseDate(?\DateTime $releaseDate): void
     {
@@ -189,23 +175,14 @@ class Book
         $this->author = $author;
     }
 
-    /**
-     * @return Category|null
-     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    /**
-     * @param Category|null $category
-     *
-     * @return void
-     */
     public function setCategory(?Category $category): void
     {
         $this->category = $category;
-
     }
 
     public function getSlug(): ?string
@@ -217,7 +194,8 @@ class Book
     {
         $this->slug = $slug;
     }
-        /**
+
+    /**
      * Getter for tags.
      *
      * @return Collection<int, Tag> Tags collection
@@ -226,6 +204,7 @@ class Book
     {
         return $this->tags;
     }
+
     /**
      * Add tag.
      *
@@ -248,7 +227,6 @@ class Book
         $this->tags->removeElement($tag);
     }
 
-
     public function isAvailable(): ?bool
     {
         return $this->available;
@@ -257,7 +235,6 @@ class Book
     public function setAvailable(bool $available): void
     {
         $this->available = $available;
-
     }
 
     public function getDescription(): ?string
@@ -268,7 +245,6 @@ class Book
     public function setDescription(?string $description): void
     {
         $this->description = $description;
-
     }
 
     public function getCoverFilename(): ?string
@@ -279,7 +255,5 @@ class Book
     public function setCoverFilename(?string $coverFilename): void
     {
         $this->coverFilename = $coverFilename;
-
     }
-
 }

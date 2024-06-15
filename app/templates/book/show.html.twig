@@ -23,6 +23,10 @@
                 <dd>{{  book.title }}</dd>
                 <dt>{{ 'label.author'|trans }}</dt>
                 <dd>{{  book.author }}</dd>
+            {% if rating is defined and rating|length %}
+            <dt>{{ 'label.rating'|trans }}</dt>
+            <dd>{{  rating }}</dd>
+                {% endif %}
             <dt>{{ 'label.description'|trans }}</dt>
             <dd>{{  book.description|markdown_to_html }}</dd>
                 <dt>{{ 'label.category'|trans }}</dt>
@@ -43,6 +47,15 @@
                 {% endif %}
                {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') and book.isAvailable() %}
                    <a class="btn btn-styled" href="{{ url('rent', {id: book.id}) }}" title="{{ 'action.rent'|trans }}">{{ 'action.rent'|trans }}</a>
+               {% endif %}
+               {% if is_granted('RATE', book) %}
+                   <a class="btn btn-styled" href="{{ url('book_rate', {id: book.id}) }}" title="{{ 'action.rate'|trans }}">{{ 'action.rate'|trans }}</a>
+               {% endif %}
+               {% if is_granted('EDIT', rating) %}
+                   <a class="btn btn-styled" href="{{ url('rating_edit', {id: rating.id}) }}" title="{{ 'action.edit_rating'|trans }}">{{ 'action.edit_rating'|trans }}</a>
+               {% endif %}
+               {% if is_granted('DELETE', rating) %}
+                   <a class="btn btn-styled" href="{{ url('rating_delete', {id: rating.id}) }}" title="{{ 'action.delete_rating'|trans }}">{{ 'action.delete_rating'|trans }}</a>
                {% endif %}
            </dd>
 
