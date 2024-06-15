@@ -59,6 +59,22 @@ class RentalService implements RentalServiceInterface
     }// end getPaginatedListByStatus()
 
     /**
+     * Get paginated list of rentals.
+     *
+     * @param int $page Page number
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
+    public function getPaginatedList(int $page): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->rentalRepository->QueryAll(),
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE
+        );
+    }// end getPaginatedListByStatus()
+
+    /**
      * Get paginated list by user.
      *
      * @param int $page Page number

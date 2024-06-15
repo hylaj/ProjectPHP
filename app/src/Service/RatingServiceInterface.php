@@ -21,7 +21,8 @@ interface RatingServiceInterface
     public function save(Rating $rating): void;
     public function delete(Rating $rating): void;
     public function canBeRated(Book $book, User $user): bool;
-    public function getAverageRatingByBook(int $bookId): ?float;
+    public function findAverageRatingAndCountByBook(int $bookId): ?array;
+    public function getRatingByUserAndBook(User $user, Book $book): ?Rating;
 
-    public function getRatingByBook(int $bookId);
+
 }

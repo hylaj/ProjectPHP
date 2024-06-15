@@ -4,12 +4,14 @@
  */
 namespace App\Repository;
 
+use App\Entity\Book;
 use App\Entity\Rating;
 use App\Entity\Rental;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,28 +49,27 @@ class RatingRepository extends ServiceEntityRepository
         $this->_em->flush();
     }// end delete()
 
-    public function findAverageRatingByBook(int $bookId): ?float
+    public function findAverageRatingAndCountByBook(int $bookId): ?array
     {
-        return $this->createQueryBuilder('rating')
-            ->select('AVG(rating.bookRating) as avgRating')
+        $result = $this->createQueryBuilder('rating')
+            ->select('AVG(rating.bookRating) as avgRating, COUNT(rating) as ratingCount')
             ->where('rating.book = :bookId')
             ->setParameter('bookId', $bookId)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getScalarResult();
+
+        if (isset($result[0])) {
+            return [
+                'avgRating' => $result[0]['avgRating'],
+                'ratingCount' => $result[0]['ratingCount'],
+            ];
+        } else {
+            return null;
+        }
+
+
     }
 
-    public function findRatingByBook(int $bookId): ?Rating
-    {
-        return $this->CreateQueryBuilder('rating')
-            ->select('partial rating.{id, bookRating, user, book},
-            AVG(rating.bookRating) as avgRating,
-            COUNT(rating.id) as ratingCount')
-            ->where('rating.book = :bookId')
-            ->setParameter('bookId', $bookId)
-            ->groupBy('rating.book')
-            ->getQuery()
-            ->getResult();
-    }
 
     /**
      * Get or create new query builder.

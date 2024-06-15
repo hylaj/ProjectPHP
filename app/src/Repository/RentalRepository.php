@@ -46,7 +46,7 @@ class RentalRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-                'partial rental.{id, owner, book, status, rentalDate, comment}',
+                'partial rental.{id, owner, book, status, rentalDate, comment, returnDate}',
                 'partial user.{id, email}',
                 'partial book.{id, title}'
             )

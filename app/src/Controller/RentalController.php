@@ -56,7 +56,7 @@ class RentalController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function rent(Request $request, Book $book): Response
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+      /*  if ($this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
         }
 
@@ -67,7 +67,7 @@ class RentalController extends AbstractController
             );
 
             return $this->redirectToRoute('book_index');
-        }
+        }*/
 
         $rental = new Rental();
         $this->rentalService->setRentalDetails(false, $this->getUser(), $book, $rental);
@@ -118,9 +118,9 @@ class RentalController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function return(Request $request, Rental $rental): Response
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        /*if ($this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException();
-        }
+        }*/
 
         $form = $this->createForm(
             FormType::class,
@@ -185,9 +185,25 @@ class RentalController extends AbstractController
      */
     #[Route('/pending-approval', name: 'rental_pending_approval', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function pending(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->rentalService->getPaginatedListByStatus($page);
+
+        return $this->render('rental/pending.html.twig', ['pagination' => $pagination]);
+    }
+
+    /**
+     * List all rentals.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('/all', name: 'all_rentals', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function index(#[MapQueryParameter] int $page = 1): Response
+    {
+        $pagination = $this->rentalService->getPaginatedList($page);
 
         return $this->render('rental/index.html.twig', ['pagination' => $pagination]);
     }

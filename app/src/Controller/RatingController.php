@@ -97,7 +97,7 @@ class RatingController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('message.rated_successfully')
+                $this->translator->trans('message.edited_successfully')
             );
 
             return $this->redirectToRoute('book_show', ['id' => $rating->getBook()->getId()]);
@@ -119,7 +119,7 @@ class RatingController extends AbstractController
         $bookId=$rating->getBook()->getId();
 
         $form = $this->createForm(
-            RatingType::class,
+            FormType::class,
             $rating,
             [
                 'method' => 'DELETE',
@@ -129,11 +129,11 @@ class RatingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->ratingService->save($rating);
+            $this->ratingService->delete($rating);
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('message.rated_successfully')
+                $this->translator->trans('message.deleted_successfully')
             );
 
             return $this->redirectToRoute('book_show', ['id' => $bookId]);

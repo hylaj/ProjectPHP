@@ -577,7 +577,7 @@
 
       <trans-unit id="label.rental_approved">
         <source>label.rental_approved</source>
-        <target>Wypożyczenie zatwierdzone przez administratora</target>
+        <target>Wypożyczone</target>
       </trans-unit>
 
         <trans-unit id="label.pending_approval">

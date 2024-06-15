@@ -50,7 +50,7 @@ class UserController extends AbstractController
             $page,
         );
 
-        return $this->render('user/index.html.twig', ['pagination' => $pagination]);
+        return $this->render('user/pending.html.twig', ['pagination' => $pagination]);
     }// end index()
 
     #[Route('/{id}/edit-password', name: 'password_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]

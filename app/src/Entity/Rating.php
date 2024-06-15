@@ -29,8 +29,7 @@ class Rating
     #[Assert\Type(User::class)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: Book::class, fetch: 'EXTRA_LAZY')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Book::class, fetch: "EXTRA_LAZY")]
     #[Assert\NotBlank]
     #[Assert\Type(Book::class)]
     private ?Book $book = null;

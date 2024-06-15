@@ -51,7 +51,7 @@ class BookController extends AbstractController
             $filters
         );
 
-        return $this->render('book/index.html.twig', ['pagination' => $pagination]);
+        return $this->render('book/pending.html.twig', ['pagination' => $pagination]);
     }
 
     /**
@@ -69,13 +69,16 @@ class BookController extends AbstractController
     )]
     public function show(Book $book): Response
     {
-        $rating = $this->ratingService->getRatingByBook($book->getId());
-        //$rating = $this->ratingService->getAverageRatingByBook($book->getId());
+        $rating=$this->ratingService->getRatingByUserAndBook($this->getUser(), $book);
+        //$averageRating = $this->ratingService->getAverageRatingByBook($book->getId());
+        $ratingsInfo = $this->ratingService->findAverageRatingAndCountByBook($book->getId());
         return $this->render(
             'book/show.html.twig',
             [
                 'book' => $book,
-                'rating' => $rating
+                'averageRating' => $ratingsInfo['avgRating'] ?? null,
+                'ratingCount' => $ratingsInfo['ratingCount'] ?? null,
+                'rating' => $rating,
             ]
         );
     }

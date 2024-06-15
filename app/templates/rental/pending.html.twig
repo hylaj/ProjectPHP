@@ -34,7 +34,7 @@
                     <td>
                         {% if rental.returnDate is not null %}
                             {{ rental.returnDate|format_date('long') }}
-                        {% else %}
+                            {% else %}
                             {{ 'label.unspecified'|trans }}
                         {% endif %}
                     </td>

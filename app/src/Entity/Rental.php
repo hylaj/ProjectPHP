@@ -41,6 +41,9 @@ class Rental
     #[Assert\Type('string')]
     private ?string $comment = null;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $returnDate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,6 +87,9 @@ class Rental
     public function setStatus(bool $status): void
     {
         $this->status = $status;
+        if ($status === true) {
+            $this->returnDate = (new \DateTimeImmutable())->modify('+30 days');
+        }
     }
 
     public function getComment(): ?string
@@ -94,5 +100,16 @@ class Rental
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
+    }
+
+    public function getReturnDate(): ?\DateTimeImmutable
+    {
+        return $this->returnDate;
+    }
+
+    public function setReturnDate(\DateTimeImmutable $returnDate): void
+    {
+        $this->returnDate = $returnDate;
+
     }
 }

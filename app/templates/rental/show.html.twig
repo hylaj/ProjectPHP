@@ -17,6 +17,8 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'rental.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.owner'|trans, 'rental.user.email') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title')  }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.rentalDate'|trans, 'rental.rentalDate')  }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.returnDate'|trans, 'rental.returnDate')  }}</th>
                 <th>{{ 'label.comment'|trans }}</th>
                 <th>{{ 'label.status'|trans }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
@@ -29,6 +31,14 @@
                     <td>{{ rental.id }}</td>
                     <td>{{ rental.owner.email }}</td>
                     <td>{{ rental.book.title }}</td>
+                    <td>{{ rental.rentalDate|format_date('long') }}</td>
+                    <td>
+                        {% if rental.returnDate is not null %}
+                            {{ rental.returnDate|format_date('long') }}
+                        {% else %}
+                            {{ 'label.unspecified'|trans }}
+                        {% endif %}
+                    </td>
                     <td>{{ rental.comment }}</td>
                     <td>
                         {%  if rental.status == true %}

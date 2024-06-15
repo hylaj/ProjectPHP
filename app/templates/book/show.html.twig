@@ -23,10 +23,24 @@
                 <dd>{{  book.title }}</dd>
                 <dt>{{ 'label.author'|trans }}</dt>
                 <dd>{{  book.author }}</dd>
-            {% if rating is defined and rating|length %}
+
             <dt>{{ 'label.rating'|trans }}</dt>
-            <dd>{{  rating }}</dd>
+
+                {% if averageRating is not null %}
+                    <dd>{{ averageRating|number_format(1, '.') }}/5</dd>
+
+                    <dt>{{ 'label.ratings_count'|trans }}</dt>
+                    <dd>{{ ratingCount }}</dd>
+
+                {% else %}
+                    <dd>{{ 'label.no_ratings'|trans }}</dd>
                 {% endif %}
+
+                {% if is_granted('EDIT', rating) %}
+            <dt>{{ 'label.my_rating'|trans }}</dt>
+            <dd>{{ rating is not null ? rating.bookRating : 'label.no_ratings'|trans }}</dd>
+                {% endif %}
+
             <dt>{{ 'label.description'|trans }}</dt>
             <dd>{{  book.description|markdown_to_html }}</dd>
                 <dt>{{ 'label.category'|trans }}</dt>

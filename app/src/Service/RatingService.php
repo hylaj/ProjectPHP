@@ -73,14 +73,13 @@ class RatingService implements RatingServiceInterface
         }
     }// end canBeRented()
 
-    public function getAverageRatingByBook(int $bookId): ?float
+    public function findAverageRatingAndCountByBook(int $bookId): ?array
     {
-        return $this->ratingRepository->findAverageRatingByBook($bookId);
+        return $this->ratingRepository->findAverageRatingAndCountByBook($bookId);
     }
-
-    public function getRatingByBook(int $bookId)
-    {
-        return $this->ratingRepository->findRatingByBook($bookId);
-    }
+public function getRatingByUserAndBook(User $user, Book $book): ?Rating
+{
+    return $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
+}
 
 }

@@ -16,28 +16,20 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
-               {# <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'tag.id') }}</th>#}
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'tag.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'tag.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'tag.updatedAt') }}</th>
 
-            {# <th>{{ knp_pagination_sortable(pagination, 'label.slug'|trans, 'tag.slug') }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
-                <th>{{ 'label.edit'|trans }}</th>
-                <th>{{ 'label.delete'|trans }}</th> #}
+
             </tr>
             </thead>
             <tbody>
             {% for tag in pagination.items %}
                 <tr>
-                   {# <td>{{ tag.id }}</td>#}
                     <td><a class="text-decoration-none" href="{{ url('tag_show', {id: tag.id}) }}">{{ tag.title }}</a></td>
                     <td>{{ tag.createdAt|format_date('long') }}</td>
                     <td>{{ tag.updatedAt|format_date('long') }}</td>
-                    {# <td>{{ tag.slug }}</td>
-                    <td><a href="{{ url('tag_show', {id: tag.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a></td>
-                    <td><a href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a></td>
-                    <td><a href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>#}
+
                 </tr>
             {% endfor %}
             </tbody>

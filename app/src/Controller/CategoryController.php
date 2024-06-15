@@ -43,7 +43,7 @@ class CategoryController extends AbstractController
     {
         $pagination = $this->categoryService->getPaginatedList($page);
 
-        return $this->render('category/index.html.twig', ['pagination' => $pagination]);
+        return $this->render('category/pending.html.twig', ['pagination' => $pagination]);
     }// end index()
 
     #[Route(
