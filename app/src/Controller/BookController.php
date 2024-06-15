@@ -51,7 +51,7 @@ class BookController extends AbstractController
             $filters
         );
 
-        return $this->render('book/pending.html.twig', ['pagination' => $pagination]);
+        return $this->render('book/index.html.twig', ['pagination' => $pagination]);
     }
 
     /**

@@ -53,7 +53,7 @@ class RentalController extends AbstractController
      * @throws OptimisticLockException
      */
     #[Route('/{id}/rent', name: 'rent', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('RENT', subject: 'book')]
     public function rent(Request $request, Book $book): Response
     {
       /*  if ($this->isGranted('ROLE_ADMIN')) {
@@ -115,7 +115,7 @@ class RentalController extends AbstractController
      * @throws OptimisticLockException
      */
     #[Route('/{id}/return', name: 'return', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('RETURN', subject: 'rental')]
     public function return(Request $request, Rental $rental): Response
     {
         /*if ($this->isGranted('ROLE_ADMIN')) {
@@ -161,7 +161,7 @@ class RentalController extends AbstractController
      * @return Response HTTP Response
      */
     #[Route('/list', name: 'rented_books', methods: 'GET')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('VIEW')]
     public function show(#[MapQueryParameter] int $page = 1): Response
     {
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -184,7 +184,7 @@ class RentalController extends AbstractController
      * @return Response HTTP Response
      */
     #[Route('/pending-approval', name: 'rental_pending_approval', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('VIEW_ALL_RENTALS')]
     public function pending(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->rentalService->getPaginatedListByStatus($page);
@@ -200,7 +200,7 @@ class RentalController extends AbstractController
      * @return Response HTTP Response
      */
     #[Route('/all', name: 'all_rentals', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('VIEW_ALL_RENTALS')]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->rentalService->getPaginatedList($page);
@@ -219,7 +219,7 @@ class RentalController extends AbstractController
      * @throws OptimisticLockException
      */
     #[Route('/{id}/approve', name: 'rental_approve', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('APPROVE', subject: 'rental')]
     public function approve(Rental $rental): Response
     {
         $this->rentalService->setStatus(true, $rental);
@@ -244,7 +244,7 @@ class RentalController extends AbstractController
      * @throws OptimisticLockException
      */
     #[Route('/{id}/deny', name: 'rental_deny', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT|DELETE')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('DENY', subject: 'rental')]
     public function deny(Rental $rental): Response
     {
         $this->bookService->setAvailable($rental->getBook(), true);
