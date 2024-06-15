@@ -40,8 +40,12 @@
                     </td>
                     <td>{{ rental.comment }}</td>
                     <td>
+                        {% if is_granted('APPROVE', rental) %}
                         <a class="btn btn-styled" href="{{ url('rental_approve', {id: rental.id}) }}" title="{{ 'action.rental_approve'|trans }}">{{ 'action.rental_approve'|trans }}</a>
                         <a class="btn btn-styled" href="{{ url('rental_deny', {id: rental.id}) }}" title="{{ 'action.rental_deny'|trans }}">{{ 'action.rental_deny'|trans }}</a>
+                        {% else %}
+                            {{ 'label.approved'|trans }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

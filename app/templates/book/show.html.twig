@@ -59,7 +59,7 @@
                 {% if is_granted('DELETE', book) %}
                     <a class="btn btn-styled" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
                 {% endif %}
-               {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') and book.isAvailable() %}
+               {% if is_granted('RENT', book)  %}
                    <a class="btn btn-styled" href="{{ url('rent', {id: book.id}) }}" title="{{ 'action.rent'|trans }}">{{ 'action.rent'|trans }}</a>
                {% endif %}
                {% if is_granted('RATE', book) %}
