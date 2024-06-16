@@ -6,7 +6,9 @@
 
 {% block body %}
     <div class="row">
-        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.rental_list'|trans }}</h2></div>
+        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.all_rentals_list'|trans }}</h2></div>
+        <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('rental_pending_approval') }}" title="{{ 'action.pending_approval'|trans }}">{{ 'action.pending_approval'|trans }}</a>
+       <a class="btn btn-styled" href="{{ url('overdue_rentals') }}" title="{{ 'action.overdue_rentals'|trans }}">{{ 'action.overdue_rentals'|trans }}</a>
     </div>
     {% if pagination is defined and pagination.items|length %}
 
@@ -20,7 +22,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.rentalDate'|trans, 'rental.rentalDate')  }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.returnDate'|trans, 'rental.returnDate')  }}</th>
                 <th>{{ 'label.comment'|trans }}</th>
-                <th>{{ 'label.approval'|trans}}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.status'|trans, 'rental.status')  }}</th>
 
             </tr>
             </thead>
@@ -39,6 +41,15 @@
                         {% endif %}
                     </td>
                     <td>{{ rental.comment }}</td>
+                    <td>
+                        {%  if rental.status == true and rental.returnDate < date() %}
+                            {{ 'label.overdue'|trans }}
+                            {% elseif rental.status == true %}
+                            {{ 'label.rented'|trans  }}
+                        {% else %}
+                            {{ 'label.pending'|trans  }}
+                        {% endif %}
+                    </td>
                     <td>
                         {% if is_granted('APPROVE', rental) %}
                         <a class="btn btn-styled" href="{{ url('rental_approve', {id: rental.id}) }}" title="{{ 'action.rental_approve'|trans }}">{{ 'action.rental_approve'|trans }}</a>

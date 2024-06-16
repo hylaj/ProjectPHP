@@ -71,6 +71,28 @@ class RentalRepository extends ServiceEntityRepository
             ->orderBy('rental.status', 'DESC');
     }// end queryByOwner()
 
+
+    public function queryByDate($date): QueryBuilder
+    {
+        return $this->QueryAll()
+            ->where('rental.returnDate <= :date')
+            ->setParameter('date', $date)
+            ->orderBy('rental.returnDate', 'ASC');
+    }
+
+
+    public function queryByDateAndUser($user, $date): ?array
+    {
+        return $this->QueryAll()
+            ->where('rental.returnDate <= :date')
+            ->andWhere('rental.owner = :user')
+            ->setParameter('user', $user)
+            ->setParameter('date', $date)
+            ->orderBy('rental.returnDate', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * Get or create new query builder.
      *

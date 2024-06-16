@@ -329,7 +329,7 @@
 
       <trans-unit id="action.pending_approval">
         <source>action.pending_approval</source>
-        <target>Wypożyczenia</target>
+        <target>Oczekujące</target>
       </trans-unit>
 
       <trans-unit id="action.rented_books">
@@ -584,6 +584,11 @@
           <source>label.pending_approval</source>
           <target>Oczekuje na zatwierdzenie</target>
         </trans-unit>
+
+      <trans-unit id="message.overdue">
+        <source>You have overdue rental with ID %id%. Return date was %date%.</source>
+        <target>Masz zaległe wypożyczenie o ID %id%. Data zwrotu była %date%.</target>
+      </trans-unit>
 
     </body>
   </file>

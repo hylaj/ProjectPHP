@@ -42,7 +42,7 @@ class TagController extends AbstractController
     {
         $pagination = $this->tagService->getPaginatedList($page);
 
-        return $this->render('tag/pending.html.twig', ['pagination' => $pagination]);
+        return $this->render('tag/index.html.twig', ['pagination' => $pagination]);
     }// end index()
 
     #[Route(

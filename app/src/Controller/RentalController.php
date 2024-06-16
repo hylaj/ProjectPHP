@@ -10,6 +10,7 @@ use App\Entity\Rental;
 use App\Form\Type\RentalType;
 use App\Service\BookServiceInterface;
 use App\Service\RentalServiceInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -164,9 +165,23 @@ class RentalController extends AbstractController
     #[IsGranted('VIEW')]
     public function show(#[MapQueryParameter] int $page = 1): Response
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
+        $today = new \DateTimeImmutable();
+        $overdueRentals = $this->rentalService->findOverdueRentalsByUser($this->getUser(), $today);
+        if ($overdueRentals){
+            foreach ($overdueRentals as $rental) {
+                $message = $this->translator->trans(
+                    'You have overdue rental with ID %id%. Return date was %date%.',
+                    [
+                        '%id%' => $rental->getId(),
+                        '%date%' => $rental->getReturnDate()->format('Y-m-d')
+                    ],
+                    'messages'
+                );
+                $this->addFlash('warning', $message);
+            }
         }
+
+
         $owner = $this->getUser()->getId();
         $pagination = $this->rentalService->getPaginatedListByOwner(
             $page,
@@ -199,13 +214,29 @@ class RentalController extends AbstractController
      *
      * @return Response HTTP Response
      */
-    #[Route('/all', name: 'all_rentals', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
+    #[Route('/all', name: 'all_rentals', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     #[IsGranted('VIEW_ALL_RENTALS')]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->rentalService->getPaginatedList($page);
 
         return $this->render('rental/index.html.twig', ['pagination' => $pagination]);
+    }
+    /**
+     * List overdue rentals.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP Response
+     */
+    #[Route('/overdue', name: 'overdue_rentals', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
+    #[IsGranted('VIEW_ALL_RENTALS')]
+    public function overdue(#[MapQueryParameter] int $page = 1): Response
+    {
+        $today = new DateTimeImmutable();
+        $pagination = $this->rentalService->getPaginatedListByDate($page, $today);
+
+        return $this->render('rental/overdue.html.twig', ['pagination' => $pagination]);
     }
 
     /**

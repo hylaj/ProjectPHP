@@ -596,7 +596,10 @@
            <source>label.pending_approval</source>
            <target>Rental is pending approval</target>
          </trans-unit>
-
+      <trans-unit id="message.overdue">
+        <source>You have overdue rental with ID %id%. Return date was %date%.</source>
+        <target>You have overdue rental with ID %id%. Return date was %date%.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

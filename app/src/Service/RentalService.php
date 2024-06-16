@@ -9,10 +9,12 @@ use App\Entity\Book;
 use App\Entity\Rental;
 use App\Entity\User;
 use App\Repository\RentalRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -89,6 +91,34 @@ class RentalService implements RentalServiceInterface
             self::PAGINATOR_ITEMS_PER_PAGE
         );
     }// end getPaginatedListByOwner()
+
+    /**
+     * Get paginated list by date.
+     *
+     * @param int $page Page number
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
+    public function getPaginatedListByDate(int $page, $date): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->rentalRepository->queryByDate($date),
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE
+        );
+    }
+
+    /**
+     * Find overdue rentals by user.
+     *
+     * @param User $user
+     * @param DateTimeImmutable $date
+     * @return QueryBuilder Paginated list
+     */
+    public function findOverdueRentalsByUser(User $user, DateTimeImmutable $date): ?array
+    {
+        return $this->rentalRepository->queryByDateAndUser($user, $date);
+    }
 
     /**
      * Save entity.
