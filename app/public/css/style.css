@@ -1,29 +1,39 @@
+body {
+    font-family: 'Courier New';
+}
+.navbar {
+    background-color: #f5f6f8;
+}
+.navbar .nav-link {
+    color: #343a40;
+}
+
+@media (max-width: 992px) {
+    .navbar .dropdown-menu {
+        background-color: #f5f6f8;
+        border-radius: 0;
+        border: none;
+    }
+}
+
+
 .btn-styled {
-    background-color: rgba(238, 151, 66, 0.78); /* Jasnoszary kolor tła */
-    border-color: #f8f9fa; /* Kolor ramki tła */
-    color: #1a324b; /* Kolor tekstu */
+    background-color: #007bff;
+    color: #ffffff;
 }
-
 .btn-styled:hover {
-    background-color: #e9ecef; /* Jaśniejszy kolor tła przy najechaniu myszką */
-    border-color: #e9ecef; /* Jaśniejszy kolor ramki tła przy najechaniu myszką */
-    color: #f18f2e; /* Kolor tekstu pozostaje bez zmian */
-}
-a.nav-link:hover {
-    color: #f18f2e;
-    text-decoration: none;
-}
-a.nav-link {
-    color: #2e5c8d;
-}
-a.navbar-brand {
-    color: #2e5c8d;
+    background-color: #ffffff;
+    color: #0056b3;
 }
 
-a.dropdown-item{
-    color: #2e5c8d;
+a.nav-link:hover {
+    color: #0056b3;
 }
+
 a.dropdown-item:hover{
-    color: #f18f2e;
-    text-decoration: none;
+    color: #0056b3;
+}
+
+a.navbar-brand:hover {
+    color: #0056b3;
 }

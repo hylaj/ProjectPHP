@@ -5,87 +5,88 @@
 {% endblock %}
 
 {% block body %}
+    <div class="main-content pb-4">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.book_list'|trans }}</h2>
+            </div>
+            {% if is_granted('CREATE') %}
+                <div class="col text-end py-4">
+                    <a class="btn btn-outline-primary" href="{{ url('book_create') }}" title="{{ 'action.create_book'|trans }}">
+                        {{ 'action.create_book'|trans }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
 
-    <div class="row">
-        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.book_list'|trans }}</h2></div>
-       {% if is_granted('CREATE') %}
-           <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('book_create') }}" title="{{ 'action.create_book'|trans }}">{{ 'action.create_book'|trans }}</a></div>
-       {% endif %}
-    </div>
-    <div class="form-group float-sm-right text-center container">
-        {{ form_start(form, { 'attr': { 'class': 'mb-4' } }) }}
-        {{ form_widget(form.titleSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
-        {{ form_widget(form.authorSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
-        <input type="submit" value="{{ 'action.search'|trans }}" class="btn btn-primary"/>
-        {{ form_end(form) }}
-    </div>
-    {% if pagination is defined and pagination.items|length %}
+        <div class="form-group float-sm-right text-center container">
+            {{ form_start(form, { 'attr': { 'class': 'mb-4' } }) }}
+            {{ form_widget(form.titleSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
+            {{ form_widget(form.authorSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
+            <input type="submit" value="{{ 'action.search'|trans }}" class="btn btn-primary"/>
+            {{ form_end(form) }}
+        </div>
 
-<div>
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-            <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title')  }}</th>
-                <th>{{  'label.tags'|trans }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.availability'|trans, 'book.available')  }}</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            {% for book in pagination.items %}
-                <tr>
-
-                    <td>
-                        <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">{{ book.title }}</a>
-                    </td>
-
-                    <td>{{ book.author }}</td>
-
-                    <td>
-                        <a class="btn btn-outline-primary"
-                           href="{{ url('book_index', {'categoryId' : book.category.id}) }}"
-                           title="{{ book.category.title }}">
-                            {{ book.category.title }}
-                        </a>
-                    </td>
-
-                    <td>{% if book.tags is defined and book.tags|length %}
-                            {% for tag in book.tags %}
-                                <a class="btn btn-outline-primary"
-                                   href="{{ url('book_index', {'tagId' : tag.id}) }}"
-                                   title="{{ tag.title }}">
-                                    {{ tag.title }}
+        {% if pagination is defined and pagination.items|length %}
+            <div>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</th>
+                        <th>{{ 'label.tags'|trans }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.availability'|trans, 'book.available') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in pagination.items %}
+                        <tr>
+                            <td>
+                                <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">
+                                    {{ book.title }}
                                 </a>
-                            {% endfor %}
-                        {% else %}
-                            &nbsp;
-                        {% endif %}
-                    </td>
+                            </td>
+                            <td>{{ book.author }}</td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{{ url('book_index', {'categoryId': book.category.id}) }}" title="{{ book.category.title }}">
+                                    {{ book.category.title }}
+                                </a>
+                            </td>
+                            <td>
+                                {% if book.tags is defined and book.tags|length %}
+                                    {% for tag in book.tags %}
+                                        <a class="btn btn-outline-primary" href="{{ url('book_index', {'tagId': tag.id}) }}" title="{{ tag.title }}">
+                                            {{ tag.title }}
+                                        </a>
+                                    {% endfor %}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if book.available == true %}
+                                    {{ 'label.available'|trans }}
+                                {% else %}
+                                    {{ 'label.not_available'|trans }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-                    <td>
-                        {%  if book.available == true %}{{ 'label.available'|trans  }}
-                    {% else %}
-                        {{ 'label.not_available'|trans  }}
-                    {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        </div>
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.empty_list'|trans
-            } %}
-        </p>
-    {% endif %}
+            <div class="navigation text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% else %}
+            <p>
+                {% include 'default/_single_alert_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.empty_list'|trans
+                } %}
+            </p>
+        {% endif %}
+    </div>
 {% endblock %}

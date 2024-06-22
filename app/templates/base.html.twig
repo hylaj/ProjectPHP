@@ -12,36 +12,35 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {% endblock %}
 </head>
-
 <body>
-
-<nav class="navbar navbar-light navbar-expand" style="background-color: rgba(214,220,224,0.87);">
+<nav class="navbar navbar-light navbar-expand-lg sticky-top" >
     <div class="container-fluid">
-        <a class="navbar-brand px-4">{{ 'label.page_title'|trans }}</a>
-        <div class="d-flex ms-auto">
-            <ul class="navbar-nav d-flex flex-row">
-
+        <a href="{{ url('book_index') }}"  class="navbar-brand px-4"><i class="bi bi-bar-chart-steps"></i> {{ 'label.page_title'|trans }}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item dropdown navbar-brand">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" >{{ 'action.admin'|trans }}</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ 'action.admin'|trans }}</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ url('user_index') }}" class="dropdown-item">{{ 'action.user_list'|trans }}</a></li>
                             <li><a href="{{ url('all_rentals') }}" class="dropdown-item">{{ 'action.all_rentals'|trans }}</a></li>
                         </ul>
                     </li>
                 {% endif %}
-
-                <li class="nav-item dropdown navbar-brand">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ 'action.account'|trans }}</a>
                     <ul class="dropdown-menu">
-                    {% if is_granted('ROLE_USER') %}
-                        {% if not is_granted('ROLE_ADMIN')%}
-                            <li><a href="{{ url('rented_books', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.rented_books'|trans }}</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                        {% endif %}
-                        <li><a href="{{ url('user_show', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.user_show'|trans }}</a></li>
-                        <li><a href="{{ url('password_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.password_edit'|trans }}</a></li>
-                        <li><a href="{{ url('details_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.details_edit'|trans }}</a></li>
+                        {% if is_granted('ROLE_USER') %}
+                            {% if not is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ url('rented_books', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.rented_books'|trans }}</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li><a href="{{ url('user_show', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.user_show'|trans }}</a></li>
+                            <li><a href="{{ url('password_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.password_edit'|trans }}</a></li>
+                            <li><a href="{{ url('details_edit', {id: app.user.id}) }}" class="dropdown-item">{{ 'action.details_edit'|trans }}</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a></li>
                         {% else %}
@@ -50,38 +49,21 @@
                         {% endif %}
                     </ul>
                 </li>
-
-
-                <li class="nav-item navbar-brand">
-                    <a href="{{ url('book_index') }}" class="nav-link">{{ 'action.books'|trans }}</a>
-                </li>
-                <li class="nav-item navbar-brand">
-                    <a href="{{ url('category_index') }}" class="nav-link">{{ 'action.categories'|trans }}</a>
-                </li>
-                <li class="nav-item navbar-brand">
-                    <a href="{{ url('tag_index') }}" class="nav-link">{{ 'action.tags'|trans }}</a>
-                </li>
+                <li class="nav-item"><a href="{{ url('book_index') }}" class="nav-link">{{ 'action.books'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ url('category_index') }}" class="nav-link">{{ 'action.categories'|trans }}</a></li>
+                <li class="nav-item"><a href="{{ url('tag_index') }}" class="nav-link">{{ 'action.tags'|trans }}</a></li>
             </ul>
         </div>
     </div>
 </nav>
-
-
-
-<main role="main" class="container-fluid ">
-    <div class="container-fluid">
+<main role="main" class="container-fluid mt-4">
+    <div class="container">
         {% include 'default/_flash_messages.html.twig' %}
         {% block body %}{% endblock %}
     </div>
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div class="fixed-bottom text-end px-4"><p>Currently logged in as {{ app.user.firstName }}</p></div>
-    {% endif %}
 </main>
-
 {% block javascripts %}
-    {# {% block importmap %}{{ importmap('app') }}{% endblock %}#}
-    <script
-            src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
             integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -91,6 +73,5 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
 {% endblock %}
-
 </body>
 </html>

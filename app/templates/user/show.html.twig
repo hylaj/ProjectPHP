@@ -29,24 +29,24 @@
 
         <dt>{{ 'label.manage_user'|trans }}</dt>
         <dd>
-                <a class="btn btn-styled btn-sm" href="{{ url('password_edit', {id: user.id}) }}" title="{{ 'action.edit_password'|trans }}">{{ 'action.edit_password'|trans }}</a>
+                <a class="btn btn-outline-primary" href="{{ url('password_edit', {id: user.id}) }}" title="{{ 'action.edit_password'|trans }}">{{ 'action.edit_password'|trans }}</a>
 
-            <a class="btn btn-styled btn-sm" href="{{ url('details_edit', {id: user.id}) }}" title="{{ 'action.edit_details'|trans }}">{{ 'action.edit_details'|trans }}</a>
+            <a class="btn btn-outline-primary" href="{{ url('details_edit', {id: user.id}) }}" title="{{ 'action.edit_details'|trans }}">{{ 'action.edit_details'|trans }}</a>
 
         {% if is_granted('MANAGE', user) %}
             {%  if 'ROLE_ADMIN' not in user.getRoles() %}
 
-            <a class="btn btn-styled btn-sm" href="{{ url('promote_user', {id: user.id}) }}" title="{{ 'action.promote_user'|trans }}">{{ 'action.promote_user'|trans }}</a>
+            <a class="btn btn-outline-primary" href="{{ url('promote_user', {id: user.id}) }}" title="{{ 'action.promote_user'|trans }}">{{ 'action.promote_user'|trans }}</a>
 
                 {% else %}
 
-                        <a class="btn btn-styled btn-sm" href="{{ url('demote_admin', {id: user.id}) }}" title="{{ 'action.demote_admin'|trans }}">{{ 'action.demote_admin'|trans }}</a>
+                        <a class="btn btn-outline-primary" href="{{ url('demote_admin', {id: user.id}) }}" title="{{ 'action.demote_admin'|trans }}">{{ 'action.demote_admin'|trans }}</a>
 
             {% endif %}
         {%  if user.isBlocked() %}
-            <a class="btn btn-styled btn-sm" href="{{ url('unblock_user', {id: user.id}) }}" title="{{ 'action.unblock_user'|trans }}">{{ 'action.unblock_user'|trans }}</a>
+            <a class="btn btn-outline-primary" href="{{ url('unblock_user', {id: user.id}) }}" title="{{ 'action.unblock_user'|trans }}">{{ 'action.unblock_user'|trans }}</a>
             {% elseif not user.isBlocked() %}
-                <a class="btn btn-styled btn-sm" href="{{ url('block_user', {id: user.id}) }}" title="{{ 'action.block_user'|trans }}">{{ 'action.block_user'|trans }}</a>
+                <a class="btn btn-outline-primary" href="{{ url('block_user', {id: user.id}) }}" title="{{ 'action.block_user'|trans }}">{{ 'action.block_user'|trans }}</a>
         {% endif %}
         {% endif %}
 
