@@ -354,7 +354,7 @@
 
       <trans-unit id="label.available">
         <source>label.available</source>
-        <target>Dostępny</target>
+        <target>Dostępna</target>
       </trans-unit>
 
       <trans-unit id="title.return_book">
@@ -404,7 +404,7 @@
 
       <trans-unit id="label.not_available">
         <source>label.not_available</source>
-        <target>Niedostępny</target>
+        <target>Niedostępna</target>
       </trans-unit>
       <trans-unit id="label.current_password">
         <source>label.current_password</source>

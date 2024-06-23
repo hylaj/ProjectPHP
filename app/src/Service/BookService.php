@@ -143,7 +143,8 @@ class BookService implements BookServiceInterface
                 $this->targetDirectory.'/'.$filename
             );
 
-            $this->createCover($uploadedFile, $book);
+
         }
+        $this->createCover($uploadedFile, $book);
     }
 }// end class

@@ -29,52 +29,51 @@
 
         {% if pagination is defined and pagination.items|length %}
             <div>
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</th>
-                        <th>{{ 'label.tags'|trans }}</th>
-                        <th>{{ knp_pagination_sortable(pagination, 'label.availability'|trans, 'book.available') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for book in pagination.items %}
-                        <tr>
-                            <td>
-                                <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">
-                                    {{ book.title }}
-                                </a>
-                            </td>
-                            <td>{{ book.author }}</td>
-                            <td>
-                                <a class="btn btn-outline-primary" href="{{ url('book_index', {'categoryId': book.category.id}) }}" title="{{ book.category.title }}">
-                                    {{ book.category.title }}
-                                </a>
-                            </td>
-                            <td>
-                                {% if book.tags is defined and book.tags|length %}
-                                    {% for tag in book.tags %}
-                                        <a class="btn btn-outline-primary" href="{{ url('book_index', {'tagId': tag.id}) }}" title="{{ tag.title }}">
-                                            {{ tag.title }}
-                                        </a>
-                                    {% endfor %}
-                                {% else %}
-                                    &nbsp;
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if book.available == true %}
-                                    {{ 'label.available'|trans }}
-                                {% else %}
-                                    {{ 'label.not_available'|trans }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% for book in pagination.items %}
+                    <div class="book-item border rounded p-3 mb-4">
+                        <div class="row">
+                            {% if book.coverFilename is defined and book.coverFilename|length %}
+                                <div class="col-md-2 mb-3">
+                                    <a href="{{ url('book_show', {id: book.id}) }}">
+                                        <img src="{{ asset(covers_directory~book.coverFilename) }}" class="img-fluid rounded" alt="{{ book.title }}">
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="col-md-10">
+                                <h3>
+                                    <a class="text-decoration-none mb-4" href="{{ url('book_show', {id: book.id}) }}">
+                                        {{ book.title }}
+                                    </a>
+                                </h3>
+                                <p><b>{{ 'label.author'|trans }}</b>: {{ book.author }}</p>
+                                <p><b>{{ 'label.release_date'|trans }}</b>: {{ book.releaseDate|format_date('long') }}</p>
+                                <p><b>{{ 'label.category'|trans }}</b>:
+                                    <a class="btn btn-outline-primary" href="{{ url('book_index', {'categoryId': book.category.id}) }}" title="{{ book.category.title }}">
+                                        {{ book.category.title }}
+                                    </a>
+                                </p>
+                                <p><b>{{ 'label.tags'|trans }}</b>:
+                                    {% if book.tags is defined and book.tags|length %}
+                                        {% for tag in book.tags %}
+                                            <a class="btn btn-outline-primary" href="{{ url('book_index', {'tagId': tag.id}) }}" title="{{ tag.title }}">
+                                                {{ tag.title }}
+                                            </a>
+                                        {% endfor %}
+                                    {% else %}
+                                        &nbsp;
+                                    {% endif %}
+                                </p>
+                                <p><b>{{ 'label.availability'|trans }}</b>:
+                                    {% if book.available == true %}
+                                        <span style="color: green;"> {{ 'label.available'|trans }}</span>
+                                    {% else %}
+                                    <span style="color: red;">  {{ 'label.not_available'|trans }}</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
 
             <div class="navigation text-center">
