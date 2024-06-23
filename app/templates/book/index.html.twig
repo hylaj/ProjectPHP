@@ -19,15 +19,27 @@
             {% endif %}
         </div>
 
-        <div class="form-group float-sm-right text-center container">
+        <div class="form-group float-sm-right text-center">
             {{ form_start(form, { 'attr': { 'class': 'mb-4' } }) }}
-            {{ form_widget(form.titleSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
+            {{ form_widget(form.titleSearch, { 'attr': { 'class': 'col form-control mb-3'} }) }}
             {{ form_widget(form.authorSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
             <input type="submit" value="{{ 'action.search'|trans }}" class="btn btn-primary"/>
             {{ form_end(form) }}
+
         </div>
 
         {% if pagination is defined and pagination.items|length %}
+            <div class="dropdown text-end">
+                <button class="btn btn-outline-primary dropdown-toggle mb-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ 'action.sort'|trans }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title')  }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.availability'|trans, 'book.available', {'defaultDirection': 'desc'})  }}</a></li>
+                </ul>
+            </div>
             <div>
                 {% for book in pagination.items %}
                     <div class="book-item border rounded p-3 mb-4">
@@ -40,8 +52,8 @@
                                 </div>
                             {% endif %}
                             <div class="col-md-10">
-                                <h3>
-                                    <a class="text-decoration-none mb-4" href="{{ url('book_show', {id: book.id}) }}">
+                                <h3 class="mb-4">
+                                    <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">
                                         {{ book.title }}
                                     </a>
                                 </h3>
@@ -63,7 +75,7 @@
                                         &nbsp;
                                     {% endif %}
                                 </p>
-                                <p><b>{{ 'label.availability'|trans }}</b>:
+                                <p>
                                     {% if book.available == true %}
                                         <span style="color: green;"> {{ 'label.available'|trans }}</span>
                                     {% else %}

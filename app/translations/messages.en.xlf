@@ -600,6 +600,123 @@
         <source>You have overdue rental with ID %id%. Return date was %date%.</source>
         <target>You have overdue rental with ID %id%. Return date was %date%.</target>
       </trans-unit>
+
+
+<trans-unit id="message.invalid_characters">
+    <source>message.invalid_characters</source>
+    <target>Invalid characters</target>
+</trans-unit>
+<trans-unit id="message.rated_successfully">
+    <source>message.rated_successfully</source>
+    <target>Rated successfully</target>
+</trans-unit>
+<trans-unit id="label.rating">
+    <source>label.rating</source>
+    <target>Rating</target>
+</trans-unit>
+<trans-unit id="label.ratings_count">
+    <source>label.ratings_count</source>
+    <target>Ratings count</target>
+</trans-unit>
+<trans-unit id="label.no_ratings">
+    <source>label.no_ratings</source>
+    <target>No ratings</target>
+</trans-unit>
+<trans-unit id="label.my_rating">
+    <source>label.my_rating</source>
+    <target>My rating</target>
+</trans-unit>
+<trans-unit id="action.rate">
+    <source>action.rate</source>
+    <target>Rate</target>
+</trans-unit>
+<trans-unit id="action.edit_rating">
+    <source>action.edit_rating</source>
+    <target>Edit rating</target>
+</trans-unit>
+<trans-unit id="action.delete_rating">
+    <source>action.delete_rating</source>
+    <target>Delete rating</target>
+</trans-unit>
+<trans-unit id="action.search">
+    <source>action.search</source>
+    <target>Search</target>
+</trans-unit>
+<trans-unit id="action.sort">
+    <source>action.sort</source>
+    <target>Sort</target>
+</trans-unit>
+<trans-unit id="action.all_rentals">
+    <source>action.all_rentals</source>
+    <target>All rentals</target>
+</trans-unit>
+<trans-unit id="label.rentalDate">
+    <source>label.rentalDate</source>
+    <target>Rental date</target>
+</trans-unit>
+<trans-unit id="label.returnDate">
+    <source>label.returnDate</source>
+    <target>Return date</target>
+</trans-unit>
+<trans-unit id="label.unspecified">
+    <source>label.unspecified</source>
+    <target>Unspecified</target>
+</trans-unit>
+<trans-unit id="title.rental_overdue_list">
+    <source>title.rental_overdue_list</source>
+    <target>Overdue rentals list</target>
+</trans-unit>
+<trans-unit id="title.all_rentals_list">
+    <source>title.all_rentals_list</source>
+    <target>All rentals list</target>
+</trans-unit>
+<trans-unit id="action.overdue_rentals">
+    <source>action.overdue_rentals</source>
+    <target>Overdue rentals</target>
+</trans-unit>
+<trans-unit id="label.overdue">
+    <source>label.overdue</source>
+    <target>Overdue</target>
+</trans-unit>
+<trans-unit id="label.rented">
+    <source>label.rented</source>
+    <target>Rented</target>
+</trans-unit>
+<trans-unit id="label.pending">
+    <source>label.pending</source>
+    <target>Pending</target>
+</trans-unit>
+<trans-unit id="label.approved">
+    <source>label.approved</source>
+    <target>Approved</target>
+</trans-unit>
+<trans-unit id="title.pending_rentals_list">
+    <source>title.pending_rentals_list</source>
+    <target>Pending rentals list</target>
+</trans-unit>
+<trans-unit id="title.rating_edit">
+    <source>title.rating_edit</source>
+    <target>Edit rating</target>
+</trans-unit>
+<trans-unit id="title.rating_delete">
+    <source>title.rating_delete</source>
+    <target>Delete rating</target>
+</trans-unit>
+<trans-unit id="title.rating_create">
+    <source>title.rating_create</source>
+    <target>Create rating</target>
+</trans-unit>
+<trans-unit id="action.searchTitle">
+    <source>action.searchTitle</source>
+    <target>Search title</target>
+</trans-unit>
+<trans-unit id="action.searchAuthor">
+    <source>action.searchAuthor</source>
+    <target>Search author</target>
+</trans-unit>
+
+
+
     </body>
   </file>
 </xliff>

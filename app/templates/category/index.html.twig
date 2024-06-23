@@ -5,55 +5,57 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.category_list'|trans }}</h2></div>
-        {% if is_granted('CREATE') %}
-          <div class="col text-end py-4"><a class="btn btn-outline-primary" href="{{ url('category_create') }}" title="{{ 'action.create_category'|trans }}">{{ 'action.create_category'|trans }}</a></div>
-        {% endif %}
-    </div>
-    {% if pagination is defined and pagination.items|length %}
-
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-            <tr>
-               {#  <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th> #}
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'category.createdAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'category.updatedAt') }}</th>
-                <th>{{'label.item_author'|trans }}</th>
-              {# <th>{{ knp_pagination_sortable(pagination, 'label.slug'|trans, 'category.slug') }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
-                <th>{{ 'label.edit'|trans }}</th>
-                <th>{{ 'label.delete'|trans }}</th>#}
-            </tr>
-            </thead>
-            <tbody>
-            {% for category in pagination.items %}
-                <tr>
-                {#  <td>{{ category.id }}</td>#}
-                    <td><a class="text-decoration-none" href="{{ url('category_show', {id: category.id}) }}"> {{ category.title }}</a></td>
-                    <td>{{ category.createdAt|format_date('long') }}</td>
-                    <td>{{ category.updatedAt|format_date('long') }}</td>
-                    <td>{{ category.itemAuthor.firstName}}</td>
-                   {#  <td>{{ category.slug }}</td>
-                    <td><a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action.show'|trans }}">{{ 'action.show'|trans }}</a></td>
-                    <td><a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a></td>
-                    <td><a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a></td>#}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
+    <div class="main-content py-4">
+        <div class="row">
+            <div class="col-8"><h2 class="mb-4 text-primary">{{ 'title.category_list'|trans }}</h2></div>
+            {% if is_granted('CREATE') %}
+                <div class="col-4 text-end">
+                    <a class="btn btn-outline-primary" href="{{ url('category_create') }}" title="{{ 'action.create_category'|trans }}">
+                        {{ 'action.create_category'|trans }}
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.empty_list'|trans
-            } %}
-        </p>
-    {% endif %}
+        {% if pagination is defined and pagination.items|length %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'category.createdAt') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'category.updatedAt') }}</th>
+                        <th>{{ 'label.item_author'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in pagination.items %}
+                        <tr>
+                            <td>
+                                <a class="text-decoration-none" href="{{ url('category_show', {id: category.id}) }}">
+                                    {{ category.title }}
+                                </a>
+                            </td>
+                            <td>{{ category.createdAt|format_date('long') }}</td>
+                            <td>{{ category.updatedAt|format_date('long') }}</td>
+                            <td>{{ category.itemAuthor.firstName }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+
+        {% else %}
+            <p>
+                {% include 'default/_single_alert_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.empty_list'|trans
+                } %}
+            </p>
+        {% endif %}
+    </div>
 {% endblock %}

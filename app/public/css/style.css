@@ -1,21 +1,33 @@
 body {
     font-family: 'Courier New';
+    font-size: 1.1em;
 }
+.container{
+    max-width: 90%;
+}
+
 .navbar {
-    background-color: #f5f6f8;
+    background-color: #203d5c;
 }
 .navbar .nav-link {
-    color: #343a40;
+    color: white;
+}
+
+a.navbar-brand {
+    color: white;
 }
 
 @media (max-width: 992px) {
     .navbar .dropdown-menu {
-        background-color: #f5f6f8;
+        background-color: #203d5c;
         border-radius: 0;
         border: none;
     }
 }
-
+.navbar .dropdown-menu{
+    background-color: #203d5c;
+    border-radius: 0;
+}
 
 .btn-styled {
     background-color: #007bff;
@@ -27,13 +39,39 @@ body {
 }
 
 a.nav-link:hover {
-    color: #0056b3;
+    color: #F8F9FA82;
 }
 
-a.dropdown-item:hover{
-    color: #0056b3;
+a.nav-link:visited {
+    color: #F8F9FA82;
+}
+
+.navbar a.dropdown-item:hover{
+    color: #F8F9FA82;
+    background-color: #203d5c;
+}
+.navbar a.dropdown-item {
+    color: white;
 }
 
 a.navbar-brand:hover {
-    color: #0056b3;
+    color: #F8F9FA82;
 }
+
+a.navbar-brand:focus {
+    color: #F8F9FA82;
+}
+
+.book-item {
+    background-color: rgba(245, 246, 248);
+}
+
+.navbar-toggler {
+    color: #F8F9FA82;
+    background-color: white;
+}
+
+.book-item {
+    background-color: rgba(245, 246, 248);
+}
+
