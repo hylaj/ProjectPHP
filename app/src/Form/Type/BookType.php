@@ -66,7 +66,7 @@ class BookType extends AbstractType
             EntityType::class,
             [
                 'class' => Category::class,
-                'choice_label' => fn($category): string => $category->getTitle(),
+                'choice_label' => fn ($category): string => $category->getTitle(),
                 'label' => 'label.category',
                 'placeholder' => 'label.none',
                 'required' => true,
@@ -86,9 +86,9 @@ class BookType extends AbstractType
                 DateType::class,
                 [
                     'label' => 'label.release_date',
-                    'required' => false,
+                    'required' => true,
                     'placeholder' => [
-                        'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+                        'year' => 'label.year', 'month' => 'label.month', 'day' => 'label.day',
                     ],
                     'format' => 'yyyy-MM-dd',
                 ]

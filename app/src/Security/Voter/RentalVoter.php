@@ -6,10 +6,7 @@
 namespace App\Security\Voter;
 
 use App\Entity\Book;
-use App\Entity\Rating;
 use App\Entity\Rental;
-use App\Entity\User;
-use App\Repository\RatingRepository;
 use App\Service\RentalServiceInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -18,9 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class RentalVoter.
- *
  */
-
 class RentalVoter extends Voter
 {
     /**
@@ -65,9 +60,8 @@ class RentalVoter extends Voter
      */
     private const DENY = 'DENY';
 
-    public function __construct( private readonly RentalServiceInterface $rentalService)
+    public function __construct(private readonly RentalServiceInterface $rentalService)
     {
-
     }
 
     protected function supports(string $attribute, mixed $subject): bool
@@ -105,6 +99,7 @@ class RentalVoter extends Voter
             if (!$subject instanceof Book) {
                 return false;
             }
+
             return $this->canRent($subject, $user);
         }
 
@@ -112,12 +107,14 @@ class RentalVoter extends Voter
             if (!$subject instanceof Rental) {
                 return false;
             }
-            return match ($attribute){
+
+            return match ($attribute) {
                 self::RETURN => $this->canReturn($subject, $user),
                 self::APPROVE => $this->canApprove($subject, $user),
                 self::DENY => $this->canDeny($subject, $user)
             };
         }
+
         return match ($attribute) {
             self::VIEW => $this->canView($user),
             self::VIEW_ALL_RENTALS => $this->canViewAllRentals($user),
@@ -130,25 +127,23 @@ class RentalVoter extends Voter
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
         } else {
-            return in_array('ROLE_USER', $user->getRoles()) && ($this->rentalService->canBeRented($book));
+            return in_array('ROLE_USER', $user->getRoles()) && $this->rentalService->canBeRented($book);
         }
     }
 
     private function canReturn(Rental $rental, UserInterface $user): bool
     {
-        return ($user->getId()===$rental->getOwner()->getId());
-
+        return $user->getId() === $rental->getOwner()->getId();
     }
+
     private function canApprove(Rental $rental, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles())) && ($rental->getStatus()===false);
-
+        return in_array('ROLE_ADMIN', $user->getRoles()) && (false === $rental->getStatus());
     }
 
     private function canDeny(Rental $rental, UserInterface $user): bool
     {
-        return (in_array('ROLE_ADMIN', $user->getRoles())) && ($rental->getStatus()===false);
-
+        return in_array('ROLE_ADMIN', $user->getRoles()) && (false === $rental->getStatus());
     }
 
     private function canView(UserInterface $user): bool
@@ -158,8 +153,8 @@ class RentalVoter extends Voter
         } else {
             return in_array('ROLE_USER', $user->getRoles());
         }
-
     }
+
     private function canViewAllRentals(UserInterface $user): bool
     {
         return in_array('ROLE_ADMIN', $user->getRoles());

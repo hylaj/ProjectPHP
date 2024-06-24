@@ -5,48 +5,64 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.category_view'|trans({'%title%': category.title|default('')}) }}</h1>
-    {% if category is defined and category|length %}
-        <dl class="dl-horizontal">
-            <dt>{{ 'label.id'|trans }}</dt>
-            <dd>{{ category.id }}</dd>
-            <dt>{{ 'label.title'|trans }}</dt>
-            <dd>{{ category.title }}</dd>
-            <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ category.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label.updated_at'|trans }}</dt>
-            <dd>{{ category.updatedAt|format_date('long') }}</dd>
-            <dt>{{ 'label.slug'|trans }}</dt>
-            <dd>{{ category.slug }}</dd>
-            <dt>{{ 'label.books'|trans }}</dt>
-    {% if books is defined and books|length %}
-            {% for book in books %}
-                <dd><a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">{{ book.title }}</a></dd>
-            {% endfor %}
-            <dt>{{ 'label.item_author'|trans }}</dt>
-            <dd>{{ category.itemAuthor.firstName}}</dd>
-    {% endif %}
-        </dl>
+    <div class="main-content pb-4 ">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.category_view'|trans({'%title%': category.title|default('')}) }}</h2>
+            </div>
+            <div class="col text-end py-4">
+                <a class="btn btn-outline-primary" href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">{{ 'action.back_to_list'|trans }}</a>
+            </div>
+        </div>
+        <div class="p-3 border rounded p-3 mb-4 category-item">
+            {% if category is defined and category|length %}
+                <dl class="row">
+                    <dt class="col-sm-2 text-md-end">{{ 'label.id'|trans }}</dt>
+                    <dd class="col-sm-9">{{ category.id }}</dd>
 
-        <dd>
-            {% if is_granted('EDIT', category) %}
-                <a class="btn btn-styled" href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                    <dt class="col-sm-2 text-md-end">{{ 'label.title'|trans }}</dt>
+                    <dd class="col-sm-9">{{ category.title }}</dd>
+
+                    <dt class="col-sm-2 text-md-end">{{ 'label.created_at'|trans }}</dt>
+                    <dd class="col-sm-9">{{ category.createdAt|format_date('long') }}</dd>
+
+                    <dt class="col-sm-2 text-md-end">{{ 'label.updated_at'|trans }}</dt>
+                    <dd class="col-sm-9">{{ category.updatedAt|format_date('long') }}</dd>
+
+                    <dt class="col-sm-2 text-md-end">{{ 'label.books'|trans }}</dt>
+                    <dd class="col-sm-9">
+                        {% if books is defined and books|length %}
+                            {% for book in books %}
+                                <a class="btn btn-outline-primary" href="{{ url('book_show', {id: book.id}) }}">{{ book.title }}</a>
+                            {% endfor %}
+                        {% else %}
+                            {{ 'message.no_books'|trans }}
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-2 text-md-end">{{ 'label.item_author'|trans }}</dt>
+                    <dd class="col-sm-9">{{ category.itemAuthor.firstName }}</dd>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <dt class="col-sm-2 text-md-end">{{ 'label.actions'|trans }}</dt>
+                    <dd class="col-sm-9">
+                        {% endif %}
+                        {% if is_granted('EDIT', category) %}
+                            <a class="btn btn-info" href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                        {% endif %}
+                        {% if is_granted('DELETE', category) %}
+                            <a class="btn btn-danger" href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+                        {% endif %}
+                    </dd>
+                </dl>
+            {% else %}
+                <p>
+                    {% include 'default/_single_alert_message.html.twig' with {
+                        type: 'warning',
+                        message: 'message.category_not_found'|trans
+                    } %}
+                </p>
             {% endif %}
-            {% if is_granted('DELETE', category) %}
-                    <a class="btn btn-styled" href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
-            {% endif %}
-        </dd>
-<p>
-    <a href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
-        {{ 'action.back_to_list'|trans }}
-    </a>
-</p>
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.category_not_found'|trans
-            } %}
-        </p>
-    {% endif %}
+        </div>
+    </div>
 {% endblock %}

@@ -2,11 +2,13 @@
 /**
  * Rating entity.
  */
+
 namespace App\Entity;
 
 use App\Repository\RatingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  *Class Rating.
  */
@@ -29,7 +31,7 @@ class Rating
     #[Assert\Type(User::class)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(targetEntity: Book::class, fetch: "EXTRA_LAZY")]
+    #[ORM\ManyToOne(targetEntity: Book::class, fetch: 'EXTRA_LAZY')]
     #[Assert\NotBlank]
     #[Assert\Type(Book::class)]
     private ?Book $book = null;
@@ -47,7 +49,6 @@ class Rating
     public function setBookRating(int $bookRating): void
     {
         $this->bookRating = $bookRating;
-
     }
 
     public function getUser(): ?User
@@ -58,7 +59,6 @@ class Rating
     public function setUser(?User $user): void
     {
         $this->user = $user;
-
     }
 
     public function getBook(): ?Book
@@ -69,6 +69,5 @@ class Rating
     public function setBook(?Book $book): void
     {
         $this->book = $book;
-
     }
 }

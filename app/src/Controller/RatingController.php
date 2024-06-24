@@ -5,22 +5,14 @@
 
 namespace App\Controller;
 
-use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
 use App\Entity\Rating;
-use App\Entity\Rental;
-use App\Form\Type\BookType;
 use App\Form\Type\RatingType;
-use App\Form\Type\RentalType;
-use App\Resolver\BookListInputFiltersDtoResolver;
-use App\Service\BookServiceInterface;
 use App\Service\RatingServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -28,23 +20,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class RatingController.
  */
-
 #[Route('/rating')]
 class RatingController extends AbstractController
 {
     /**
      * Constructor.
      */
-    public function __construct(private readonly TranslatorInterface $translator,
-    private readonly RatingServiceInterface $ratingService)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly RatingServiceInterface $ratingService
+    ) {
     }
 
     #[Route('/{id}/rate', name: 'book_rate', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[IsGranted('RATE', subject: 'book')]
     public function rate(Request $request, Book $book): Response
     {
-
         $rating = new Rating();
         $rating->setBook($book);
         $rating->setUser($this->getUser());
@@ -111,12 +102,11 @@ class RatingController extends AbstractController
         );
     }
 
-
     #[Route('/{id}/delete', name: 'rating_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     #[IsGranted('DELETE', subject: 'rating')]
     public function delete(Request $request, Rating $rating): Response
     {
-        $bookId=$rating->getBook()->getId();
+        $bookId = $rating->getBook()->getId();
 
         $form = $this->createForm(
             FormType::class,
@@ -146,7 +136,4 @@ class RatingController extends AbstractController
             ]
         );
     }
-
-
-
 }

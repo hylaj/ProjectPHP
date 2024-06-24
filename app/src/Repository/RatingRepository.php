@@ -2,16 +2,14 @@
 /**
  * Rating repository.
  */
+
 namespace App\Repository;
 
-use App\Entity\Book;
 use App\Entity\Rating;
-use App\Entity\Rental;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -66,10 +64,7 @@ class RatingRepository extends ServiceEntityRepository
         } else {
             return null;
         }
-
-
     }
-
 
     /**
      * Get or create new query builder.

@@ -5,88 +5,106 @@
 {% endblock %}
 
 {% block body %}
-    <h2 class="p-4 text-primary">{{ 'title.book_view'|trans({'%title%': book.title|default('')}) }}</h2>
-    <div class="d-flex p-3">
-        <div>
-            {% if book.coverFilename is defined and book.coverFilename|length %}
-                <img class="nav-profile-img" src="{{ asset(covers_directory~book.coverFilename) }}">
-            {% endif %}
+    <div class="main-content pb-4 ">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.book_view'|trans({'%title%': book.title|default('')}) }}</h2>
+            </div>
+            <div class="col text-end py-4">
+                <a class="btn btn-outline-primary" href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">{{ 'action.back_to_list'|trans }}</a>
+            </div>
         </div>
-        <div class="px-4">
-        {% if book is defined and book|length %}
-            <dl class="dl-horizontal">
-                <dt>{{ 'label.id'|trans }}</dt>
-                <dd>{{ book.id }}</dd>
-                <dt>{{ 'label.release_date'|trans }}</dt>
-                <dd>{{ book.releaseDate|format_date('long') }}</dd>
-                <dt>{{ 'label.title'|trans }}</dt>
-                <dd>{{  book.title }}</dd>
-                <dt>{{ 'label.author'|trans }}</dt>
-                <dd>{{  book.author }}</dd>
+        <div class="d-flex flex-wrap p-3 border rounded p-3 mb-4  book-item">
+            <div class="book-cover d-flex align-items-center justify-content-end">
+                {% if book.coverFilename is defined and book.coverFilename|length %}
+                    <img class="nav-profile-img img-fluid" src="{{ asset(covers_directory ~ book.coverFilename) }}" alt="{{ book.title }}">
+                {% endif %}
+            </div>
+            <div class="px-4 book-details">
+                {% if book is defined and book|length %}
+                    <dl class="row">
+                        <dt class="col-sm-3 text-md-end">{{ 'label.category'|trans }}</dt>
+                        <dd class="col-sm-9"><a class="btn btn-outline-primary"  href="{{ url('category_show', {id: book.category.id}) }}" title="{{ book.category.title }}">{{ book.category.title }}</a></dd>
 
-            <dt>{{ 'label.rating'|trans }}</dt>
+                        <dt class="col-sm-3 text-md-end">{{ 'label.id'|trans }}</dt>
+                        <dd class="col-sm-9">{{ book.id }}</dd>
 
-                {% if averageRating is not null %}
-                    <dd>{{ averageRating|number_format(1, '.') }}/5</dd>
+                        <dt class="col-sm-3 text-md-end">{{ 'label.title'|trans }}</dt>
+                        <dd class="col-sm-9">{{ book.title }}</dd>
 
-                    <dt>{{ 'label.ratings_count'|trans }}</dt>
-                    <dd>{{ ratingCount }}</dd>
+                        <dt class="col-sm-3 text-md-end">{{ 'label.author'|trans }}</dt>
+                        <dd class="col-sm-9">{{ book.author }}</dd>
+
+                        <dt class="col-sm-3 text-md-end">{{ 'label.release_date'|trans }}</dt>
+                        <dd class="col-sm-9">{{ book.releaseDate|format_date('long') }}</dd>
+
+                        <dt class="col-sm-3 text-md-end">{{ 'label.rating'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if averageRating is not null %}
+                            {{ averageRating|number_format(1, '.') }}/5
+                        <dt class="col-sm-3 text-md-end">{{ 'label.ratings_count'|trans }}</dt>
+                        <dd class="col-sm-9">{{ ratingCount }}</dd>
+                        {% else %}
+                            {{ 'label.no_ratings'|trans }}
+                        {% endif %}
+
+
+                        {% if is_granted('EDIT', rating) %}
+                            <dt class="col-sm-3 text-md-end">{{ 'label.my_rating'|trans }}</dt>
+                            <dd class="col-sm-9">{{ rating is not null ? rating.bookRating : 'label.no_ratings'|trans }}</dd>
+                        {% endif %}
+
+                        <dt class="col-sm-3 text-md-end">{{ 'label.description'|trans }}</dt>
+                        <dd class="col-sm-9">{{ book.description|markdown_to_html }}</dd>
+
+                        <dt class="col-sm-3 text-md-end">{{ 'label.availability'|trans }}</dt>
+                        {% if book.available == true %}
+                            <dd class="col-sm-9" style="color: green;"> {{ 'label.available'|trans }}</dd>
+                        {% else %}
+                            <dd class="col-sm-9" style="color: red;">  {{ 'label.not_available'|trans }}</dd>
+                        {% endif %}
+
+                        <dt class="col-sm-3 text-md-end">{{ 'label.tags'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if book.tags is defined and book.tags|length %}
+                                {% for tag in book.tags %}
+                                    <a class="btn btn-outline-primary"  href="{{ url('tag_show', {id: tag.id}) }}" title="{{ tag.title }}">{{ tag.title }}</a>
+                                {% endfor %}
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 text-md-end">{{ 'label.actions'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if is_granted('EDIT', book) %}
+                                <a class="btn btn-info" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                            {% endif %}
+                            {% if is_granted('DELETE', book) %}
+                                <a class="btn btn-danger" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+                            {% endif %}
+                            {% if is_granted('RENT', book) %}
+                                <a class="btn btn-primary" href="{{ url('rent', {id: book.id}) }}" title="{{ 'action.rent'|trans }}">{{ 'action.rent'|trans }}</a>
+                            {% endif %}
+                            {% if is_granted('RATE', book) %}
+                                <a class="btn btn-primary" href="{{ url('book_rate', {id: book.id}) }}" title="{{ 'action.rate'|trans }}">{{ 'action.rate'|trans }}</a>
+                            {% endif %}
+                            {% if is_granted('EDIT', rating) %}
+                                <a class="btn btn-info" href="{{ url('rating_edit', {id: rating.id}) }}" title="{{ 'action.edit_rating'|trans }}">{{ 'action.edit_rating'|trans }}</a>
+                            {% endif %}
+                            {% if is_granted('DELETE', rating) %}
+                                <a class="btn btn-danger" href="{{ url('rating_delete', {id: rating.id}) }}" title="{{ 'action.delete_rating'|trans }}">{{ 'action.delete_rating'|trans }}</a>
+                            {% endif %}
+                        </dd>
+                    </dl>
 
                 {% else %}
-                    <dd>{{ 'label.no_ratings'|trans }}</dd>
+                    <p>
+                        {% include 'default/_single_alert_message.html.twig' with {
+                            type: 'warning',
+                            message: 'message.book_not_found'|trans
+                        } %}
+                    </p>
                 {% endif %}
-
-                {% if is_granted('EDIT', rating) %}
-            <dt>{{ 'label.my_rating'|trans }}</dt>
-            <dd>{{ rating is not null ? rating.bookRating : 'label.no_ratings'|trans }}</dd>
-                {% endif %}
-
-            <dt>{{ 'label.description'|trans }}</dt>
-            <dd>{{  book.description|markdown_to_html }}</dd>
-                <dt>{{ 'label.category'|trans }}</dt>
-                <dd>{{  book.category.title }}</dd>
-                <dt>{{ 'label.tags'|trans }}</dt>
-        {% if book.tags is defined and book.tags|length %}
-           <dd> {% for tag in book.tags %}
-                 {{ tag.title }}
-               {% endfor %}</dd>
-            {%  endif %}
-            <dt>{{ 'label.actions'|trans }}</dt>
-           <dd>
-                {% if is_granted('EDIT', book) %}
-                    <a class="btn btn-styled" href="{{ url('book_edit', {id: book.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
-                {% endif %}
-                {% if is_granted('DELETE', book) %}
-                    <a class="btn btn-styled" href="{{ url('book_delete', {id: book.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
-                {% endif %}
-               {% if is_granted('RENT', book)  %}
-                   <a class="btn btn-styled" href="{{ url('rent', {id: book.id}) }}" title="{{ 'action.rent'|trans }}">{{ 'action.rent'|trans }}</a>
-               {% endif %}
-               {% if is_granted('RATE', book) %}
-                   <a class="btn btn-styled" href="{{ url('book_rate', {id: book.id}) }}" title="{{ 'action.rate'|trans }}">{{ 'action.rate'|trans }}</a>
-               {% endif %}
-               {% if is_granted('EDIT', rating) %}
-                   <a class="btn btn-styled" href="{{ url('rating_edit', {id: rating.id}) }}" title="{{ 'action.edit_rating'|trans }}">{{ 'action.edit_rating'|trans }}</a>
-               {% endif %}
-               {% if is_granted('DELETE', rating) %}
-                   <a class="btn btn-styled" href="{{ url('rating_delete', {id: rating.id}) }}" title="{{ 'action.delete_rating'|trans }}">{{ 'action.delete_rating'|trans }}</a>
-               {% endif %}
-           </dd>
-
-            <p>
-                <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                    {{ 'action.back_to_list'|trans }}
-                </a>
-            </p>
-        {% else %}
-            <p>
-                {% include 'default/_single_alert_message.html.twig' with {
-                    type: 'warning',
-                    message: 'message.book_not_found'|trans
-                } %}
-            </p>
-            </dl>
-        {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

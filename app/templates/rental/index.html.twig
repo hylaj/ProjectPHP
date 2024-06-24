@@ -7,8 +7,8 @@
 {% block body %}
     <div class="row">
         <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.all_rentals_list'|trans }}</h2></div>
-        <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('rental_pending_approval') }}" title="{{ 'action.pending_approval'|trans }}">{{ 'action.pending_approval'|trans }}</a>
-       <a class="btn btn-styled" href="{{ url('overdue_rentals') }}" title="{{ 'action.overdue_rentals'|trans }}">{{ 'action.overdue_rentals'|trans }}</a>
+        <div class="col text-end py-4"><a class="btn btn-outline-primary" href="{{ url('rental_pending_approval') }}" title="{{ 'action.pending_approval'|trans }}">{{ 'action.pending_approval'|trans }}</a>
+       <a class="btn btn-outline-primary" href="{{ url('overdue_rentals') }}" title="{{ 'action.overdue_rentals'|trans }}">{{ 'action.overdue_rentals'|trans }}</a>
     </div>
     {% if pagination is defined and pagination.items|length %}
 
@@ -23,6 +23,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.returnDate'|trans, 'rental.returnDate')  }}</th>
                 <th>{{ 'label.comment'|trans }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.status'|trans, 'rental.status')  }}</th>
+                <th>{{ 'label.actions'|trans }}</th>
 
             </tr>
             </thead>
@@ -52,8 +53,8 @@
                     </td>
                     <td>
                         {% if is_granted('APPROVE', rental) %}
-                        <a class="btn btn-styled" href="{{ url('rental_approve', {id: rental.id}) }}" title="{{ 'action.rental_approve'|trans }}">{{ 'action.rental_approve'|trans }}</a>
-                        <a class="btn btn-styled" href="{{ url('rental_deny', {id: rental.id}) }}" title="{{ 'action.rental_deny'|trans }}">{{ 'action.rental_deny'|trans }}</a>
+                        <a class="btn btn-info" href="{{ url('rental_approve', {id: rental.id}) }}" title="{{ 'action.rental_approve'|trans }}">{{ 'action.rental_approve'|trans }}</a>
+                        <a class="btn btn-danger" href="{{ url('rental_deny', {id: rental.id}) }}" title="{{ 'action.rental_deny'|trans }}">{{ 'action.rental_deny'|trans }}</a>
                         {% else %}
                             {{ 'label.approved'|trans }}
                         {% endif %}

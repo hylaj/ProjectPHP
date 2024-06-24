@@ -5,39 +5,62 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.tag_view'|trans({'%title%': tag.title|default('')}) }}</h1>
-    {% if tag is defined and tag|length %}
-        <dl class="dl-horizontal">
-            <dt>{{ 'label.id'|trans }}</dt>
-            <dd>{{ tag.id }}</dd>
-            <dt>{{ 'label.title'|trans }}</dt>
-            <dd>{{ tag.title }}</dd>
-            <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ tag.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label.updated_at'|trans }}</dt>
-            <dd>{{ tag.updatedAt|format_date('long') }}</dd>
-            <dt>{{ 'label.slug'|trans }}</dt>
-            <dd>{{ tag.slug }}</dd>
-
-        <dd>
-            {% if is_granted('EDIT', tag) %}
-                <a class="btn btn-styled btn-sm" href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+    <div class="main-content pb-4">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.tag_view'|trans({'%title%':tag.title|default('')}) }}</h2>
+            </div>
+            <div class="col text-end py-4">
+                <a class="btn btn-outline-primary" href="{{ url('tag_index') }}" title="{{ 'action.back_to_list'|trans }}">{{ 'action.back_to_list'|trans }}</a>
+            </div>
+        </div>
+        <div class="p-3 border rounded p-3 mb-4 tag-item">
+            {% if tag is defined and tag|length %}
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <th scope="row">{{ 'label.id'|trans }}</th>
+                        <td>{{ tag.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'label.title'|trans }}</th>
+                        <td>{{ tag.title }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'label.created_at'|trans }}</th>
+                        <td>{{ tag.createdAt|format_date('long') }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'label.updated_at'|trans }}</th>
+                        <td>{{ tag.updatedAt|format_date('long') }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'label.slug'|trans }}</th>
+                        <td>{{ tag.slug }}</td>
+                    </tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <tr>
+                        <th scope="row">{{ 'label.actions'|trans }}</th>
+                        <td>
+                            {% if is_granted('EDIT', tag) %}
+                                <a class="btn btn-info" href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                            {% endif %}
+                            {% if is_granted('DELETE', tag) %}
+                                <a class="btn btn-danger" href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>
+                    {% include 'default/_single_alert_message.html.twig' with {
+                        type: 'warning',
+                        message: 'message.tag_not_found'|trans
+                    } %}
+                </p>
             {% endif %}
-            {% if is_granted('DELETE', tag) %}
-                <a class="btn btn-styled btn-sm" href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
-            {% endif %}
-     </dd>
-        <p>
-            <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                {{ 'action.back_to_list'|trans }}
-            </a>
-        </p>
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.tag_not_found'|trans
-            } %}
-        </p>
-    {% endif %}
+        </div>
+    </div>
 {% endblock %}

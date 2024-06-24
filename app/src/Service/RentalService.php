@@ -9,7 +9,6 @@ use App\Entity\Book;
 use App\Entity\Rental;
 use App\Entity\User;
 use App\Repository\RentalRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -111,11 +110,9 @@ class RentalService implements RentalServiceInterface
     /**
      * Find overdue rentals by user.
      *
-     * @param User $user
-     * @param DateTimeImmutable $date
      * @return QueryBuilder Paginated list
      */
-    public function findOverdueRentalsByUser(User $user, DateTimeImmutable $date): ?array
+    public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array
     {
         return $this->rentalRepository->queryByDateAndUser($user, $date);
     }

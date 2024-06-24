@@ -5,71 +5,79 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.rental_list'|trans }}</h2></div>
-    </div>
-    {% if pagination is defined and pagination.items|length %}
-
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-            <tr>
-
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'rental.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.owner'|trans, 'rental.user.email') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title')  }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.rentalDate'|trans, 'rental.rentalDate')  }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.returnDate'|trans, 'rental.returnDate')  }}</th>
-                <th>{{ 'label.comment'|trans }}</th>
-                <th>{{ 'label.status'|trans }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            {% for rental in pagination.items %}
-                <tr>
-                    <td>{{ rental.id }}</td>
-                    <td>{{ rental.owner.email }}</td>
-                    <td>{{ rental.book.title }}</td>
-                    <td>{{ rental.rentalDate|format_date('long') }}</td>
-                    <td>
-                        {% if rental.returnDate is not null %}
-                            {{ rental.returnDate|format_date('long') }}
-                        {% else %}
-                            {{ 'label.unspecified'|trans }}
-                        {% endif %}
-                    </td>
-                    <td>{{ rental.comment }}</td>
-                    <td>
-                        {%  if rental.status == true %}
-                            {{ 'label.rental_approved'|trans }}
-                        {% else %}
-                            {{ 'label.pending_approval'|trans }}
-                        {% endif %}
-                    </td>
-                     <td>
-                         {%  if rental.status == true %}
-                        <a class="btn btn-styled" href="{{ url('return', {id: rental.id}) }}" title="{{ 'action.book_return'|trans }}">{{ 'action.book_return'|trans }}</a>
-                             {% else %}
-                                 <a class="btn btn-styled" href="{{ url('return', {id: rental.id}) }}" title="{{ 'action.rental_cancel'|trans }}">{{ 'action.rental_cancel'|trans }}</a>
-                        {% endif %}
-                     </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
+    <div class="main-content pb-4">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.rental_list'|trans }}</h2>
+            </div>
+            {% if is_granted('CREATE') %}
+                <div class="col text-end py-4">
+                    <a class="btn btn-outline-primary" href="{{ url('rental_create') }}" title="{{ 'action.create_rental'|trans }}">
+                        {{ 'action.create_rental'|trans }}
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.empty_list'|trans
-            } %}
-        </p>
-    {% endif %}
+        {% if pagination is defined and pagination.items|length %}
+            <div class="dropdown text-end">
+                <button class="btn btn-outline-primary dropdown-toggle mb-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ 'action.sort'|trans }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.id'|trans, 'rental.id') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.rentalDate'|trans, 'rental.rentalDate') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.returnDate'|trans, 'rental.returnDate') }}</a></li>
+                </ul>
+            </div>
 
+            <div>
+                {% for rental in pagination.items %}
+                    <div class="rental-item border rounded p-3 mb-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><b>{{ 'label.id'|trans }}</b>: {{ rental.id }}</p>
+                                <p><b>{{ 'label.title'|trans }}</b>: {{ rental.book.title }}</p>
+                                <p><b>{{ 'label.rentalDate'|trans }}</b>: {{ rental.rentalDate|format_date('long') }}</p>
+                                <p><b>{{ 'label.returnDate'|trans }}</b>:
+                                    {% if rental.returnDate is not null %}
+                                        {{ rental.returnDate|format_date('long') }}
+                                    {% else %}
+                                        {{ 'label.unspecified'|trans }}
+                                    {% endif %}
+                                </p>
+                                <p><b>{{ 'label.comment'|trans }}</b>: {{ rental.comment }}</p>
+                                <p><b>{{ 'label.status'|trans }}</b>:
+                                    {% if rental.status == true %}
+                                        {{ 'label.rental_approved'|trans }}
+                                    {% else %}
+                                        {{ 'label.pending_approval'|trans }}
+                                    {% endif %}
+                                </p>
+                                <div class="text-end">
+                                    {% if rental.status == true %}
+                                        <a class="btn btn-primary" href="{{ url('return', {id: rental.id}) }}" title="{{ 'action.book_return'|trans }}">{{ 'action.book_return'|trans }}</a>
+                                    {% else %}
+                                        <a class="btn btn-primary" href="{{ url('return', {id: rental.id}) }}" title="{{ 'action.rental_cancel'|trans }}">{{ 'action.rental_cancel'|trans }}</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% else %}
+            <p>
+                {% include 'default/_single_alert_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.empty_list'|trans
+                } %}
+            </p>
+        {% endif %}
+    </div>
 {% endblock %}

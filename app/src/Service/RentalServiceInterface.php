@@ -8,7 +8,6 @@ namespace App\Service;
 use App\Entity\Book;
 use App\Entity\Rental;
 use App\Entity\User;
-use DateTimeImmutable;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -61,5 +60,6 @@ interface RentalServiceInterface
     public function setStatus(bool $status, Rental $rental): void;
 
     public function getPaginatedListByDate(int $page, $date): PaginationInterface;
-    public function findOverdueRentalsByUser(User $user, DateTimeImmutable $date): ?array;
+
+    public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array;
 }

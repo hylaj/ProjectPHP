@@ -52,6 +52,7 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
+    #[IsGranted('ROLE_USER')]
     public function show(Category $category, BookService $bookService): Response
     {
         $books = $bookService->getBooksByCategory($category);

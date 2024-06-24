@@ -5,7 +5,10 @@ body {
 .container{
     max-width: 90%;
 }
-
+h2.text-primary{
+    color: #a2827d !important;
+    font-weight: bold;
+}
 .navbar {
     background-color: #203d5c;
 }
@@ -62,7 +65,7 @@ a.navbar-brand:focus {
     color: #F8F9FA82;
 }
 
-.book-item {
+.book-item, .category-item, .rental-item, .tag-item, .user-item{
     background-color: rgba(245, 246, 248);
 }
 
@@ -71,7 +74,57 @@ a.navbar-brand:focus {
     background-color: white;
 }
 
-.book-item {
-    background-color: rgba(245, 246, 248);
+
+.btn-primary{
+   background-color: #925967;
+    border-color: #925967;
+}
+.btn-primary:hover{
+    background-color: #203d5c;
+    border-color: #203d5c;
+}
+.btn-outline-primary {
+    border-color: #925967;
+    color: #925967;
+    transition: background-color 0.3s;
 }
 
+.btn-outline-primary:hover, .btn-outline-primary:focus{
+    background-color: #925967;
+    border-color: #925967;
+    color:white;
+}
+
+
+.book-cover {
+    flex: 1 1 200px;
+}
+.book-details {
+    flex: 3 1 600px;
+}
+.badge {
+    margin-right: 5px;
+}
+.btn-styled {
+    margin-right: 5px;
+}
+
+.dropdown-divider{
+    background-color: #F8F9FA82;
+}
+
+.btn-info{
+    background-color: #203d5c;
+    border-color: #203d5c;
+    color: white;
+}
+.btn-info:hover{
+    background-color: #082035;
+    border-color: #082035;
+    color: white;
+}
+.btn-danger:hover{
+    background-color: #771926;
+    border-color: #771926;
+    color: white;
+}

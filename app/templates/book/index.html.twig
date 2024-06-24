@@ -25,63 +25,65 @@
             {{ form_widget(form.authorSearch, { 'attr': { 'class': 'col form-control mb-3' } }) }}
             <input type="submit" value="{{ 'action.search'|trans }}" class="btn btn-primary"/>
             {{ form_end(form) }}
-
         </div>
 
         {% if pagination is defined and pagination.items|length %}
-            <div class="dropdown text-end">
-                <button class="btn btn-outline-primary dropdown-toggle mb-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown text-end mb-4">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ 'action.sort'|trans }}
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.title'|trans, 'book.title') }}</a></li>
                     <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.author'|trans, 'book.author') }}</a></li>
-                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title')  }}</a></li>
-                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.availability'|trans, 'book.available', {'defaultDirection': 'desc'})  }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.availability'|trans, 'book.available', {'defaultDirection': 'desc'}) }}</a></li>
                 </ul>
             </div>
-            <div>
+
+            <div class="row row-cols-1 row-cols-lg-2 g-4 align-items-stretch">
                 {% for book in pagination.items %}
-                    <div class="book-item border rounded p-3 mb-4">
-                        <div class="row">
-                            {% if book.coverFilename is defined and book.coverFilename|length %}
-                                <div class="col-md-2 mb-3">
-                                    <a href="{{ url('book_show', {id: book.id}) }}">
-                                        <img src="{{ asset(covers_directory~book.coverFilename) }}" class="img-fluid rounded" alt="{{ book.title }}">
-                                    </a>
+                    <div class="col">
+                        <div class="book-item border rounded p-3 d-flex flex-column h-100">
+                            <div class="row">
+                                {% if book.coverFilename is defined and book.coverFilename|length %}
+                                    <div class="col-md-4 mb-3">
+                                        <a href="{{ url('book_show', {id: book.id}) }}">
+                                            <img src="{{ asset(covers_directory ~ book.coverFilename) }}" class="img-fluid rounded" alt="{{ book.title }}">
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                <div class="col-md-8">
+                                    <h3 class="mb-4">
+                                        <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">
+                                            {{ book.title }}
+                                        </a>
+                                    </h3>
+                                    <p><b>{{ 'label.author'|trans }}</b>: {{ book.author }}</p>
+                                    <p><b>{{ 'label.release_date'|trans }}</b>: {{ book.releaseDate|format_date('long') }}</p>
+                                    <p><b>{{ 'label.category'|trans }}</b>:
+                                        <a class="btn btn-outline-primary" href="{{ url('book_index', {'categoryId': book.category.id}) }}" title="{{ book.category.title }}">
+                                            {{ book.category.title }}
+                                        </a>
+                                    </p>
+                                    <p><b>{{ 'label.tags'|trans }}</b>:
+                                        {% if book.tags is defined and book.tags|length %}
+                                            {% for tag in book.tags %}
+                                                <a class="btn btn-outline-primary" href="{{ url('book_index', {'tagId': tag.id}) }}" title="{{ tag.title }}">
+                                                    {{ tag.title }}
+                                                </a>
+                                            {% endfor %}
+                                        {% else %}
+                                            &nbsp;
+                                        {% endif %}
+                                    </p>
+                                    <p class="mt-auto">
+                                        {% if book.available %}
+                                            <span style="color: green;">{{ 'label.available'|trans }}</span>
+                                        {% else %}
+                                            <span style="color: red;">{{ 'label.not_available'|trans }}</span>
+                                        {% endif %}
+                                    </p>
                                 </div>
-                            {% endif %}
-                            <div class="col-md-10">
-                                <h3 class="mb-4">
-                                    <a class="text-decoration-none" href="{{ url('book_show', {id: book.id}) }}">
-                                        {{ book.title }}
-                                    </a>
-                                </h3>
-                                <p><b>{{ 'label.author'|trans }}</b>: {{ book.author }}</p>
-                                <p><b>{{ 'label.release_date'|trans }}</b>: {{ book.releaseDate|format_date('long') }}</p>
-                                <p><b>{{ 'label.category'|trans }}</b>:
-                                    <a class="btn btn-outline-primary" href="{{ url('book_index', {'categoryId': book.category.id}) }}" title="{{ book.category.title }}">
-                                        {{ book.category.title }}
-                                    </a>
-                                </p>
-                                <p><b>{{ 'label.tags'|trans }}</b>:
-                                    {% if book.tags is defined and book.tags|length %}
-                                        {% for tag in book.tags %}
-                                            <a class="btn btn-outline-primary" href="{{ url('book_index', {'tagId': tag.id}) }}" title="{{ tag.title }}">
-                                                {{ tag.title }}
-                                            </a>
-                                        {% endfor %}
-                                    {% else %}
-                                        &nbsp;
-                                    {% endif %}
-                                </p>
-                                <p>
-                                    {% if book.available == true %}
-                                        <span style="color: green;"> {{ 'label.available'|trans }}</span>
-                                    {% else %}
-                                    <span style="color: red;">  {{ 'label.not_available'|trans }}</span>
-                                    {% endif %}
-                                </p>
                             </div>
                         </div>
                     </div>

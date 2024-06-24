@@ -15,9 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class RatingVoter.
- *
  */
-
 class RatingVoter extends Voter
 {
     /**
@@ -40,16 +38,15 @@ class RatingVoter extends Voter
      */
     private const DELETE = 'DELETE';
 
-    public function __construct( private readonly RatingRepository $ratingRepository)
+    public function __construct(private readonly RatingRepository $ratingRepository)
     {
-
     }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-       if ($subject instanceof Book) {
-           return self::RATE === $attribute;
-       }
+        if ($subject instanceof Book) {
+            return self::RATE === $attribute;
+        }
 
         return in_array($attribute, [self::DELETE, self::EDIT])
             && $subject instanceof Rating;
@@ -77,6 +74,7 @@ class RatingVoter extends Voter
             if (!$subject instanceof Book) {
                 return false;
             }
+
             return $this->canRate($subject, $user);
         }
 
@@ -99,6 +97,7 @@ class RatingVoter extends Voter
             return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
         }
     }
+
     private function canEdit(Rating $rating, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
@@ -107,12 +106,13 @@ class RatingVoter extends Voter
             return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
         }
     }
+
     private function canRate(Book $book, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
         } else {
-            return (in_array('ROLE_USER', $user->getRoles()) && ($this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]))===null);
+            return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
         }
     }
 }

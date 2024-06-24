@@ -71,7 +71,6 @@ class RentalRepository extends ServiceEntityRepository
             ->orderBy('rental.status', 'DESC');
     }// end queryByOwner()
 
-
     public function queryByDate($date): QueryBuilder
     {
         return $this->QueryAll()
@@ -79,7 +78,6 @@ class RentalRepository extends ServiceEntityRepository
             ->setParameter('date', $date)
             ->orderBy('rental.returnDate', 'ASC');
     }
-
 
     public function queryByDateAndUser($user, $date): ?array
     {

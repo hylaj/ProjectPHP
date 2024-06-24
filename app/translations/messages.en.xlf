@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="title.tag_view">
         <source>title.tag_view</source>
-        <target>View tag</target>
+        <target>View tag "%title%"</target>
       </trans-unit>
         <trans-unit id="message.tag_not_found">
           <source>message.tag_not_found</source>
@@ -715,7 +715,34 @@
     <target>Search author</target>
 </trans-unit>
 
-
+<trans-unit id="label.none">
+    <source>label.none</source>
+    <target>Choose</target>
+</trans-unit>
+<trans-unit id="label.cover">
+    <source>label.cover</source>
+    <target>Cover</target>
+</trans-unit>
+<trans-unit id="label.day">
+    <source>label.day</source>
+    <target>Day</target>
+</trans-unit>
+<trans-unit id="label.month">
+    <source>label.month</source>
+    <target>Month</target>
+</trans-unit>
+<trans-unit id="label.year">
+    <source>label.year</source>
+    <target>Year</target>
+</trans-unit>
+<trans-unit id="message.book_rented_cannot_be_deleted">
+    <source>message.book_rented_cannot_be_deleted</source>
+    <target>Can't be deleted. Book is currently rented.</target>
+</trans-unit>
+<trans-unit id="message.no_books">
+    <source>message.no_books</source>
+    <target>No books</target>
+</trans-unit>
 
     </body>
   </file>

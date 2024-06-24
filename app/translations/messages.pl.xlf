@@ -156,7 +156,7 @@
             </trans-unit>
             <trans-unit id="title.tag_view">
               <source>title.tag_view</source>
-              <target>Zobacz</target>
+              <target>Tag %title%</target>
             </trans-unit>
               <trans-unit id="message.tag_not_found">
                 <source>message.tag_not_found</source>
@@ -369,7 +369,7 @@
 
       <trans-unit id="title.rental_list">
         <source>title.rental_list</source>
-        <target>Lista wypożyczeń</target>
+        <target>Wypożyczone książki</target>
       </trans-unit>
 
       <trans-unit id="action.book_return">
@@ -708,6 +708,34 @@
     <target>Wyszukaj autora</target>
 </trans-unit>
 
+<trans-unit id="label.none">
+    <source>label.none</source>
+    <target>wybierz</target>
+</trans-unit>
+<trans-unit id="label.cover">
+    <source>label.cover</source>
+    <target>Okładka</target>
+</trans-unit>
+<trans-unit id="label.day">
+    <source>label.day</source>
+    <target>Dzień</target>
+</trans-unit>
+<trans-unit id="label.month">
+    <source>label.month</source>
+    <target>Miesiąc</target>
+</trans-unit>
+<trans-unit id="label.year">
+    <source>label.year</source>
+    <target>Rok</target>
+</trans-unit>
+<trans-unit id="message.book_rented_cannot_be_deleted">
+    <source>message.book_rented_cannot_be_deleted</source>
+    <target>Nie można usunąć. Książka jest aktualnie wypożyczona.</target>
+</trans-unit>
+<trans-unit id="message.no_books">
+    <source>message.no_books</source>
+    <target>Brak</target>
+</trans-unit>
     </body>
   </file>
 </xliff>

@@ -5,63 +5,73 @@
 {% endblock %}
 
 {% block body %}
-    <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.user_show'|trans({'%fisrtNamee%': user.firstName|default('')}) }}</h2></div>
-    {% if user is defined and user|length %}
-        <dl class="dl-horizontal">
-        <dt>{{ 'label.id'|trans }}</dt>
-        <dd>{{ user.id }}</dd>
-        <dt>{{ 'label.firstName'|trans }}</dt>
-        <dd>{{ user.firstName }}</dd>
-        <dt>{{ 'label.email'|trans }}</dt>
-        <dd>{{ user.email }}</dd>
-        <dt>{{ 'label.block'|trans }}</dt>
-        <dd>{% if user.isBlocked %}
-            {{ 'label.blocked'|trans }}
-        {% else %}
-            {{ 'label.active'|trans }}
-            {% endif %}</dd>
+    <div class="main-content pb-4">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.user_show'|trans({'%firstName%': user.firstName|default('')}) }}</h2>
+            </div>
+        </div>
+        <div class="p-3 border rounded p-3 mb-4 row user-item">
+            <div class="col-md-8 ">
+                {% if user is defined and user|length %}
+                    <dl class="row">
+                        <dt class="col-sm-2">{{ 'label.id'|trans }}:</dt>
+                        <dd class="col-sm-9">{{ user.id }}</dd>
 
-        <dt>{{ 'label.role'|trans }}</dt>
-        <dd> {% for role in user.roles %}
-               {% if role == 'ROLE_USER' %}  {{ 'label.user'|trans }} {% endif %}
-                {% if role == 'ROLE_ADMIN' %}  {{ 'label.admin'|trans }} {% endif %}
-            {% endfor %}</dd>
+                        <dt class="col-sm-2">{{ 'label.firstName'|trans }}:</dt>
+                        <dd class="col-sm-9">{{ user.firstName }}</dd>
 
-        <dt>{{ 'label.manage_user'|trans }}</dt>
-        <dd>
-                <a class="btn btn-outline-primary" href="{{ url('password_edit', {id: user.id}) }}" title="{{ 'action.edit_password'|trans }}">{{ 'action.edit_password'|trans }}</a>
+                        <dt class="col-sm-2">{{ 'label.email'|trans }}:</dt>
+                        <dd class="col-sm-9">{{ user.email }}</dd>
 
-            <a class="btn btn-outline-primary" href="{{ url('details_edit', {id: user.id}) }}" title="{{ 'action.edit_details'|trans }}">{{ 'action.edit_details'|trans }}</a>
+                        <dt class="col-sm-2">{{ 'label.status'|trans }}:</dt>
+                        <dd class="col-sm-9">
+                            {% if user.isBlocked %}
+                                {{ 'label.blocked'|trans }}
+                            {% else %}
+                                {{ 'label.active'|trans }}
+                            {% endif %}
+                        </dd>
 
-        {% if is_granted('MANAGE', user) %}
-            {%  if 'ROLE_ADMIN' not in user.getRoles() %}
-
-            <a class="btn btn-outline-primary" href="{{ url('promote_user', {id: user.id}) }}" title="{{ 'action.promote_user'|trans }}">{{ 'action.promote_user'|trans }}</a>
-
+                        <dt class="col-sm-2">{{ 'label.role'|trans }}:</dt>
+                        <dd class="col-sm-9">
+                            {% for role in user.roles %}
+                                {% if role == 'ROLE_USER' %} {{ 'label.user'|trans }} {% endif %}
+                                {% if role == 'ROLE_ADMIN' %} {{ 'label.admin'|trans }} {% endif %}
+                            {% endfor %}
+                        </dd>
+                    </dl>
                 {% else %}
+                    <p>
+                        {% include 'default/_single_alert_message.html.twig' with {
+                            type: 'warning',
+                            message: 'message.user_not_found'|trans
+                        } %}
+                    </p>
+                {% endif %}
+            </div>
+            <div class="col-md-4 d-flex align-items-center justify-content-md-end justify-content-start">
+                {% if user is defined and user|length %}
+                    <div class="btn-group-vertical">
+                    <a class="btn btn-outline-primary mb-2" href="{{ url('password_edit', {id: user.id}) }}" title="{{ 'action.edit_password'|trans }}">{{ 'action.edit_password'|trans }}</a>
+                    <a class="btn btn-outline-primary mb-2" href="{{ url('details_edit', {id: user.id}) }}" title="{{ 'action.edit_details'|trans }}">{{ 'action.edit_details'|trans }}</a>
 
-                        <a class="btn btn-outline-primary" href="{{ url('demote_admin', {id: user.id}) }}" title="{{ 'action.demote_admin'|trans }}">{{ 'action.demote_admin'|trans }}</a>
+                    {% if is_granted('MANAGE', user) %}
+                        {% if 'ROLE_ADMIN' not in user.getRoles() %}
+                            <a class="btn btn-outline-primary mb-2" href="{{ url('promote_user', {id: user.id}) }}" title="{{ 'action.promote_user'|trans }}">{{ 'action.promote_user'|trans }}</a>
+                        {% else %}
+                            <a class="btn btn-outline-primary mb-2" href="{{ url('demote_admin', {id: user.id}) }}" title="{{ 'action.demote_admin'|trans }}">{{ 'action.demote_admin'|trans }}</a>
+                        {% endif %}
 
-            {% endif %}
-        {%  if user.isBlocked() %}
-            <a class="btn btn-outline-primary" href="{{ url('unblock_user', {id: user.id}) }}" title="{{ 'action.unblock_user'|trans }}">{{ 'action.unblock_user'|trans }}</a>
-            {% elseif not user.isBlocked() %}
-                <a class="btn btn-outline-primary" href="{{ url('block_user', {id: user.id}) }}" title="{{ 'action.block_user'|trans }}">{{ 'action.block_user'|trans }}</a>
-        {% endif %}
-        {% endif %}
-
-        </dd>
-        <p>
-            <a href="{{ url('book_index') }}" title="{{ 'action.back_to_list'|trans }}">
-                {{ 'action.back_to_list'|trans }}
-            </a>
-        </p>
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.user_not_found'|trans
-            } %}
-        </p>
-    {% endif %}
+                        {% if user.isBlocked() %}
+                            <a class="btn btn-outline-primary mb-2" href="{{ url('unblock_user', {id: user.id}) }}" title="{{ 'action.unblock_user'|trans }}">{{ 'action.unblock_user'|trans }}</a>
+                        {% else %}
+                            <a class="btn btn-outline-primary mb-2" href="{{ url('block_user', {id: user.id}) }}" title="{{ 'action.block_user'|trans }}">{{ 'action.block_user'|trans }}</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

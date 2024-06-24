@@ -51,6 +51,7 @@ class TagController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET'
     )]
+    #[IsGranted('ROLE_USER')]
     public function show(Tag $tag): Response
     {
         return $this->render(

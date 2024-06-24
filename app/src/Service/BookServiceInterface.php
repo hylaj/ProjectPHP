@@ -47,4 +47,6 @@ interface BookServiceInterface
     public function createCover(UploadedFile $uploadedFile, Book $book): void;
 
     public function updateCover(UploadedFile $uploadedFile, Book $book): void;
+
+    public function canBeDeleted(Book $book): bool;
 }

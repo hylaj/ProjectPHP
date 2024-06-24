@@ -35,10 +35,10 @@ class UserDetailsType extends AbstractType
                 'firstName',
                 TextType::class,
                 [
-                      'label' => 'label.firstName',
-                      'required' => true,
-                      'attr' => ['max_length' => 64],
-                  ]
+                    'label' => 'label.firstName',
+                    'required' => true,
+                    'attr' => ['max_length' => 64],
+                ]
             )
         ->add(
             'email',

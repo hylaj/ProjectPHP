@@ -10,7 +10,6 @@ use App\Entity\Rental;
 use App\Form\Type\RentalType;
 use App\Service\BookServiceInterface;
 use App\Service\RentalServiceInterface;
-use DateTimeImmutable;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,18 +56,18 @@ class RentalController extends AbstractController
     #[IsGranted('RENT', subject: 'book')]
     public function rent(Request $request, Book $book): Response
     {
-      /*  if ($this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
-        }
+        /*  if ($this->isGranted('ROLE_ADMIN')) {
+              throw $this->createAccessDeniedException();
+          }
 
-        if (!$this->rentalService->canBeRented($book)) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.book_not_available')
-            );
+          if (!$this->rentalService->canBeRented($book)) {
+              $this->addFlash(
+                  'warning',
+                  $this->translator->trans('message.book_not_available')
+              );
 
-            return $this->redirectToRoute('book_index');
-        }*/
+              return $this->redirectToRoute('book_index');
+          }*/
 
         $rental = new Rental();
         $this->rentalService->setRentalDetails(false, $this->getUser(), $book, $rental);
@@ -167,20 +166,19 @@ class RentalController extends AbstractController
     {
         $today = new \DateTimeImmutable();
         $overdueRentals = $this->rentalService->findOverdueRentalsByUser($this->getUser(), $today);
-        if ($overdueRentals){
+        if ($overdueRentals) {
             foreach ($overdueRentals as $rental) {
                 $message = $this->translator->trans(
                     'You have overdue rental with ID %id%. Return date was %date%.',
                     [
                         '%id%' => $rental->getId(),
-                        '%date%' => $rental->getReturnDate()->format('Y-m-d')
+                        '%date%' => $rental->getReturnDate()->format('Y-m-d'),
                     ],
                     'messages'
                 );
                 $this->addFlash('warning', $message);
             }
         }
-
 
         $owner = $this->getUser()->getId();
         $pagination = $this->rentalService->getPaginatedListByOwner(
@@ -222,6 +220,7 @@ class RentalController extends AbstractController
 
         return $this->render('rental/index.html.twig', ['pagination' => $pagination]);
     }
+
     /**
      * List overdue rentals.
      *
@@ -233,7 +232,7 @@ class RentalController extends AbstractController
     #[IsGranted('VIEW_ALL_RENTALS')]
     public function overdue(#[MapQueryParameter] int $page = 1): Response
     {
-        $today = new DateTimeImmutable();
+        $today = new \DateTimeImmutable();
         $pagination = $this->rentalService->getPaginatedListByDate($page, $today);
 
         return $this->render('rental/overdue.html.twig', ['pagination' => $pagination]);

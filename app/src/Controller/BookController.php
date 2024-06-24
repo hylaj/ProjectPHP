@@ -31,10 +31,11 @@ class BookController extends AbstractController
     /**
      * Constructor.
      */
-    public function __construct(private readonly BookServiceInterface $bookService,
-                                private readonly TranslatorInterface $translator,
-                                private readonly RatingServiceInterface $ratingService)
-    {
+    public function __construct(
+        private readonly BookServiceInterface $bookService,
+        private readonly TranslatorInterface $translator,
+        private readonly RatingServiceInterface $ratingService
+    ) {
     }
 
     /**
@@ -47,13 +48,15 @@ class BookController extends AbstractController
     #[Route(name: 'book_index', methods: 'GET')]
     public function index(Request $request, #[MapQueryString(resolver: BookListInputFiltersDtoResolver::class)] BookListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
-      $form = $this->createForm(SearchType::class,
-        [
-            'method' => 'GET'
-        ]);
+        $form = $this->createForm(
+            SearchType::class,
+            [
+                'method' => 'GET',
+            ]
+        );
         $form->handleRequest($request);
 
-          $pagination = $this->bookService->getPaginatedList(
+        $pagination = $this->bookService->getPaginatedList(
             $page,
             $filters,
         );
@@ -62,8 +65,9 @@ class BookController extends AbstractController
             'book/index.html.twig',
             [
                 'pagination' => $pagination,
-                'form' => $form->createView()
-            ]);
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -79,11 +83,13 @@ class BookController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: 'GET',
     )]
+    #[IsGranted('ROLE_USER')]
     public function show(Book $book): Response
     {
-        $rating=$this->ratingService->getRatingByUserAndBook($this->getUser(), $book);
-        //$averageRating = $this->ratingService->getAverageRatingByBook($book->getId());
+        $rating = $this->ratingService->getRatingByUserAndBook($this->getUser(), $book);
+        // $averageRating = $this->ratingService->getAverageRatingByBook($book->getId());
         $ratingsInfo = $this->ratingService->findAverageRatingAndCountByBook($book->getId());
+
         return $this->render(
             'book/show.html.twig',
             [
@@ -198,6 +204,15 @@ class BookController extends AbstractController
     #[IsGranted('DELETE', subject: 'book')]
     public function delete(Request $request, Book $book): Response
     {
+        if (!$this->bookService->canBeDeleted($book)) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.book_rented_cannot_be_deleted')
+            );
+
+            return $this->redirectToRoute('book_index');
+        }
+
         $form = $this->createForm(FormType::class, $book, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('book_delete', ['id' => $book->getId()]),

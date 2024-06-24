@@ -11,6 +11,8 @@ use App\Entity\Book;
 use App\Entity\Category;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -116,7 +118,6 @@ class BookService implements BookServiceInterface
             null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
             $filters->titleSearch,
             $filters->authorSearch
-
         );
     }
 
@@ -142,9 +143,23 @@ class BookService implements BookServiceInterface
             $this->filesystem->remove(
                 $this->targetDirectory.'/'.$filename
             );
-
-
         }
         $this->createCover($uploadedFile, $book);
+    }
+
+    /**
+     * Can Category be deleted?
+     *
+     * @return bool Result
+     */
+    public function canBeDeleted(Book $book): bool
+    {
+        try {
+            $result = $book->isAvailable();
+
+            return $result > 0;
+        } catch (NoResultException|NonUniqueResultException) {
+            return false;
+        }
     }
 }// end class

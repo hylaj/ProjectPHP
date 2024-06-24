@@ -6,9 +6,9 @@
 
 {% block body %}
         <div class="row">
-            <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.pending_rentals_list'|trans }}</h2></div>
-            <div class="col text-end py-4"><a class="btn btn-styled" href="{{ url('overdue_rentals') }}" title="{{ 'action.overdue_rentals'|trans }}">{{ 'action.overdue_rentals'|trans }}</a>
-                <a class="btn btn-styled" href="{{ url('all_rentals') }}" title="{{ 'action.all_rentals'|trans }}">{{ 'action.all_rentals'|trans }}</a></div>
+            <div class="col text-start py-4"><h2 class="mb-4 btn-outline-primary">{{ 'title.pending_rentals_list'|trans }}</h2></div>
+            <div class="col text-end py-4"><a class="btn btn-outline-primary" href="{{ url('overdue_rentals') }}" title="{{ 'action.overdue_rentals'|trans }}">{{ 'action.overdue_rentals'|trans }}</a>
+                <a class="btn btn-outline-primary" href="{{ url('all_rentals') }}" title="{{ 'action.all_rentals'|trans }}">{{ 'action.all_rentals'|trans }}</a></div>
         </div>
     {% if pagination is defined and pagination.items|length %}
 
@@ -43,8 +43,8 @@
                     <td>{{ rental.comment }}</td>
                     <td>
                         {% if is_granted('APPROVE', rental) %}
-                        <a class="btn btn-styled" href="{{ url('rental_approve', {id: rental.id}) }}" title="{{ 'action.rental_approve'|trans }}">{{ 'action.rental_approve'|trans }}</a>
-                        <a class="btn btn-styled" href="{{ url('rental_deny', {id: rental.id}) }}" title="{{ 'action.rental_deny'|trans }}">{{ 'action.rental_deny'|trans }}</a>
+                        <a class="btn btn-info" href="{{ url('rental_approve', {id: rental.id}) }}" title="{{ 'action.rental_approve'|trans }}">{{ 'action.rental_approve'|trans }}</a>
+                        <a class="btn btn-danger" href="{{ url('rental_deny', {id: rental.id}) }}" title="{{ 'action.rental_deny'|trans }}">{{ 'action.rental_deny'|trans }}</a>
                         {% else %}
                             {{ 'label.approved'|trans }}
                         {% endif %}

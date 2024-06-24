@@ -5,56 +5,74 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.user_list'|trans }}</h2></div>
-    </div>
-    {% if pagination is defined and pagination.items|length %}
-
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-            <tr>
-
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'user.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.owner'|trans, 'user.email') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'user.firstName')  }}</th>
-                <th>{{ 'label.block'|trans }}</th>
-                <th>{{ 'label.roles'|trans }}</th>
-                <th>{{ 'label.manage_user'|trans }}</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in pagination.items %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.firstName }}</td>
-                    <td>{% if user.isBlocked %}
-                            {{ 'label.blocked'|trans }}
-                        {% else %}
-                            {{ 'label.active'|trans }}
-                        {% endif %}</td>
-                    <td> {% for role in user.roles %}
-                            {% if role == 'ROLE_USER' %}  {{ 'label.user'|trans }} {% endif %}
-                            {% if role == 'ROLE_ADMIN' %}  {{ 'label.admin'|trans }} {% endif %}
-                        {% endfor %}</td>
-                    <td><a class="btn btn-outline-primary" href="{{ url('user_show', {id: user.id}) }}" title="{{ 'action.manage_user'|trans }}">{{ 'action.manage_user'|trans }}</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
+    <div class="main-content pb-4">
+        <div class="row">
+            <div class="col text-start py-4">
+                <h2 class="mb-4 text-primary">{{ 'title.user_list'|trans }}</h2>
+            </div>
         </div>
 
-    {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.empty_list'|trans
-            } %}
-        </p>
-    {% endif %}
+        {% if pagination is defined and pagination.items|length %}
+            <div class="dropdown text-end">
+                <button class="btn btn-outline-primary dropdown-toggle mb-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ 'action.sort'|trans }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.id'|trans, 'user.id') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.firstName'|trans, 'user.firstName') }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.status'|trans, 'user.isBlocked')  }}</a></li>
+                    <li><a class="dropdown-item" {{ knp_pagination_sortable(pagination, 'label.roles'|trans, 'user.roles', {'defaultDirection': 'desc'})  }}</a></li>
+                </ul>
+            </div>
+            <div class="row">
+                {% for user in pagination.items %}
+                    <div class="col-md-6">
+                        <div class="user-item border rounded p-3 mb-4">
+                            <h3 class="mb-4">
+                                <a class="text-decoration-none" href="{{ url('user_show', {id: user.id}) }}">
+                                    {{ user.firstName }}
+                                </a>
+                            </h3>
 
+                            <p><b>{{ 'label.id'|trans }}</b>: {{ user.id }}</p>
+                            <p><b>{{ 'label.email'|trans }}</b>: {{ user.email }}</p>
+                            <p>
+                                <b>{{ 'label.status'|trans }}</b>:
+
+                                {% if user.isBlocked %}
+                                <span style="color: red;">  {{ 'label.blocked'|trans }}</span>
+                                {% else %}
+                                    <span style="color: green;">  {{ 'label.active'|trans }}</span>
+                                {% endif %}
+                            </p>
+                            <p>
+                                <b>{{ 'label.role'|trans }}</b>:
+                                {% for role in user.roles %}
+                                    {% if role == 'ROLE_USER' %}{{ 'label.user'|trans }}{% endif %}
+                                    {% if role == 'ROLE_ADMIN' %}{{ 'label.admin'|trans }}{% endif %}
+                                {% endfor %}
+                            </p>
+                            <p>
+                                <a class="btn btn-outline-primary" href="{{ url('user_show', {id: user.id}) }}" title="{{ 'action.manage_user'|trans }}">
+                                    {{ 'action.manage_user'|trans }}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="navigation text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+
+        {% else %}
+            <p>
+                {% include 'default/_single_alert_message.html.twig' with {
+                    type: 'warning',
+                    message: 'message.empty_list'|trans
+                } %}
+            </p>
+        {% endif %}
+    </div>
 {% endblock %}

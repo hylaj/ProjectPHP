@@ -15,6 +15,8 @@ use Faker\Generator;
  */
 class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
+    private $covers = ['default0.jpg', 'default1.jpg', 'default2.jpg', 'default3.jpg', 'default4.jpg'];
+
     /**
      * Load data.
      */
@@ -44,13 +46,13 @@ class BookFixtures extends AbstractBaseFixtures implements DependentFixtureInter
                 foreach ($tags as $tag) {
                     $book->addTag($tag);
                 }
+                $book->setAvailable(true);
                 $book->setDescription($this->faker->text(1000));
 
-                /*
-                                for ($i = rand(1, 2); $i < 2; $i++) {
-                                    $author = $this->getRandomReference('users');
-                                    $book->setItemAuthor($author);
-                                }*/
+                $randomIndex = array_rand($this->covers);
+                $coverFilename = $this->covers[$randomIndex];
+
+                $book->setCoverFilename($coverFilename);
 
                 return $book;
             }

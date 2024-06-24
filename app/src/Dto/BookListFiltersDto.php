@@ -19,10 +19,11 @@ class BookListFiltersDto
      * @param Category|null $category Category entity
      * @param Tag|null      $tag      Tag entity
      */
-    public function __construct(public readonly ?Category $category,
-                                public readonly ?Tag $tag,
-                                public readonly ?string $title,
-                                public readonly ?string $author)
-    {
+    public function __construct(
+        public readonly ?Category $category,
+        public readonly ?Tag $tag,
+        public readonly ?string $title,
+        public readonly ?string $author
+    ) {
     }
 }

@@ -5,14 +5,15 @@
 {% endblock %}
 
 {% block body %}
+    <div class="container-fluid px-0">
     <div class="row">
-        <div class="col text-start py-4"><h2 class="mb-4 text-primary">{{ 'title.tag_list'|trans }}</h2></div>
+        <div class="col text-start py-4 "><h2 class="mb-4 text-primary">{{ 'title.tag_list'|trans }}</h2></div>
         {% if is_granted('CREATE') %}
             <div class="col text-end py-4"><a class="btn btn-outline-primary" href="{{ url('tag_create') }}" title="{{ 'action.create_tag'|trans }}">{{ 'action.create_tag'|trans }}</a></div>
         {% endif %}
     </div>
     {% if pagination is defined and pagination.items|length %}
-
+<div class="px-sm-0">
         <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
@@ -37,6 +38,8 @@
 
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
+        </div>
+</div>
         </div>
 
     {% else %}

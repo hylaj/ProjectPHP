@@ -5,22 +5,14 @@
 
 namespace App\Service;
 
-use App\Dto\BookListFiltersDto;
-use App\Dto\BookListInputFiltersDto;
 use App\Entity\Book;
-use App\Entity\Category;
 use App\Entity\Rating;
 use App\Entity\User;
-use App\Repository\BookRepository;
 use App\Repository\RatingRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
-use Knp\Component\Pager\Pagination\PaginationInterface;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class RatingService.
@@ -30,8 +22,7 @@ class RatingService implements RatingServiceInterface
     /**
      * Constructor.
      *
-     * @param RatingRepository     $ratingRepository Rating repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param RatingRepository $ratingRepository Rating repository
      */
     public function __construct(
         private readonly RatingRepository $ratingRepository
@@ -67,7 +58,7 @@ class RatingService implements RatingServiceInterface
         try {
             $result = $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
 
-            return $result === null;
+            return null === $result;
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }
@@ -77,9 +68,9 @@ class RatingService implements RatingServiceInterface
     {
         return $this->ratingRepository->findAverageRatingAndCountByBook($bookId);
     }
-public function getRatingByUserAndBook(User $user, Book $book): ?Rating
-{
-    return $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
-}
 
+    public function getRatingByUserAndBook(User $user, Book $book): ?Rating
+    {
+        return $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
+    }
 }

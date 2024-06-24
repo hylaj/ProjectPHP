@@ -87,8 +87,8 @@ class Rental
     public function setStatus(bool $status): void
     {
         $this->status = $status;
-        if ($status === true) {
-            $this->returnDate = (new \DateTimeImmutable())->modify('+30 days');
+        if (true === $status) {
+            $this->returnDate = $this->getRentalDate()->modify('+30 days');
         }
     }
 
@@ -110,6 +110,5 @@ class Rental
     public function setReturnDate(\DateTimeImmutable $returnDate): void
     {
         $this->returnDate = $returnDate;
-
     }
 }

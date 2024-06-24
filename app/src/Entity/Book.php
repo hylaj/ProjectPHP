@@ -21,13 +21,6 @@ use Symfony\Component\Validator\Constraints\Date;
 #[ORM\Table(name: 'books')]
 class Book
 {
-    private ?int $countRatings=null;
-    public function setRatingCount(?int $ratingCount): self
-    {
-        $this->ratingCount = $ratingCount;
-        return $this;
-    }
-
     /**
      * Primary key.
      */
