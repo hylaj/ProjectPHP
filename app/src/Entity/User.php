@@ -165,21 +165,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
     }// end setPassword()
 
+
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *  Returning a salt is only needed, if you are not using a modern
+     *  hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
      *
-     * @see UserInterface
+     * @return string|null
      */
     public function getSalt(): ?string
     {
         return null;
     }// end getSalt()
 
+
     /**
      * Removes sensitive information from the token.
      *
-     * @see UserInterface
+     * @return void
      */
     public function eraseCredentials(): void
     {
@@ -187,27 +189,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }// end eraseCredentials()
 
+
     /**
      * Getter for firstName.
+     *
+     * @return string|null
      */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }// end getFirstName()
 
+
     /**
      * Setter for firstName.
+     *
+     * @param string|null $firstName
+     * @return void
      */
     public function setFirstName(?string $firstName): void
     {
         $this->firstName = $firstName;
     }// end setFirstName()
 
+    /**
+     * Is User blocked?
+     *
+     * @return bool|null
+     */
     public function isBlocked(): ?bool
     {
         return $this->isBlocked;
     }
 
+
+    /**
+     * Setter for user block.
+     * @param bool $isBlocked
+     * @return void
+     */
     public function setBlocked(bool $isBlocked): void
     {
         $this->isBlocked = $isBlocked;

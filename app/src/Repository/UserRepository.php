@@ -1,4 +1,7 @@
 <?php
+/**
+ * User Repository.
+ */
 
 namespace App\Repository;
 
@@ -6,6 +9,8 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,10 +19,17 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
+ * UserRepository.
+ *
  * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -37,7 +49,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }// end upgradePassword()
 
+
     /**
+     * Save entity.
+     *
+     * @param User $user
+     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -60,6 +77,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->orderBy('user.id', 'ASC');
     }// end queryAll()
 
+
+    /**
+     * Count Users By Role.
+     *
+     * @param string $role
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countByRole(string $role): int
+    {
+        $qb = $this->getOrCreateQueryBuilder();
+
+        return $qb->select($qb->expr()->COUNT('user.id'))
+            ->where('user.roles LIKE :role')
+            ->setParameter('role', '%"'.$role.'"%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     /**
      * Get or create new query builder.
      *
@@ -71,15 +108,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $queryBuilder ?? $this->createQueryBuilder('user');
     }// end getOrCreateQueryBuilder()
-
-    public function countByRole(string $role): int
-    {
-        $qb = $this->getOrCreateQueryBuilder();
-
-        return $qb->select($qb->expr()->COUNT('user.id'))
-            ->where('user.roles LIKE :role')
-            ->setParameter('role', '%"'.$role.'"%')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
 }// end class

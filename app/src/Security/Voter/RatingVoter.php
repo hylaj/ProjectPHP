@@ -38,10 +38,23 @@ class RatingVoter extends Voter
      */
     private const DELETE = 'DELETE';
 
+    /**
+     * Constructor.
+     *
+     * @param RatingRepository $ratingRepository
+     */
     public function __construct(private readonly RatingRepository $ratingRepository)
     {
     }
 
+    /**
+     * Determines if the attribute and subject are supported by this voter.
+     *
+     * @param string $attribute An attribute
+     * @param mixed  $subject   The subject to secure, e.g. an object the user wants to access or any other PHP type
+     *
+     * @return bool Result
+     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if ($subject instanceof Book) {
@@ -89,6 +102,13 @@ class RatingVoter extends Voter
         };
     }
 
+    /**
+     * Checks if user can rate a book.
+     *
+     * @param Rating $rating
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canDelete(Rating $rating, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
@@ -98,6 +118,13 @@ class RatingVoter extends Voter
         }
     }
 
+    /**
+     * Checks if user can edit the rating.
+     *
+     * @param Rating $rating
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canEdit(Rating $rating, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
@@ -107,6 +134,13 @@ class RatingVoter extends Voter
         }
     }
 
+    /**
+     * Checks if user can rate a book.
+     *
+     * @param Book $book
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canRate(Book $book, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class TaskVoter.
+ * Class UserVoter.
  */
 class UserVoter extends Voter
 {
@@ -20,6 +20,14 @@ class UserVoter extends Voter
     private const VIEW_USER_LIST = 'VIEW_USER_LIST';
     private const MANAGE = 'MANAGE';
 
+    /**
+     * Determines if the attribute and subject are supported by this voter.
+     *
+     * @param string $attribute An attribute
+     * @param mixed  $subject   The subject to secure, e.g. an object the user wants to access or any other PHP type
+     *
+     * @return bool Result
+     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (self::VIEW_USER_LIST === $attribute) {
@@ -30,6 +38,16 @@ class UserVoter extends Voter
             && $subject instanceof User;
     }
 
+    /**
+     * Perform a single access check operation on a given attribute, subject and token.
+     * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
+     *
+     * @param string         $attribute Permission name
+     * @param mixed          $subject   Object
+     * @param TokenInterface $token     Security token
+     *
+     * @return bool Vote result
+     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $current_user = $token->getUser();
@@ -53,6 +71,13 @@ class UserVoter extends Voter
         };
     }
 
+    /**
+     * Checks if user can view his own profile.
+     *
+     * @param UserInterface $user
+     * @param UserInterface $current_user
+     * @return bool
+     */
     private function canViewUser(UserInterface $user, UserInterface $current_user): bool
     {
         if (in_array('ROLE_ADMIN', $current_user->getRoles())) {
@@ -62,11 +87,24 @@ class UserVoter extends Voter
         }
     }
 
+    /**
+     * Checks if user can view all users.
+     *
+     * @param UserInterface $current_user
+     * @return bool
+     */
     private function canViewUserList(UserInterface $current_user): bool
     {
         return in_array('ROLE_ADMIN', $current_user->getRoles());
     }
 
+    /**
+     * Checks if user can edit user details.
+     *
+     * @param UserInterface $user
+     * @param UserInterface $current_user
+     * @return bool
+     */
     private function canEdit(UserInterface $user, UserInterface $current_user): bool
     {
         if (in_array('ROLE_ADMIN', $current_user->getRoles())) {
@@ -76,6 +114,13 @@ class UserVoter extends Voter
         }
     }
 
+    /**
+     * Checks if user can promote other user.
+     *
+     * @param UserInterface $user
+     * @param UserInterface $current_user
+     * @return bool
+     */
     private function canPromote(UserInterface $user, UserInterface $current_user): bool
     {
         return in_array('ROLE_ADMIN', $current_user->getRoles()) && $current_user !== $user;

@@ -7,60 +7,65 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
- * Class CategoryService.
+ * Class UserService.
  */
 class UserService implements UserServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+
     /**
      * Constructor.
      *
-     * @param UserRepository $userRepository User repository
+     * @param UserRepository $userRepository
+     * @param PaginatorInterface $paginator
      */
     public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator)
     {
     }// end __construct()
 
+
     /**
-     * Update password.
+     * Upgrade password.
+     *
+     * @param PasswordAuthenticatedUserInterface $user
+     * @param string $newHashedPassword
+     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        /*
-            if(null === $category->getId()){
-            $category->setCreatedAt(new \DateTimeImmutable());
-            }
-            $category->setCreatedAt(new \DateTimeImmutable());
-        */
-
         $this->userRepository->upgradePassword($user, $newHashedPassword);
     }// end upgradePassword()
+
 
     /**
      * Save entity.
      *
-     * @param User $user User entity
+     * @param User $user
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(User $user): void
     {
-        /*
-            if(null === $category->getId()){
-            $category->setCreatedAt(new \DateTimeImmutable());
-            }
-            $category->setCreatedAt(new \DateTimeImmutable());
-        */
-
         $this->userRepository->save($user);
     }// end save()
 
+    /**
+     * Get paginated list.
+     *
+     * @param int $page
+     * @return PaginationInterface
+     */
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -70,6 +75,12 @@ class UserService implements UserServiceInterface
         );
     }// end getPaginatedList()
 
+    /**
+     * Can user be demoted?
+     *
+     * @param string $role
+     * @return bool
+     */
     public function canBeDemoted(string $role): bool
     {
         try {

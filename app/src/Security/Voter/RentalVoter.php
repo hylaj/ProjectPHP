@@ -64,6 +64,14 @@ class RentalVoter extends Voter
     {
     }
 
+    /**
+     * Determines if the attribute and subject are supported by this voter.
+     *
+     * @param string $attribute An attribute
+     * @param mixed  $subject   The subject to secure, e.g. an object the user wants to access or any other PHP type
+     *
+     * @return bool Result
+     */
     protected function supports(string $attribute, mixed $subject): bool
     {
         if ($subject instanceof Book) {
@@ -122,6 +130,13 @@ class RentalVoter extends Voter
         };
     }
 
+    /**
+     * Checks if user can rent a book.
+     *
+     * @param Book $book
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canRent(Book $book, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
@@ -131,21 +146,47 @@ class RentalVoter extends Voter
         }
     }
 
+    /**
+     *  Checks if user can return a book.
+     *
+     * @param Rental $rental
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canReturn(Rental $rental, UserInterface $user): bool
     {
         return $user->getId() === $rental->getOwner()->getId();
     }
 
+    /**
+     *  Checks if user can approve the rental request.
+     *
+     * @param Rental $rental
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canApprove(Rental $rental, UserInterface $user): bool
     {
         return in_array('ROLE_ADMIN', $user->getRoles()) && (false === $rental->getStatus());
     }
 
+    /**
+     * Checks if user can deny the rental request.
+     * @param Rental $rental
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canDeny(Rental $rental, UserInterface $user): bool
     {
         return in_array('ROLE_ADMIN', $user->getRoles()) && (false === $rental->getStatus());
     }
 
+    /**
+     * Checks if user can view own rentals list.
+     *
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canView(UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
@@ -155,6 +196,12 @@ class RentalVoter extends Voter
         }
     }
 
+    /**
+     *  Checks if user can view all rentals list.
+     *
+     * @param UserInterface $user
+     * @return bool
+     */
     private function canViewAllRentals(UserInterface $user): bool
     {
         return in_array('ROLE_ADMIN', $user->getRoles());

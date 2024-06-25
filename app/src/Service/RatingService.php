@@ -24,9 +24,7 @@ class RatingService implements RatingServiceInterface
      *
      * @param RatingRepository $ratingRepository Rating repository
      */
-    public function __construct(
-        private readonly RatingRepository $ratingRepository
-    ) {
+    public function __construct(private readonly RatingRepository $ratingRepository) {
     }// end __construct()
 
     /**
@@ -42,9 +40,12 @@ class RatingService implements RatingServiceInterface
         $this->ratingRepository->save($rating);
     }// end save()
 
+
     /**
      * Delete entity.
      *
+     * @param Rating $rating
+     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -53,22 +54,24 @@ class RatingService implements RatingServiceInterface
         $this->ratingRepository->delete($rating);
     }
 
-    public function canBeRated(Book $book, User $user): bool
-    {
-        try {
-            $result = $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
-
-            return null === $result;
-        } catch (NoResultException|NonUniqueResultException) {
-            return false;
-        }
-    }// end canBeRented()
-
+    /**
+     * Find Average Rating and count ratings by book.
+     *
+     * @param int $bookId
+     * @return array|null
+     */
     public function findAverageRatingAndCountByBook(int $bookId): ?array
     {
         return $this->ratingRepository->findAverageRatingAndCountByBook($bookId);
     }
 
+    /**
+     * Get rating by user and book.
+     *
+     * @param User $user
+     * @param Book $book
+     * @return Rating|null
+     */
     public function getRatingByUserAndBook(User $user, Book $book): ?Rating
     {
         return $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);

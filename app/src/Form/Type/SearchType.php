@@ -11,13 +11,21 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Regex;
-
+/**
+ * Class Search type.
+ */
 class SearchType extends AbstractType
 {
+    /**
+     * Build form.
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->setMethod('GET')
+            ->setMethod(\Symfony\Component\HttpFoundation\Request::METHOD_GET)
             ->add('titleSearch', TextType::class, [
                 'label' => 'label.titleSearch',
                 'required' => false,
@@ -45,22 +53,14 @@ class SearchType extends AbstractType
                         'message' => 'message.invalid_characters',
                     ]),
                 ],
-            ])/*
-            ->add(
-                'availableSearch',
-                ChoiceType::class,
-                [
-                    'choices' => [
-                        'label.available' => true,
-                        'label.not_available' => false,
-                    ],
-                    'expanded' => true,
-                    'label' => 'label.availableSearch',
-                    'placeholder' => false
-                ]
-            )*/;
+            ]);
     }
 
+    /**
+     * Configures the options for this type.
+     *
+     * @param OptionsResolver $resolver The resolver for the options
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -68,6 +68,14 @@ class SearchType extends AbstractType
         ]);
     }
 
+    /**
+     * Returns the prefix of the template block name for this type.
+     *
+     * The block prefix defaults to the underscored short class name with
+     * the "Type" suffix removed (e.g. "UserProfileType" => "user_profile").
+     *
+     * @return string The prefix of the template block name
+     */
     public function getBlockPrefix(): string
     {
         return '';

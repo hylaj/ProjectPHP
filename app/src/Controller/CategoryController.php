@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
 use App\Service\BookService;
@@ -18,6 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class CategoryController.
+ */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
@@ -46,6 +50,14 @@ class CategoryController extends AbstractController
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);
     }// end index()
 
+
+    /**
+     * Show action.
+     *
+     * @param Category $category
+     * @param BookService $bookService
+     * @return Response
+     */
     #[Route(
         '/{id}',
         name: 'category_show',

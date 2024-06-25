@@ -15,23 +15,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * User Password Type.
+ * Class User Password Type.
  */
 class UserPasswordType extends AbstractType
 {
+
     /**
-     * Builds the form.
+     * Constructor,
      *
-     * This method is called for each type in the hierarchy starting from the
-     * top most type. Type extensions can further modify the form.
-     *
-     * @see FormTypeExtensionInterface::buildForm()
+     * @param Security $security
      */
-    public function __construct(
-        private readonly Security $security,
-    ) {
+    public function __construct(private readonly Security $security,) {
     }
 
+    /**
+     * Build form.
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($this->security->getUser() === $options['data']) {

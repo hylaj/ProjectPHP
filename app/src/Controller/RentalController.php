@@ -34,11 +34,7 @@ class RentalController extends AbstractController
      * @param TranslatorInterface    $translator    Translator
      * @param BookServiceInterface   $bookService   Book service
      */
-    public function __construct(
-        private readonly RentalServiceInterface $rentalService,
-        private readonly TranslatorInterface $translator,
-        private readonly BookServiceInterface $bookService
-    ) {
+    public function __construct(private readonly RentalServiceInterface $rentalService, private readonly TranslatorInterface $translator, private readonly BookServiceInterface $bookService) {
     }
 
     /**
@@ -56,18 +52,6 @@ class RentalController extends AbstractController
     #[IsGranted('RENT', subject: 'book')]
     public function rent(Request $request, Book $book): Response
     {
-        /*  if ($this->isGranted('ROLE_ADMIN')) {
-              throw $this->createAccessDeniedException();
-          }
-
-          if (!$this->rentalService->canBeRented($book)) {
-              $this->addFlash(
-                  'warning',
-                  $this->translator->trans('message.book_not_available')
-              );
-
-              return $this->redirectToRoute('book_index');
-          }*/
 
         $rental = new Rental();
         $this->rentalService->setRentalDetails(false, $this->getUser(), $book, $rental);

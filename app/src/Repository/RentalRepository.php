@@ -1,4 +1,7 @@
 <?php
+/**
+ * Rental repository.
+ */
 
 namespace App\Repository;
 
@@ -11,15 +14,32 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Rental Repository.
+ *
  * @extends ServiceEntityRepository<Rental>
  */
 class RentalRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Rental::class);
     }// end __construct()
 
+    /**
+     * Save entity.
+     *
+     * @param Rental $rental
+     *
+     * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function save(Rental $rental): void
     {
         assert($this->_em instanceof EntityManager);
@@ -42,6 +62,11 @@ class RentalRepository extends ServiceEntityRepository
         $this->_em->flush();
     }// end delete()
 
+    /**
+     * Query All Rentals.
+     *
+     * @return QueryBuilder
+     */
     public function QueryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
@@ -54,6 +79,11 @@ class RentalRepository extends ServiceEntityRepository
             ->join('rental.book', 'book');
     }
 
+    /**
+     * Query Rentals By Status.
+     *
+     * @return QueryBuilder
+     */
     public function queryByStatus(): QueryBuilder
     {
         return $this->QueryAll()
@@ -61,6 +91,12 @@ class RentalRepository extends ServiceEntityRepository
             ->setParameter('status', false);
     }// end queryByStatus()
 
+    /**
+     * Query Rentals By Owner.
+     *
+     * @param $owner
+     * @return QueryBuilder
+     */
     public function queryByOwner($owner): QueryBuilder
     {
         return $this->QueryAll()
@@ -71,6 +107,12 @@ class RentalRepository extends ServiceEntityRepository
             ->orderBy('rental.status', 'DESC');
     }// end queryByOwner()
 
+    /**
+     * Query Rentals By Date (overdue rentals).
+     *
+     * @param $date
+     * @return QueryBuilder
+     */
     public function queryByDate($date): QueryBuilder
     {
         return $this->QueryAll()
@@ -79,6 +121,13 @@ class RentalRepository extends ServiceEntityRepository
             ->orderBy('rental.returnDate', 'ASC');
     }
 
+    /**
+     * Query Overdue Rentals By User.
+     *
+     * @param $user
+     * @param $date
+     * @return array|null
+     */
     public function queryByDateAndUser($user, $date): ?array
     {
         return $this->QueryAll()
@@ -103,27 +152,5 @@ class RentalRepository extends ServiceEntityRepository
         return $queryBuilder ?? $this->createQueryBuilder('rental');
     }// end getOrCreateQueryBuilder()
 
-    // **
-    // * @return Rental[] Returns an array of Rental objects
-    // */
-    // public function findByExampleField($value): array
-    // {
-    // return $this->createQueryBuilder('r')
-    // ->andWhere('r.exampleField = :val')
-    // ->setParameter('val', $value)
-    // ->orderBy('r.id', 'ASC')
-    // ->setMaxResults(10)
-    // ->getQuery()
-    // ->getResult()
-    // ;
-    // }
-    // public function findOneBySomeField($value): ?Rental
-    // {
-    // return $this->createQueryBuilder('r')
-    // ->andWhere('r.exampleField = :val')
-    // ->setParameter('val', $value)
-    // ->getQuery()
-    // ->getOneOrNullResult()
-    // ;
-    // }
+
 }// end class

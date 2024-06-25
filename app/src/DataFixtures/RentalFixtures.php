@@ -64,6 +64,6 @@ class RentalFixtures extends AbstractBaseFixtures implements DependentFixtureInt
     public function getDependencies(): array
     {
         return [UserFixtures::class,
-            BookFixtures::class];
+            BookFixtures::class, ];
     }// end getDependencies()
 }

@@ -17,6 +17,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class TagController.
+ */
 #[Route('/tag')]
 class TagController extends AbstractController
 {
@@ -45,6 +48,12 @@ class TagController extends AbstractController
         return $this->render('tag/index.html.twig', ['pagination' => $pagination]);
     }// end index()
 
+    /**
+     * Show action.
+     *
+     * @param Tag $tag
+     * @return Response
+     */
     #[Route(
         '/{id}',
         name: 'tag_show',

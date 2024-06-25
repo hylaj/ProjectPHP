@@ -30,20 +30,24 @@ class BookController extends AbstractController
 {
     /**
      * Constructor.
+     *
+     * @param BookServiceInterface $bookService Book service
+     * @param TranslatorInterface $translator Translator
+     * @param RatingServiceInterface $ratingService Rating service
+     *
      */
-    public function __construct(
-        private readonly BookServiceInterface $bookService,
-        private readonly TranslatorInterface $translator,
-        private readonly RatingServiceInterface $ratingService
-    ) {
+    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService) {
     }
+
 
     /**
      * Index action.
      *
-     * @param int $page Page number
+     * @param Request $request
+     * @param BookListInputFiltersDto $filters
+     * @param int $page
      *
-     * @return Response HTTP response
+     * @return Response
      */
     #[Route(name: 'book_index', methods: 'GET')]
     public function index(Request $request, #[MapQueryString(resolver: BookListInputFiltersDtoResolver::class)] BookListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
@@ -87,7 +91,6 @@ class BookController extends AbstractController
     public function show(Book $book): Response
     {
         $rating = $this->ratingService->getRatingByUserAndBook($this->getUser(), $book);
-        // $averageRating = $this->ratingService->getAverageRatingByBook($book->getId());
         $ratingsInfo = $this->ratingService->findAverageRatingAndCountByBook($book->getId());
 
         return $this->render(
@@ -101,7 +104,7 @@ class BookController extends AbstractController
         );
     }
 
-    // end show()
+
     /**
      * Create action.
      *

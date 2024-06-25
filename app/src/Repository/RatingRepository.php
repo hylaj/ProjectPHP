@@ -14,17 +14,30 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class BookRepository.
+ * Class RatingRepository.
  *
  * @extends ServiceEntityRepository<Rating>
  */
 class RatingRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Rating::class);
     }
 
+    /**
+     * Save entity.
+     *
+     * @param Rating $rating
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function save(Rating $rating): void
     {
         assert($this->_em instanceof EntityManager);
@@ -47,6 +60,12 @@ class RatingRepository extends ServiceEntityRepository
         $this->_em->flush();
     }// end delete()
 
+    /**
+     * Find average rating and count ratings by book.
+     *
+     * @param int $bookId
+     * @return array|null
+     */
     public function findAverageRatingAndCountByBook(int $bookId): ?array
     {
         $result = $this->createQueryBuilder('rating')
@@ -78,28 +97,5 @@ class RatingRepository extends ServiceEntityRepository
         return $queryBuilder ?? $this->createQueryBuilder('rating');
     }
 
-    //    /**
-    //     * @return Rating[] Returns an array of Rating objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Rating
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

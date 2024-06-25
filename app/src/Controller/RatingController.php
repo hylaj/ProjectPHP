@@ -23,15 +23,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/rating')]
 class RatingController extends AbstractController
 {
+
     /**
      * Constructor.
+     *
+     * @param TranslatorInterface $translator
+     * @param RatingServiceInterface $ratingService
      */
-    public function __construct(
-        private readonly TranslatorInterface $translator,
-        private readonly RatingServiceInterface $ratingService
-    ) {
+    public function __construct(private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService) {
     }
 
+    /**
+     * Rate a book.
+     *
+     * @param Request $request
+     * @param Book $book
+     * @return Response
+     */
     #[Route('/{id}/rate', name: 'book_rate', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[IsGranted('RATE', subject: 'book')]
     public function rate(Request $request, Book $book): Response
@@ -69,6 +77,13 @@ class RatingController extends AbstractController
         );
     }
 
+    /**
+     * Edit the rating.
+     *
+     * @param Request $request
+     * @param Rating $rating
+     * @return Response
+     */
     #[Route('/{id}/edit', name: 'rating_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
     #[IsGranted('EDIT', subject: 'rating')]
     public function edit(Request $request, Rating $rating): Response
@@ -102,6 +117,13 @@ class RatingController extends AbstractController
         );
     }
 
+    /**
+     * Delete the rating.
+     *
+     * @param Request $request
+     * @param Rating $rating
+     * @return Response
+     */
     #[Route('/{id}/delete', name: 'rating_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     #[IsGranted('DELETE', subject: 'rating')]
     public function delete(Request $request, Rating $rating): Response

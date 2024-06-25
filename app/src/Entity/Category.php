@@ -143,8 +143,11 @@ class Category
         $this->updatedAt = $updatedAt;
     }
 
+
     /**
      * Getter for slug.
+     *
+     * @return string|null
      */
     public function getSlug(): ?string
     {
@@ -161,11 +164,22 @@ class Category
         $this->slug = $slug;
     }
 
+    /**
+     * Getter for ItemAuthor.
+     *
+     * @return User|null
+     */
     public function getItemAuthor(): ?User
     {
         return $this->itemAuthor;
     }
 
+    /**
+     * Setter for ItemAuthor.
+     *
+     * @param User|null $itemAuthor
+     * @return void
+     */
     public function setItemAuthor(?User $itemAuthor): void
     {
         $this->itemAuthor = $itemAuthor;

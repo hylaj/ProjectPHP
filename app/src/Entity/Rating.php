@@ -36,36 +36,74 @@ class Rating
     #[Assert\Type(Book::class)]
     private ?Book $book = null;
 
+    /**
+     * Getter for Id.
+     *
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Getter for BookRating..
+     *
+     * @return int|null
+     */
     public function getBookRating(): ?int
     {
         return $this->bookRating;
     }
 
+    /**
+     * Setter for BookRating.
+     *
+     * @param int $bookRating
+     * @return void
+     */
     public function setBookRating(int $bookRating): void
     {
         $this->bookRating = $bookRating;
     }
 
+    /**
+     *  Getter for User.
+     *
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     *  Setter for User.
+     *
+     * @param User|null $user
+     * @return void
+     */
     public function setUser(?User $user): void
     {
         $this->user = $user;
     }
 
+    /**
+     *  Getter for Book.
+     *
+     * @return Book|null
+     */
     public function getBook(): ?Book
     {
         return $this->book;
     }
 
+    /**
+     *  Setter for Book.
+     *
+     * @param Book|null $book
+     * @return void
+     */
     public function setBook(?Book $book): void
     {
         $this->book = $book;

@@ -14,27 +14,30 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- *Class TagService.
+ * Class TagService.
  */
 class TagService implements TagServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+
     /**
      * Constructor.
      *
-     * @param TagRepository $tagRepository Tag repository
+     * @param TagRepository $tagRepository
+     * @param PaginatorInterface $paginator
      */
     public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
     {
     }
 
+
     /**
      * Find by title.
      *
-     * @param string $title Tag title
-     *
-     * @return Tag|null Tag entity
+     * @param string $title
+     * @return Tag|null
+     * @throws NonUniqueResultException
      */
     public function findOneByTitle(string $title): ?Tag
     {
@@ -70,8 +73,14 @@ class TagService implements TagServiceInterface
         );
     }
 
+
     /**
      * Delete entity.
+     *
+     * @param Tag $tag
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Tag $tag): void
     {

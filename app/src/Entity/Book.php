@@ -12,7 +12,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  *Class Book.
@@ -127,8 +126,12 @@ class Book
         return $this->releaseDate;
     }
 
+
     /**
-     * Setter for release date.
+     *  Setter for release date.
+     *
+     * @param \DateTime|null $releaseDate
+     * @return void
      */
     public function setReleaseDate(?\DateTime $releaseDate): void
     {
@@ -175,21 +178,43 @@ class Book
         $this->author = $author;
     }
 
+    /**
+     * Getter fot category.
+     *
+     * @return Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * Setter for category.
+     *
+     * @param Category|null $category
+     * @return void
+     */
     public function setCategory(?Category $category): void
     {
         $this->category = $category;
     }
 
+    /**
+     * Getter for slug.
+     *
+     * @return string|null
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     *  Setter for slug.
+     *
+     * @param string $slug
+     * @return void
+     */
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
@@ -227,31 +252,64 @@ class Book
         $this->tags->removeElement($tag);
     }
 
+    /**
+     * Is Book available?
+     *
+     * @return bool|null
+     */
     public function isAvailable(): ?bool
     {
         return $this->available;
     }
 
+    /**
+     * Setter for book availability.
+     *
+     * @param bool $available
+     * @return void
+     */
     public function setAvailable(bool $available): void
     {
         $this->available = $available;
     }
 
+    /**
+     * Getter for description.
+     *
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     *  Setter for description.
+     *
+     * @param string|null $description
+     * @return void
+     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
+    /**
+     * Getter for cover fileName.
+     *
+     * @return string|null
+     */
     public function getCoverFilename(): ?string
     {
         return $this->coverFilename;
     }
 
+    /**
+     * Setter for coverFilename.
+     *
+     * @param string|null $coverFilename
+     * @return void
+     */
     public function setCoverFilename(?string $coverFilename): void
     {
         $this->coverFilename = $coverFilename;

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Tag repository.
+ */
 
 namespace App\Repository;
 
@@ -12,40 +15,30 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Tag Repository.
+ *
  * @extends ServiceEntityRepository<Tag>
  */
 class TagRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
     }// end __construct()
 
-    // **
-    // * @return Tag[] Returns an array of Tag objects
-    // */
-    // public function findByExampleField($value): array
-    // {
-    // return $this->createQueryBuilder('t')
-    // ->andWhere('t.exampleField = :val')
-    // ->setParameter('val', $value)
-    // ->orderBy('t.id', 'ASC')
-    // ->setMaxResults(10)
-    // ->getQuery()
-    // ->getResult()
-    // ;
-    // }
-    // public function findOneBySomeField($value): ?Tag
-    // {
-    // return $this->createQueryBuilder('t')
-    // ->andWhere('t.exampleField = :val')
-    // ->setParameter('val', $value)
-    // ->getQuery()
-    // ->getOneOrNullResult()
-    // ;
-    // }
 
     /**
+     * Find Tag By Title.
+     *
+     * @param string $title
+     *
+     * @return Tag|null
+     *
      * @throws NonUniqueResultException
      */
     public function findOneByTitle(string $title): ?Tag
@@ -57,19 +50,14 @@ class TagRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * Get or create new query builder.
-     *
-     * @param QueryBuilder|null $queryBuilder Query builder
-     *
-     * @return QueryBuilder Query builder
-     */
-    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
-    {
-        return $queryBuilder ?? $this->createQueryBuilder('tag');
-    }
 
     /**
+     * Save entiity.
+     *
+     * @param Tag $tag
+     *
+     * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -106,4 +94,17 @@ class TagRepository extends ServiceEntityRepository
         $this->_em->remove($tag);
         $this->_em->flush();
     }
+
+    /**
+     * Get or create new query builder.
+     *
+     * @param QueryBuilder|null $queryBuilder Query builder
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
+    {
+        return $queryBuilder ?? $this->createQueryBuilder('tag');
+    }
+
 }// end class

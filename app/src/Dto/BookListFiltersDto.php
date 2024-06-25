@@ -13,17 +13,15 @@ use App\Entity\Tag;
  */
 class BookListFiltersDto
 {
+
     /**
-     * Constructor.
+     *  Constructor.
      *
-     * @param Category|null $category Category entity
-     * @param Tag|null      $tag      Tag entity
+     * @param Category|null $category
+     * @param Tag|null $tag
+     * @param string|null $title
+     * @param string|null $author
      */
-    public function __construct(
-        public readonly ?Category $category,
-        public readonly ?Tag $tag,
-        public readonly ?string $title,
-        public readonly ?string $author
-    ) {
+    public function __construct(public readonly ?Category $category, public readonly ?Tag $tag, public readonly ?string $title, public readonly ?string $author) {
     }
 }

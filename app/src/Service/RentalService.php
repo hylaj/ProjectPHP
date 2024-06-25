@@ -75,12 +75,13 @@ class RentalService implements RentalServiceInterface
         );
     }// end getPaginatedListByStatus()
 
+
     /**
-     * Get paginated list by user.
+     *  Get paginated list by user.
      *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @param int $page
+     * @param int $owner
+     * @return PaginationInterface
      */
     public function getPaginatedListByOwner(int $page, int $owner): PaginationInterface
     {
@@ -91,12 +92,13 @@ class RentalService implements RentalServiceInterface
         );
     }// end getPaginatedListByOwner()
 
+
     /**
      * Get paginated list by date.
      *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @param int $page
+     * @param $date
+     * @return PaginationInterface
      */
     public function getPaginatedListByDate(int $page, $date): PaginationInterface
     {
@@ -107,10 +109,13 @@ class RentalService implements RentalServiceInterface
         );
     }
 
+
     /**
      * Find overdue rentals by user.
      *
-     * @return QueryBuilder Paginated list
+     * @param User $user
+     * @param \DateTimeImmutable $date
+     * @return array|null
      */
     public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array
     {
@@ -130,9 +135,11 @@ class RentalService implements RentalServiceInterface
         $this->rentalRepository->save($rental);
     }// end save()
 
+
     /**
      * Delete entity.
-     *
+     * @param Rental $rental
+     * @return void
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -141,6 +148,12 @@ class RentalService implements RentalServiceInterface
         $this->rentalRepository->delete($rental);
     }// end delete()
 
+    /**
+     * Checks if Book can be rented.
+     *
+     * @param Book $book
+     * @return bool
+     */
     public function canBeRented(Book $book): bool
     {
         try {
@@ -152,26 +165,28 @@ class RentalService implements RentalServiceInterface
         }
     }// end canBeRented()
 
+
     /**
-     * @return bool
+     * Set Book status.
      *
-     * public function canBeReturned(Rental $rental):bool
-     * {
-     * try {
-     * $result = $rental->getStatus();
-     *
-     * return !($result === false);
-     * } catch (NoResultException | NonUniqueResultException) {
-     * return false;
-     * }
-     *
-     * }//end canBeRented()
-     * */
+     * @param bool $status
+     * @param Rental $rental
+     * @return void
+     */
     public function setStatus(bool $status, Rental $rental): void
     {
         $rental->setStatus($status);
     }
 
+    /**
+     * Set Rental Details.
+     *
+     * @param bool $status
+     * @param User $owner
+     * @param Book $book
+     * @param Rental $rental
+     * @return void
+     */
     public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void
     {
         $rental->setBook($book);

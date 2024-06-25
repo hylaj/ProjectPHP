@@ -35,29 +35,29 @@ class BookService implements BookServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+
     /**
      * Constructor.
      *
-     * @param BookRepository     $bookRepository Book repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param BookRepository $bookRepository
+     * @param PaginatorInterface $paginator
+     * @param CategoryServiceInterface $categoryService
+     * @param TagServiceInterface $tagService
+     * @param FileUploadServiceInterface $fileUploadService
+     * @param string $targetDirectory
+     * @param Filesystem $filesystem
      */
-    public function __construct(
-        private readonly BookRepository $bookRepository,
-        private readonly PaginatorInterface $paginator,
-        private readonly CategoryServiceInterface $categoryService,
-        private readonly TagServiceInterface $tagService,
-        private readonly FileUploadServiceInterface $fileUploadService,
-        private readonly string $targetDirectory,
-        private readonly Filesystem $filesystem
-    ) {
+    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem) {
     }// end __construct()
 
+
     /**
-     * Get paginated list.
+     * Get Paginated List.
      *
-     * @param int $page Page number
+     * @param int $page
+     * @param BookListInputFiltersDto $filters
      *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @return PaginationInterface
      */
     public function getPaginatedList(int $page, BookListInputFiltersDto $filters): PaginationInterface
     {
@@ -70,6 +70,12 @@ class BookService implements BookServiceInterface
         );
     }
 
+    /**
+     * Get Books By Category.
+     *
+     * @param Category $category
+     * @return array
+     */
     public function getBooksByCategory(Category $category): array
     {
         return $this->bookRepository->findBooksByCategory($category);
@@ -88,8 +94,13 @@ class BookService implements BookServiceInterface
         $this->bookRepository->save($book);
     }// end save()
 
+
     /**
      * Delete entity.
+     *
+     * @param Book $book
+     *
+     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -99,30 +110,27 @@ class BookService implements BookServiceInterface
         $this->bookRepository->delete($book);
     }
 
+    /**
+     * Sets availability of book.
+     *
+     * @param Book $book
+     * @param bool $status
+     *
+     * @return void
+     */
     public function setAvailable(Book $book, bool $status): void
     {
         $book->setAvailable($status);
     }
 
     /**
-     * Prepare filters for the tasks list.
-     *
-     * @param BookListInputFiltersDto $filters Raw filters from request
-     *
-     * @return BookListFiltersDto Result filters
-     */
-    private function prepareFilters(BookListInputFiltersDto $filters): BookListFiltersDto
-    {
-        return new BookListFiltersDto(
-            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
-            null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
-            $filters->titleSearch,
-            $filters->authorSearch
-        );
-    }
-
-    /**
      * Create avatar.
+     *
+     * @param UploadedFile $uploadedFile
+     * @param Book $book
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function createCover(UploadedFile $uploadedFile, Book $book): void
     {
@@ -132,8 +140,15 @@ class BookService implements BookServiceInterface
         $this->bookRepository->save($book);
     }
 
+
     /**
      * Update cover.
+     *
+     * @param UploadedFile $uploadedFile
+     * @param Book $book
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function updateCover(UploadedFile $uploadedFile, Book $book): void
     {
@@ -147,10 +162,12 @@ class BookService implements BookServiceInterface
         $this->createCover($uploadedFile, $book);
     }
 
+
     /**
      * Can Category be deleted?
      *
-     * @return bool Result
+     * @param Book $book
+     * @return bool
      */
     public function canBeDeleted(Book $book): bool
     {
@@ -162,4 +179,22 @@ class BookService implements BookServiceInterface
             return false;
         }
     }
+    /**
+     *  Prepare filters for the tasks list.
+     *
+     * @return BookListFiltersDto Result filters
+     * @return BookListFiltersDto
+     *
+     * @throws NonUniqueResultException
+     */
+    private function prepareFilters(BookListInputFiltersDto $filters): BookListFiltersDto
+    {
+        return new BookListFiltersDto(
+            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
+            null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
+            $filters->titleSearch,
+            $filters->authorSearch
+        );
+    }
+
 }// end class

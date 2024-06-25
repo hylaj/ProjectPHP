@@ -1,6 +1,6 @@
 <?php
 /**
- * User Controller.
+ * Registration Controller.
  */
 
 namespace App\Controller;
@@ -14,19 +14,29 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-
+/**
+ * Class RegistrationController.
+ */
 class RegistrationController extends AbstractController
 {
+
     /**
      * Constructor.
      *
-     * @param UserServiceInterface $userService User service
-     * @param TranslatorInterface  $translator  Translator
+     * @param UserServiceInterface $userService
+     * @param TranslatorInterface $translator
+     * @param UserPasswordHasherInterface $passwordHasher
      */
     public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }// end __construct()
 
+    /**
+     * Register action.
+     *
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/register', name: 'register', methods: ['GET', 'POST'])]
     public function register(Request $request): Response
     {
