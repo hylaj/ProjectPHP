@@ -31,8 +31,6 @@ interface RatingServiceInterface
      *
      * @param Rating $rating Rating
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */

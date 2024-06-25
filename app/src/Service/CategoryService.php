@@ -31,7 +31,6 @@ class CategoryService implements CategoryServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
@@ -73,8 +72,6 @@ class CategoryService implements CategoryServiceInterface
      * Delete entity.
      *
      * @param Category $category Category entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

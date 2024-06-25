@@ -42,13 +42,10 @@ class CategoryRepository extends ServiceEntityRepository
             ->orderBy('category.createdAt', 'DESC');
     }// end queryAll()
 
-
     /**
      * Save entity.
      *
      * @param Category $category Category entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -64,8 +61,6 @@ class CategoryRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Category $category Category entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

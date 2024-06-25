@@ -54,8 +54,6 @@ class TagRepository extends ServiceEntityRepository
      *
      * @param Tag $tag Tag entity
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -82,8 +80,6 @@ class TagRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Tag $tag Tag entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

@@ -10,8 +10,6 @@ use App\Entity\Rating;
 use App\Entity\User;
 use App\Repository\RatingRepository;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 
 /**
@@ -41,13 +39,10 @@ class RatingService implements RatingServiceInterface
         $this->ratingRepository->save($rating);
     }// end save()
 
-
     /**
      * Delete entity.
      *
      * @param Rating $rating Rating
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

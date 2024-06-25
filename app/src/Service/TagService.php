@@ -20,7 +20,6 @@ class TagService implements TagServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
@@ -30,7 +29,6 @@ class TagService implements TagServiceInterface
     public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
     {
     }
-
 
     /**
      * Find by title.
@@ -75,13 +73,10 @@ class TagService implements TagServiceInterface
         );
     }
 
-
     /**
      * Delete entity.
      *
      * @param Tag $tag Tag
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

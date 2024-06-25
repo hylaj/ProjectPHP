@@ -23,13 +23,10 @@ interface TagServiceInterface
      */
     public function findOneByTitle(string $title): ?Tag;
 
-
     /**
      * Save entity.
      *
      * @param Tag $tag Tag entity
-     *
-     * @return void
      */
     public function save(Tag $tag): void;
 
@@ -42,13 +39,10 @@ interface TagServiceInterface
      */
     public function getPaginatedList(int $page): PaginationInterface;
 
-
     /**
      * Delete entity.
      *
      * @param Tag $tag Tag entity
-     *
-     * @return void
      */
     public function delete(Tag $tag): void;
 

@@ -10,7 +10,6 @@ namespace App\Dto;
  */
 class BookListInputFiltersDto
 {
-
     /**
      * Constructor.
      *

@@ -24,8 +24,6 @@ class Category
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,8 +32,6 @@ class Category
 
     /**
      * Created at.
-     *
-     * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(\DateTimeImmutable::class)]
@@ -44,8 +40,6 @@ class Category
 
     /**
      * Title.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
@@ -55,8 +49,6 @@ class Category
 
     /**
      * Updated at.
-     *
-     * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(\DateTimeImmutable::class)]
@@ -65,8 +57,6 @@ class Category
 
     /**
      * Slug.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -76,8 +66,6 @@ class Category
 
     /**
      * Item Author.
-     *
-     * @var User|null
      */
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -156,9 +144,9 @@ class Category
     }
 
     /**
-     * Getter for slug.
+     *  Getter for slug.
      *
-     * @return string|null
+     * @return string|null Slug
      */
     public function getSlug(): ?string
     {
@@ -176,9 +164,9 @@ class Category
     }
 
     /**
-     * Getter for ItemAuthor.
+     *  Getter for ItemAuthor.
      *
-     * @return User|null
+     * @return User|null item author
      */
     public function getItemAuthor(): ?User
     {

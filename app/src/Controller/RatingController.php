@@ -23,7 +23,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/rating')]
 class RatingController extends AbstractController
 {
-
     /**
      * Constructor.
      *

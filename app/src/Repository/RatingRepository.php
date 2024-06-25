@@ -35,8 +35,6 @@ class RatingRepository extends ServiceEntityRepository
      *
      * @param Rating $rating Rating entity
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -51,8 +49,6 @@ class RatingRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Rating $rating Rating entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

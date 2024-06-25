@@ -50,7 +50,6 @@ class CategoryController extends AbstractController
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);
     }// end index()
 
-
     /**
      * Show action.
      *

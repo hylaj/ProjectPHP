@@ -87,8 +87,6 @@ class BookRepository extends ServiceEntityRepository
      *
      * @param Book $book Book entity
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -103,8 +101,6 @@ class BookRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Book $book Book entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

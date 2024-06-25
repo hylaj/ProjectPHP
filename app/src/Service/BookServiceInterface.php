@@ -28,7 +28,6 @@ interface BookServiceInterface
      */
     public function getBooksByCategory(Category $category): array;
 
-
     /**
      * Save Book entity.
      *
@@ -44,8 +43,6 @@ interface BookServiceInterface
      *
      * @param Book $book Book entity
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -56,8 +53,6 @@ interface BookServiceInterface
      *
      * @param int                     $page    page
      * @param BookListInputFiltersDto $filters filters
-     *
-     * @return PaginationInterface
      */
     public function getPaginatedList(int $page/* , User $author */, BookListInputFiltersDto $filters): PaginationInterface;
 
@@ -66,8 +61,6 @@ interface BookServiceInterface
      *
      * @param Book $book   Book entity
      * @param bool $status Availability status
-     *
-     * @return void
      */
     public function setAvailable(Book $book, bool $status): void;
 
@@ -76,8 +69,6 @@ interface BookServiceInterface
      *
      * @param UploadedFile $uploadedFile Uploaded file representing cover
      * @param Book         $book         Book entity to attach cover to
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -89,8 +80,6 @@ interface BookServiceInterface
      *
      * @param UploadedFile $uploadedFile Uploaded file representing new cover
      * @param Book         $book         Book entity to update cover for
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

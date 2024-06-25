@@ -13,7 +13,6 @@ use App\Entity\Tag;
  */
 class BookListFiltersDto
 {
-
     /**
      * Constructor.
      *

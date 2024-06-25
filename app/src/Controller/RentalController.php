@@ -53,7 +53,6 @@ class RentalController extends AbstractController
     #[IsGranted('RENT', subject: 'book')]
     public function rent(Request $request, Book $book): Response
     {
-
         $rental = new Rental();
         $this->rentalService->setRentalDetails(false, $this->getUser(), $book, $rental);
 

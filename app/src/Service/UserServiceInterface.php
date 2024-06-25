@@ -21,8 +21,6 @@ interface UserServiceInterface
      *
      * @param PasswordAuthenticatedUserInterface $user              User entity implementing PasswordAuthenticatedUserInterface
      * @param string                             $newHashedPassword New hashed password
-     *
-     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void;
 
@@ -30,8 +28,6 @@ interface UserServiceInterface
      * Save user entity.
      *
      * @param User $user User entity to save
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

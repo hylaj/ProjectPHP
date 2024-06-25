@@ -34,7 +34,6 @@ class BookController extends AbstractController
      * @param BookServiceInterface   $bookService   Book service
      * @param TranslatorInterface    $translator    Translator
      * @param RatingServiceInterface $ratingService Rating service
-     *
      */
     public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService)
     {

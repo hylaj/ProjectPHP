@@ -35,7 +35,6 @@ class BookService implements BookServiceInterface
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
@@ -100,8 +99,6 @@ class BookService implements BookServiceInterface
      *
      * @param Book $book Book entity
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -115,8 +112,6 @@ class BookService implements BookServiceInterface
      *
      * @param Book $book   Book entity
      * @param bool $status Availability status
-     *
-     * @return void
      */
     public function setAvailable(Book $book, bool $status): void
     {
@@ -128,8 +123,6 @@ class BookService implements BookServiceInterface
      *
      * @param UploadedFile $uploadedFile Uploaded file representing cover
      * @param Book         $book         Book entity to attach cover to
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -147,8 +140,6 @@ class BookService implements BookServiceInterface
      *
      * @param UploadedFile $uploadedFile Uploaded file representing new cover
      * @param Book         $book         Book entity to update cover for
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

@@ -18,8 +18,6 @@ class Rating
 {
     /**
      * Primary key.
-     *
-     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,8 +26,6 @@ class Rating
 
     /**
      * Book rating.
-     *
-     * @var int|null
      */
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
@@ -37,8 +33,6 @@ class Rating
 
     /**
      * User.
-     *
-     * @var User|null
      */
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,8 +42,6 @@ class Rating
 
     /**
      * Book.
-     *
-     * @var Book|null
      */
     #[ORM\ManyToOne(targetEntity: Book::class, fetch: 'EXTRA_LAZY')]
     #[Assert\NotBlank]

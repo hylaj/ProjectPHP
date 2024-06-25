@@ -13,7 +13,6 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -75,7 +74,6 @@ class RentalService implements RentalServiceInterface
         );
     }// end getPaginatedList()
 
-
     /**
      *  Get paginated list by user.
      *
@@ -93,7 +91,6 @@ class RentalService implements RentalServiceInterface
         );
     }// end getPaginatedListByOwner()
 
-
     /**
      * Get paginated list by date.
      *
@@ -110,7 +107,6 @@ class RentalService implements RentalServiceInterface
             self::PAGINATOR_ITEMS_PER_PAGE
         );
     }
-
 
     /**
      * Find overdue rentals by user.
@@ -138,12 +134,10 @@ class RentalService implements RentalServiceInterface
         $this->rentalRepository->save($rental);
     }// end save()
 
-
     /**
      * Delete entity.
-     * @param Rental $rental Rental entity to delete
      *
-     * @return void
+     * @param Rental $rental Rental entity to delete
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -171,14 +165,11 @@ class RentalService implements RentalServiceInterface
         }
     }// end canBeRented()
 
-
     /**
      * Set Rental status.
      *
      * @param bool   $status Rental status to set
      * @param Rental $rental Rental entity
-     *
-     * @return void
      */
     public function setStatus(bool $status, Rental $rental): void
     {
@@ -192,8 +183,6 @@ class RentalService implements RentalServiceInterface
      * @param User   $owner  User who owns the rental
      * @param Book   $book   Book rented
      * @param Rental $rental Rental entity to set details
-     *
-     * @return void
      */
     public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void
     {

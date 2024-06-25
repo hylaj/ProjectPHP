@@ -6,12 +6,14 @@
 namespace App\Repository;
 
 use App\Entity\Rental;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * Rental Repository.
@@ -35,8 +37,6 @@ class RentalRepository extends ServiceEntityRepository
      *
      * @param Rental $rental Rental entity
      *
-     * @return void
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -51,8 +51,6 @@ class RentalRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Rental $rental Rental entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -96,16 +94,16 @@ class RentalRepository extends ServiceEntityRepository
     /**
      * Query rentals by owner.
      *
-     * @param mixed $owner Owner entity
+     * @param int $owner Owner entity
      *
      * @return QueryBuilder Query builder
      */
-    public function queryByOwner($owner): QueryBuilder
+    public function queryByOwner(int $owner): QueryBuilder
     {
         return $this->queryAll()
             ->where('rental.status= :status')
             ->setParameter('status', true)
-            ->Where('rental.owner= :owner')
+            ->where('rental.owner= :owner')
             ->setParameter('owner', $owner)
             ->orderBy('rental.status', 'DESC');
     }// end queryByOwner()
@@ -113,11 +111,11 @@ class RentalRepository extends ServiceEntityRepository
     /**
      * Query rentals by date (overdue rentals).
      *
-     * @param mixed $date Date to check against
+     * @param \DateTimeImmutable $date Date to check against
      *
      * @return QueryBuilder Query builder
      */
-    public function queryByDate($date): QueryBuilder
+    public function queryByDate(\DateTimeImmutable $date): QueryBuilder
     {
         return $this->queryAll()
             ->where('rental.returnDate <= :date')
@@ -128,12 +126,12 @@ class RentalRepository extends ServiceEntityRepository
     /**
      * Query overdue rentals by user.
      *
-     * @param mixed $user User entity
-     * @param mixed $date Date to check against
+     * @param User               $user User entity
+     * @param \DateTimeImmutable $date Date to check against
      *
      * @return array|null List of rentals or null
      */
-    public function queryByDateAndUser($user, $date): ?array
+    public function queryByDateAndUser(User $user, \DateTimeImmutable $date): ?array
     {
         return $this->queryAll()
             ->where('rental.returnDate <= :date')

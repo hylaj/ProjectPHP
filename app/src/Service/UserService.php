@@ -22,17 +22,14 @@ class UserService implements UserServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-
     /**
      * Constructor.
      *
      * @param UserRepository     $userRepository User repository
      * @param PaginatorInterface $paginator      Paginator service
      */
-    public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly PaginatorInterface $paginator
-    ) {
+    public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator)
+    {
     }
 
     /**
@@ -40,8 +37,6 @@ class UserService implements UserServiceInterface
      *
      * @param PasswordAuthenticatedUserInterface $user              User entity implementing PasswordAuthenticatedUserInterface
      * @param string                             $newHashedPassword New hashed password
-     *
-     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -52,8 +47,6 @@ class UserService implements UserServiceInterface
      * Save user entity.
      *
      * @param User $user User entity to save
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException

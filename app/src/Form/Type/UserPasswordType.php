@@ -12,16 +12,14 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class User Password Type.
  */
 class UserPasswordType extends AbstractType
 {
-
     /**
-     * Constructor,
+     * Constructor,.
      *
      * @param Security $security Security
      */

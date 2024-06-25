@@ -35,14 +35,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }// end __construct()
 
-
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      *
      * @param PasswordAuthenticatedUserInterface $user              User entity
      * @param string                             $newHashedPassword New hashed password
-     *
-     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -55,13 +52,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }// end upgradePassword()
 
-
     /**
      * Save entity.
      *
      * @param User $user User entity
-     *
-     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -84,7 +78,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->select('partial user.{id, firstName, email, roles, isBlocked}')
             ->orderBy('user.id', 'ASC');
     }// end queryAll()
-
 
     /**
      * Count users by role.

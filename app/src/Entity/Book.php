@@ -30,8 +30,6 @@ class Book
 
     /**
      * Release Date.
-     *
-     * @var \DateTime|null
      */
     #[ORM\Column(type: 'date')]
     #[Assert\Type(\DateTime::class)]
@@ -39,8 +37,6 @@ class Book
 
     /**
      * Title.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -50,8 +46,6 @@ class Book
 
     /**
      * Author.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -61,8 +55,6 @@ class Book
 
     /**
      * Category.
-     *
-     * @var Category|null
      */
     #[ORM\ManyToOne(targetEntity: Category::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -72,8 +64,6 @@ class Book
 
     /**
      * Slug.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Gedmo\Slug(fields: ['title'])]
@@ -92,8 +82,6 @@ class Book
 
     /**
      * Available.
-     *
-     * @var bool|null
      */
     #[ORM\Column]
     #[Assert\NotNull]
@@ -101,8 +89,6 @@ class Book
 
     /**
      * Description.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: Types::TEXT, length: 1000, nullable: true)]
     #[Assert\Length(max: 1000)]
@@ -110,8 +96,6 @@ class Book
 
     /**
      * Cover Filename.
-     *
-     * @var string|null
      */
     #[ORM\Column(length: 191, nullable: true)]
     #[Assert\Type('string')]

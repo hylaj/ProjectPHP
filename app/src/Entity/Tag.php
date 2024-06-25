@@ -112,7 +112,6 @@ class Tag
         $this->updatedAt = $updatedAt;
     }
 
-
     /**
      * Getter for slug.
      *
@@ -123,13 +122,10 @@ class Tag
         return $this->slug;
     }
 
-
     /**
      * Setter for slug.
      *
      * @param string|null $slug Slug
-     *
-     * @return void
      */
     public function setSlug(?string $slug): void
     {

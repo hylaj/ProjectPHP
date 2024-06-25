@@ -26,7 +26,6 @@ interface RentalServiceInterface
      */
     public function getPaginatedListByStatus(int $page): PaginationInterface;
 
-
     /**
      *  Get paginated list by user.
      *
@@ -47,12 +46,10 @@ interface RentalServiceInterface
      */
     public function save(Rental $rental): void;
 
-
     /**
      * Delete entity.
-     * @param Rental $rental Rental entity to delete
      *
-     * @return void
+     * @param Rental $rental Rental entity to delete
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -66,8 +63,6 @@ interface RentalServiceInterface
      * @param User   $owner  User who owns the rental
      * @param Book   $book   Book rented
      * @param Rental $rental Rental entity to set details
-     *
-     * @return void
      */
     public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void;
 
@@ -85,8 +80,6 @@ interface RentalServiceInterface
      *
      * @param bool   $status Rental status to set
      * @param Rental $rental Rental entity
-     *
-     * @return void
      */
     public function setStatus(bool $status, Rental $rental): void;
 

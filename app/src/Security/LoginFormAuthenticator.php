@@ -42,13 +42,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
      */
     private const DEFAULT_ROUTE = 'book_index';
 
-
     /**
      * Constructor.
      *
-     * @param UrlGeneratorInterface $urlGenerator URL generator
-     *                                            * @param UserRepository $userRepository User repository
-     * @param TranslatorInterface   $translator   Translator
+     * @param UrlGeneratorInterface $urlGenerator   URL generator
+     * @param UserRepository        $userRepository User repository
+     * @param TranslatorInterface   $translator     Translator
      */
     public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly UserRepository $userRepository, private readonly TranslatorInterface $translator)
     {

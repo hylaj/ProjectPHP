@@ -74,8 +74,6 @@ class Rental
      * Setter for RentalDate.
      *
      * @param \DateTimeImmutable $rentalDate rentalDate
-     *
-     * @return void
      */
     public function setRentalDate(\DateTimeImmutable $rentalDate): void
     {
@@ -96,8 +94,6 @@ class Rental
      * Setter for Owner.
      *
      * @param User $owner Owner
-     *
-     * @return void
      */
     public function setOwner(User $owner): void
     {
@@ -118,8 +114,6 @@ class Rental
      * Setter for Book.
      *
      * @param Book $book Book
-     *
-     * @return void
      */
     public function setBook(Book $book): void
     {
@@ -140,8 +134,6 @@ class Rental
      *  Setter for Status.
      *
      * @param bool $status status+
-     *
-     * @return void
      */
     public function setStatus(bool $status): void
     {
@@ -165,8 +157,6 @@ class Rental
      *  Setter for Comment.
      *
      * @param string|null $comment comment
-     *
-     * @return void
      */
     public function setComment(?string $comment): void
     {
@@ -187,8 +177,6 @@ class Rental
      * Setter for ReturnDate.
      *
      * @param \DateTimeImmutable $returnDate returnDate
-     *
-     * @return void
      */
     public function setReturnDate(\DateTimeImmutable $returnDate): void
     {
