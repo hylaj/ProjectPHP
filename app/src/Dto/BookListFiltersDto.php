@@ -9,18 +9,18 @@ use App\Entity\Category;
 use App\Entity\Tag;
 
 /**
- * Class TaskListFiltersDto.
+ * Class BookListFiltersDto.
  */
 class BookListFiltersDto
 {
 
     /**
-     *  Constructor.
+     * Constructor.
      *
-     * @param Category|null $category
-     * @param Tag|null      $tag
-     * @param string|null   $title
-     * @param string|null   $author
+     * @param Category|null $category Category entity
+     * @param Tag|null      $tag      Tag entity
+     * @param string|null   $title    Book title
+     * @param string|null   $author   Book author
      */
     public function __construct(public readonly ?Category $category, public readonly ?Tag $tag, public readonly ?string $title, public readonly ?string $author)
     {

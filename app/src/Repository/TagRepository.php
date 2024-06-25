@@ -24,37 +24,35 @@ class TagRepository extends ServiceEntityRepository
     /**
      * Constructor.
      *
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
     }// end __construct()
 
-
     /**
-     * Find Tag By Title.
+     * Find tag by title.
      *
-     * @param string $title
+     * @param string $title Tag title
      *
-     * @return Tag|null
+     * @return Tag|null Tag entity or null
      *
      * @throws NonUniqueResultException
      */
     public function findOneByTitle(string $title): ?Tag
     {
-        return $this->getOrcreateQueryBuilder()
-            ->andWhere('tag.title= :title')
+        return $this->getOrCreateQueryBuilder()
+            ->andWhere('tag.title = :title')
             ->setParameter('title', $title)
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
+    }// end findOneByTitle()
 
     /**
-     * Save entiity.
+     * Save entity.
      *
-     * @param Tag $tag
+     * @param Tag $tag Tag entity
      *
      * @return void
      *
@@ -78,12 +76,14 @@ class TagRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder()
             ->select('tag')
             ->orderBy('tag.createdAt', 'DESC');
-    }
+    }// end queryAll()
 
     /**
      * Delete entity.
      *
      * @param Tag $tag Tag entity
+     *
+     * @return void
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -93,7 +93,7 @@ class TagRepository extends ServiceEntityRepository
         assert($this->_em instanceof EntityManager);
         $this->_em->remove($tag);
         $this->_em->flush();
-    }
+    }// end delete()
 
     /**
      * Get or create new query builder.
@@ -105,5 +105,5 @@ class TagRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('tag');
-    }
+    }// end getOrCreateQueryBuilder()
 }// end class

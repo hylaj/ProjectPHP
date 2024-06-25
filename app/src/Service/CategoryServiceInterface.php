@@ -6,7 +6,9 @@
 namespace App\Service;
 
 use App\Entity\Category;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -34,9 +36,12 @@ interface CategoryServiceInterface
     /**
      * Delete entity.
      *
-     * @param Category $category
+     * @param Category $category Category entity
      *
      * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Category $category): void;
 

@@ -45,7 +45,7 @@ class RatingService implements RatingServiceInterface
     /**
      * Delete entity.
      *
-     * @param Rating $rating
+     * @param Rating $rating Rating
      *
      * @return void
      *
@@ -60,9 +60,9 @@ class RatingService implements RatingServiceInterface
     /**
      * Find Average Rating and count ratings by book.
      *
-     * @param int $bookId
+     * @param int $bookId Book ID
      *
-     * @return array|null
+     * @return array|null array
      */
     public function findAverageRatingAndCountByBook(int $bookId): ?array
     {
@@ -72,10 +72,10 @@ class RatingService implements RatingServiceInterface
     /**
      * Get rating by user and book.
      *
-     * @param User $user
-     * @param Book $book
+     * @param User $user User entity
+     * @param Book $book Book entity
      *
-     * @return Rating|null
+     * @return Rating|null Rating entity
      */
     public function getRatingByUserAndBook(User $user, Book $book): ?Rating
     {

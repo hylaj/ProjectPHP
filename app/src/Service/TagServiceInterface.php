@@ -27,7 +27,7 @@ interface TagServiceInterface
     /**
      * Save entity.
      *
-     * @param Tag $tag
+     * @param Tag $tag Tag entity
      *
      * @return void
      */
@@ -46,7 +46,7 @@ interface TagServiceInterface
     /**
      * Delete entity.
      *
-     * @param Tag $tag
+     * @param Tag $tag Tag entity
      *
      * @return void
      */

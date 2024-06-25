@@ -24,8 +24,9 @@ class RatingVoter extends Voter
      * @const string
      */
     private const RATE = 'RATE';
+
     /**
-     * Create permission.
+     * Edit permission.
      *
      * @const string
      */
@@ -41,7 +42,7 @@ class RatingVoter extends Voter
     /**
      * Constructor.
      *
-     * @param RatingRepository $ratingRepository
+     * @param RatingRepository $ratingRepository Rating repository
      */
     public function __construct(private readonly RatingRepository $ratingRepository)
     {
@@ -103,12 +104,12 @@ class RatingVoter extends Voter
     }
 
     /**
-     * Checks if user can rate a book.
+     * Checks if user can delete rating.
      *
-     * @param Rating        $rating
-     * @param UserInterface $user
+     * @param Rating        $rating Rating entity
+     * @param UserInterface $user   User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canDelete(Rating $rating, UserInterface $user): bool
     {
@@ -122,10 +123,10 @@ class RatingVoter extends Voter
     /**
      * Checks if user can edit the rating.
      *
-     * @param Rating        $rating
-     * @param UserInterface $user
+     * @param Rating        $rating Rating entity
+     * @param UserInterface $user   User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canEdit(Rating $rating, UserInterface $user): bool
     {
@@ -139,10 +140,10 @@ class RatingVoter extends Voter
     /**
      * Checks if user can rate a book.
      *
-     * @param Book          $book
-     * @param UserInterface $user
+     * @param Book          $book Book entity
+     * @param UserInterface $user User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canRate(Book $book, UserInterface $user): bool
     {
@@ -153,3 +154,4 @@ class RatingVoter extends Voter
         return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
     }
 }
+

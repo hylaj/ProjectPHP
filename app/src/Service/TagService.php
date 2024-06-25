@@ -24,8 +24,8 @@ class TagService implements TagServiceInterface
     /**
      * Constructor.
      *
-     * @param TagRepository      $tagRepository
-     * @param PaginatorInterface $paginator
+     * @param TagRepository      $tagRepository Tag Repository
+     * @param PaginatorInterface $paginator Paginator interface
      */
     public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
     {
@@ -35,9 +35,9 @@ class TagService implements TagServiceInterface
     /**
      * Find by title.
      *
-     * @param string $title
+     * @param string $title title
      *
-     * @return Tag|null
+     * @return Tag|null tag
      *
      * @throws NonUniqueResultException
      */
@@ -79,7 +79,7 @@ class TagService implements TagServiceInterface
     /**
      * Delete entity.
      *
-     * @param Tag $tag
+     * @param Tag $tag Tag
      *
      * @return void
      *

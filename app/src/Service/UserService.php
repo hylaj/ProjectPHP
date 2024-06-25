@@ -26,32 +26,32 @@ class UserService implements UserServiceInterface
     /**
      * Constructor.
      *
-     * @param UserRepository     $userRepository
-     * @param PaginatorInterface $paginator
+     * @param UserRepository     $userRepository User repository
+     * @param PaginatorInterface $paginator       Paginator service
      */
-    public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator)
-    {
-    }// end __construct()
-
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly PaginatorInterface $paginator
+    ) {
+    }
 
     /**
-     * Upgrade password.
+     * Upgrade user's password.
      *
-     * @param PasswordAuthenticatedUserInterface $user
-     * @param string                             $newHashedPassword
+     * @param PasswordAuthenticatedUserInterface $user              User entity implementing PasswordAuthenticatedUserInterface
+     * @param string                             $newHashedPassword New hashed password
      *
      * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         $this->userRepository->upgradePassword($user, $newHashedPassword);
-    }// end upgradePassword()
-
+    }
 
     /**
-     * Save entity.
+     * Save user entity.
      *
-     * @param User $user
+     * @param User $user User entity to save
      *
      * @return void
      *
@@ -61,14 +61,14 @@ class UserService implements UserServiceInterface
     public function save(User $user): void
     {
         $this->userRepository->save($user);
-    }// end save()
+    }
 
     /**
-     * Get paginated list.
+     * Get paginated list of users.
      *
-     * @param int $page
+     * @param int $page Page number
      *
-     * @return PaginationInterface
+     * @return PaginationInterface Paginated list of users
      */
     public function getPaginatedList(int $page): PaginationInterface
     {
@@ -77,14 +77,14 @@ class UserService implements UserServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-    }// end getPaginatedList()
+    }
 
     /**
-     * Can user be demoted?
+     * Check if user can be demoted.
      *
-     * @param string $role
+     * @param string $role Role of the user
      *
-     * @return bool
+     * @return bool True if user can be demoted, false otherwise
      */
     public function canBeDemoted(string $role): bool
     {
@@ -95,5 +95,5 @@ class UserService implements UserServiceInterface
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }
-    }// end canBeDemoted()
-}// end class
+    }
+}

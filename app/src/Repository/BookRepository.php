@@ -33,25 +33,23 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BookRepository extends ServiceEntityRepository
 {
-
     /**
      * Constructor.
      *
-     * @param ManagerRegistry     $registry
-     * @param TagsDataTransformer $tagsDataTransformer
+     * @param ManagerRegistry     $registry            Manager registry
+     * @param TagsDataTransformer $tagsDataTransformer Tags data transformer
      */
     public function __construct(ManagerRegistry $registry, private readonly TagsDataTransformer $tagsDataTransformer)
     {
         parent::__construct($registry, Book::class);
-    }
-
+    }// end __construct()
 
     /**
      * Query all records.
      *
-     * @param BookListFiltersDto $filters
+     * @param BookListFiltersDto $filters Filters
      *
-     * @return QueryBuilder
+     * @return QueryBuilder Query builder
      */
     public function queryAll(BookListFiltersDto $filters): QueryBuilder
     {
@@ -66,29 +64,28 @@ class BookRepository extends ServiceEntityRepository
             ->orderBy('book.title', 'DESC');
 
         return $this->applyFiltersToList($queryBuilder, $filters);
-    }
+    }// end queryAll()
 
     /**
-     * Find Books By Category.
+     * Find books by category.
      *
-     * @param Category $category
+     * @param Category $category Category entity
      *
-     * @return array
+     * @return array Array of books
      */
     public function findBooksByCategory(Category $category): array
     {
         return $this->getOrCreateQueryBuilder()
-            ->andWhere('book.category= :category')
+            ->andWhere('book.category = :category')
             ->setParameter('category', $category)
             ->getQuery()
             ->getResult();
-    }
-
+    }// end findBooksByCategory()
 
     /**
      * Save entity.
      *
-     * @param Book $book
+     * @param Book $book Book entity
      *
      * @return void
      *
@@ -107,6 +104,8 @@ class BookRepository extends ServiceEntityRepository
      *
      * @param Book $book Book entity
      *
+     * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -115,12 +114,12 @@ class BookRepository extends ServiceEntityRepository
         assert($this->_em instanceof EntityManager);
         $this->_em->remove($book);
         $this->_em->flush();
-    }
+    }// end delete()
 
     /**
      * Count books by category.
      *
-     * @param Category $category Category
+     * @param Category $category Category entity
      *
      * @return int Number of books in category
      *
@@ -136,7 +135,7 @@ class BookRepository extends ServiceEntityRepository
             ->setParameter(':category', $category)
             ->getQuery()
             ->getSingleScalarResult();
-    }
+    }// end countByCategory()
 
     /**
      * Apply filters to paginated list.
@@ -161,23 +160,17 @@ class BookRepository extends ServiceEntityRepository
         if ($filters->title) {
             $queryBuilder
                 ->andWhere('book.title LIKE :title')
-                ->setParameter(
-                    'title',
-                    '%'.$filters->title.'%'
-                );
+                ->setParameter('title', '%'.$filters->title.'%');
         }
 
         if (isset($filters->author)) {
             $queryBuilder
                 ->andWhere('book.author LIKE :author')
-                ->setParameter(
-                    'author',
-                    '%'.$filters->author.'%'
-                );
+                ->setParameter('author', '%'.$filters->author.'%');
         }
 
         return $queryBuilder;
-    }
+    }// end applyFiltersToList()
 
     /**
      * Get or create new query builder.
@@ -189,5 +182,5 @@ class BookRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('book');
-    }
-}
+    }// end getOrCreateQueryBuilder()
+}// end class

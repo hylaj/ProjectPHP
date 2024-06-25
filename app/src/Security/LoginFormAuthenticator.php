@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class LoginFormAuthenticator.
@@ -45,10 +46,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     /**
      * Constructor.
      *
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param UserRepository        $userRepository
+     * @param UrlGeneratorInterface $urlGenerator URL generator
+     * * @param UserRepository $userRepository User repository
+     * @param TranslatorInterface   $translator Translator
      */
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly UserRepository $userRepository)
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly UserRepository $userRepository, private readonly TranslatorInterface $translator)
     {
     }
 
@@ -92,7 +94,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $user = $this->userRepository->findOneBy(['email' => $email]);
         if ($user && $user->isBlocked()) {
-            throw new CustomUserMessageAuthenticationException('message.blocked_account');
+            $message= $this->translator->trans('message.blocked_account');
+            throw new CustomUserMessageAuthenticationException($message);
         }
 
         return new Passport(

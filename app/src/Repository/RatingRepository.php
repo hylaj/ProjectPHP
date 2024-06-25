@@ -23,17 +23,17 @@ class RatingRepository extends ServiceEntityRepository
     /**
      * Constructor.
      *
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Rating::class);
-    }
+    }// end __construct()
 
     /**
      * Save entity.
      *
-     * @param Rating $rating
+     * @param Rating $rating Rating entity
      *
      * @return void
      *
@@ -52,6 +52,8 @@ class RatingRepository extends ServiceEntityRepository
      *
      * @param Rating $rating Rating entity
      *
+     * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -65,9 +67,9 @@ class RatingRepository extends ServiceEntityRepository
     /**
      * Find average rating and count ratings by book.
      *
-     * @param int $bookId
+     * @param int $bookId Book ID
      *
-     * @return array|null
+     * @return array|null Average rating and count
      */
     public function findAverageRatingAndCountByBook(int $bookId): ?array
     {
@@ -85,8 +87,8 @@ class RatingRepository extends ServiceEntityRepository
             ];
         }
 
-            return null;
-    }
+        return null;
+    }// end findAverageRatingAndCountByBook()
 
     /**
      * Get or create new query builder.
@@ -98,5 +100,5 @@ class RatingRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('rating');
-    }
-}
+    }// end getOrCreateQueryBuilder()
+}// end class

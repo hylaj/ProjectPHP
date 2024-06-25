@@ -28,7 +28,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Constructor.
      *
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,10 +37,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
     /**
-     *  Used to upgrade (rehash) the user's password automatically over time.
+     * Used to upgrade (rehash) the user's password automatically over time.
      *
-     * @param PasswordAuthenticatedUserInterface $user
-     * @param string                             $newHashedPassword
+     * @param PasswordAuthenticatedUserInterface $user User entity
+     * @param string                             $newHashedPassword New hashed password
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Save entity.
      *
-     * @param User $user
+     * @param User $user User entity
      *
      * @return void
      *
@@ -87,11 +87,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
     /**
-     * Count Users By Role.
+     * Count users by role.
      *
-     * @param string $role
+     * @param string $role User role
      *
-     * @return int
+     * @return int Number of users
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
@@ -105,7 +105,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('role', '%"'.$role.'"%')
             ->getQuery()
             ->getSingleScalarResult();
-    }
+    }// end countByRole()
 
     /**
      * Get or create new query builder.

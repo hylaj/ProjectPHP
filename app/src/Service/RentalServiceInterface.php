@@ -28,19 +28,19 @@ interface RentalServiceInterface
 
 
     /**
-     * Get paginated list by user.
+     *  Get paginated list by user.
      *
-     * @param int $page
-     * @param int $owner
+     * @param int $page Page number
+     * @param int $owner User ID
      *
-     * @return PaginationInterface
+     * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedListByOwner(int $page, int $owner): PaginationInterface;
 
     /**
      * Save entity.
      *
-     * @param Rental $rental Rental entity
+     * @param Rental $rental Rental entity to save
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -50,20 +50,22 @@ interface RentalServiceInterface
 
     /**
      * Delete entity.
-     *
-     * @param Rental $rental
+     * @param Rental $rental Rental entity to delete
      *
      * @return void
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Rental $rental): void;
 
     /**
      * Set Rental Details.
      *
-     * @param bool   $status
-     * @param User   $owner
-     * @param Book   $book
-     * @param Rental $rental
+     * @param bool   $status Status of the rental
+     * @param User   $owner User who owns the rental
+     * @param Book   $book Book rented
+     * @param Rental $rental Rental entity to set details
      *
      * @return void
      */
@@ -72,39 +74,39 @@ interface RentalServiceInterface
     /**
      * Checks if Book can be rented.
      *
-     * @param Book $book
+     * @param Book $book Book entity to check
      *
-     * @return bool
+     * @return bool True if book can be rented, false otherwise
      */
     public function canBeRented(Book $book): bool;
 
     /**
-     * Sets the rental status.
+     * Set Rental status.
      *
-     * @param bool   $status
-     * @param Rental $rental
+     * @param bool   $status Rental status to set
+     * @param Rental $rental Rental entity
      *
      * @return void
      */
     public function setStatus(bool $status, Rental $rental): void;
 
     /**
-     * Get paginated list of rentals by date.
+     * Get paginated list by date.
      *
-     * @param int $page
-     * @param $date
+     * @param int             $page Page number
+     * @param \DateTimeImmutable $date Rental date
      *
-     * @return PaginationInterface
+     * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedListByDate(int $page, $date): PaginationInterface;
+    public function getPaginatedListByDate(int $page, \DateTimeImmutable $date): PaginationInterface;
 
     /**
-     * Find overdue rentals bu user.
+     * Find overdue rentals by user.
      *
-     * @param User               $user
-     * @param \DateTimeImmutable $date
+     * @param User               $user User entity
+     * @param \DateTimeImmutable $date Date to check overdue
      *
-     * @return array|null
+     * @return array|null Array of overdue rentals or null
      */
     public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array;
 }

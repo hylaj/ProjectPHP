@@ -22,15 +22,15 @@ interface BookServiceInterface
     /**
      * Get Books By Category.
      *
-     * @param Category $category
+     * @param Category $category Category entity
      *
-     * @return array
+     * @return array Array of books
      */
     public function getBooksByCategory(Category $category): array;
 
 
     /**
-     * Save entity.
+     * Save Book entity.
      *
      * @param Book $book Book entity
      *
@@ -40,9 +40,9 @@ interface BookServiceInterface
     public function save(Book $book): void;
 
     /**
-     * Delete entity.
+     * Delete Book entity.
      *
-     * @param Book $book
+     * @param Book $book Book entity
      *
      * @return void
      *
@@ -64,18 +64,18 @@ interface BookServiceInterface
     /**
      * Sets availability of book.
      *
-     * @param Book $book
-     * @param bool $status
+     * @param Book $book   Book entity
+     * @param bool $status Availability status
      *
      * @return void
      */
     public function setAvailable(Book $book, bool $status): void;
 
     /**
-     * Create avatar.
+     * Create Book cover.
      *
-     * @param UploadedFile $uploadedFile
-     * @param Book         $book
+     * @param UploadedFile $uploadedFile Uploaded file representing cover
+     * @param Book         $book         Book entity to attach cover to
      *
      * @return void
      *
@@ -85,10 +85,10 @@ interface BookServiceInterface
     public function createCover(UploadedFile $uploadedFile, Book $book): void;
 
     /**
-     * Update cover.
+     * Update Book cover.
      *
-     * @param UploadedFile $uploadedFile
-     * @param Book         $book
+     * @param UploadedFile $uploadedFile Uploaded file representing new cover
+     * @param Book         $book         Book entity to update cover for
      *
      * @return void
      *
@@ -98,11 +98,11 @@ interface BookServiceInterface
     public function updateCover(UploadedFile $uploadedFile, Book $book): void;
 
     /**
-     * Can Category be deleted?
+     * Check if Book can be deleted.
      *
-     * @param Book $book
+     * @param Book $book Book entity to check
      *
-     * @return bool
+     * @return bool True if book can be deleted, false otherwise
      */
     public function canBeDeleted(Book $book): bool;
 }

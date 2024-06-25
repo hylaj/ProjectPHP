@@ -753,7 +753,10 @@
       <source>action.create_rental</source>
       <target>Rent</target>
     </trans-unit>
-
+    <trans-unit id="message.blocked_account">
+      <source>message.blocked_account</source>
+      <target>Blocked account</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

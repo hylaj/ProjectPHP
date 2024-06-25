@@ -37,7 +37,7 @@ class RentalService implements RentalServiceInterface
      * Constructor.
      *
      * @param RentalRepository   $rentalRepository Rental repository
-     * @param PaginatorInterface $paginator        Paginator
+     * @param PaginatorInterface $paginator        Paginator service
      */
     public function __construct(private readonly RentalRepository $rentalRepository, private readonly PaginatorInterface $paginator)
     {
@@ -73,16 +73,16 @@ class RentalService implements RentalServiceInterface
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
-    }// end getPaginatedListByStatus()
+    }// end getPaginatedList()
 
 
     /**
      *  Get paginated list by user.
      *
-     * @param int $page
-     * @param int $owner
+     * @param int $page Page number
+     * @param int $owner User ID
      *
-     * @return PaginationInterface
+     * @return PaginationInterface<string, mixed> Paginated list
      */
     public function getPaginatedListByOwner(int $page, int $owner): PaginationInterface
     {
@@ -97,12 +97,12 @@ class RentalService implements RentalServiceInterface
     /**
      * Get paginated list by date.
      *
-     * @param int $page
-     * @param $date
+     * @param int             $page Page number
+     * @param \DateTimeImmutable $date Rental date
      *
-     * @return PaginationInterface
+     * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedListByDate(int $page, $date): PaginationInterface
+    public function getPaginatedListByDate(int $page, \DateTimeImmutable $date): PaginationInterface
     {
         return $this->paginator->paginate(
             $this->rentalRepository->queryByDate($date),
@@ -115,10 +115,10 @@ class RentalService implements RentalServiceInterface
     /**
      * Find overdue rentals by user.
      *
-     * @param User               $user
-     * @param \DateTimeImmutable $date
+     * @param User               $user User entity
+     * @param \DateTimeImmutable $date Date to check overdue
      *
-     * @return array|null
+     * @return array|null Array of overdue rentals or null
      */
     public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array
     {
@@ -128,7 +128,7 @@ class RentalService implements RentalServiceInterface
     /**
      * Save entity.
      *
-     * @param Rental $rental Rental entity
+     * @param Rental $rental Rental entity to save
      *
      * @throws ORMException
      * @throws OptimisticLockException
@@ -141,7 +141,7 @@ class RentalService implements RentalServiceInterface
 
     /**
      * Delete entity.
-     * @param Rental $rental
+     * @param Rental $rental Rental entity to delete
      *
      * @return void
      *
@@ -156,9 +156,9 @@ class RentalService implements RentalServiceInterface
     /**
      * Checks if Book can be rented.
      *
-     * @param Book $book
+     * @param Book $book Book entity to check
      *
-     * @return bool
+     * @return bool True if book can be rented, false otherwise
      */
     public function canBeRented(Book $book): bool
     {
@@ -173,10 +173,10 @@ class RentalService implements RentalServiceInterface
 
 
     /**
-     * Set Book status.
+     * Set Rental status.
      *
-     * @param bool   $status
-     * @param Rental $rental
+     * @param bool   $status Rental status to set
+     * @param Rental $rental Rental entity
      *
      * @return void
      */
@@ -188,10 +188,10 @@ class RentalService implements RentalServiceInterface
     /**
      * Set Rental Details.
      *
-     * @param bool   $status
-     * @param User   $owner
-     * @param Book   $book
-     * @param Rental $rental
+     * @param bool   $status Status of the rental
+     * @param User   $owner User who owns the rental
+     * @param Book   $book Book rented
+     * @param Rental $rental Rental entity to set details
      *
      * @return void
      */
@@ -202,3 +202,4 @@ class RentalService implements RentalServiceInterface
         $rental->setStatus($status);
     }// end setRentalDetails()
 }// end class
+

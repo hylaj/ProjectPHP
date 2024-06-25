@@ -23,7 +23,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * Constructor.
      *
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -46,7 +46,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * Save entity.
      *
-     * @param Category $category
+     * @param Category $category Category entity
      *
      * @return void
      *
@@ -65,6 +65,8 @@ class CategoryRepository extends ServiceEntityRepository
      *
      * @param Category $category Category entity
      *
+     * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -73,14 +75,14 @@ class CategoryRepository extends ServiceEntityRepository
         assert($this->_em instanceof EntityManager);
         $this->_em->remove($category);
         $this->_em->flush();
-    }
+    }// end delete()
 
     /**
-     * Get Or Create Query Builder.
+     * Get or create new query builder.
      *
-     * @param QueryBuilder|null $queryBuilder
+     * @param QueryBuilder|null $queryBuilder Query builder
      *
-     * @return QueryBuilder
+     * @return QueryBuilder Query builder
      */
     private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {

@@ -19,42 +19,42 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class RentalVoter extends Voter
 {
     /**
-     * Create permission.
+     * Rent permission.
      *
      * @const string
      */
     private const RENT = 'RENT';
 
     /**
-     * Create permission.
+     * Return permission.
      *
      * @const string
      */
     private const RETURN = 'RETURN';
 
     /**
-     * Create permission.
+     * Approve permission.
      *
      * @const string
      */
     private const APPROVE = 'APPROVE';
 
     /**
-     * Create permission.
+     * View permission.
      *
      * @const string
      */
     private const VIEW = 'VIEW';
 
     /**
-     * Create permission.
+     * View all rentals permission.
      *
      * @const string
      */
     private const VIEW_ALL_RENTALS = 'VIEW_ALL_RENTALS';
 
     /**
-     * Create permission.
+     * Deny permission.
      *
      * @const string
      */
@@ -63,7 +63,7 @@ class RentalVoter extends Voter
     /**
      * Constructor.
      *
-     * @param RentalServiceInterface $rentalService
+     * @param RentalServiceInterface $rentalService Rental service interface
      */
     public function __construct(private readonly RentalServiceInterface $rentalService)
     {
@@ -138,10 +138,10 @@ class RentalVoter extends Voter
     /**
      * Checks if user can rent a book.
      *
-     * @param Book          $book
-     * @param UserInterface $user
+     * @param Book          $book Book entity
+     * @param UserInterface $user User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canRent(Book $book, UserInterface $user): bool
     {
@@ -153,12 +153,12 @@ class RentalVoter extends Voter
     }
 
     /**
-     *  Checks if user can return a book.
+     * Checks if user can return a book.
      *
-     * @param Rental        $rental
-     * @param UserInterface $user
+     * @param Rental        $rental Rental entity
+     * @param UserInterface $user   User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canReturn(Rental $rental, UserInterface $user): bool
     {
@@ -166,12 +166,12 @@ class RentalVoter extends Voter
     }
 
     /**
-     *  Checks if user can approve the rental request.
+     * Checks if user can approve the rental request.
      *
-     * @param Rental        $rental
-     * @param UserInterface $user
+     * @param Rental        $rental Rental entity
+     * @param UserInterface $user   User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canApprove(Rental $rental, UserInterface $user): bool
     {
@@ -180,10 +180,11 @@ class RentalVoter extends Voter
 
     /**
      * Checks if user can deny the rental request.
-     * @param Rental        $rental
-     * @param UserInterface $user
      *
-     * @return bool
+     * @param Rental        $rental Rental entity
+     * @param UserInterface $user   User entity
+     *
+     * @return bool Result
      */
     private function canDeny(Rental $rental, UserInterface $user): bool
     {
@@ -193,9 +194,9 @@ class RentalVoter extends Voter
     /**
      * Checks if user can view own rentals list.
      *
-     * @param UserInterface $user
+     * @param UserInterface $user User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canView(UserInterface $user): bool
     {
@@ -207,14 +208,15 @@ class RentalVoter extends Voter
     }
 
     /**
-     *  Checks if user can view all rentals list.
+     * Checks if user can view all rentals list.
      *
-     * @param UserInterface $user
+     * @param UserInterface $user User entity
      *
-     * @return bool
+     * @return bool Result
      */
     private function canViewAllRentals(UserInterface $user): bool
     {
         return in_array('ROLE_ADMIN', $user->getRoles());
     }
 }
+

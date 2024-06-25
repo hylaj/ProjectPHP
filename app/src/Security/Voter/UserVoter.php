@@ -15,9 +15,32 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserVoter extends Voter
 {
+    /**
+     * Edit permission.
+     *
+     * @const string
+     */
     private const EDIT = 'EDIT';
+
+    /**
+     * View user permission.
+     *
+     * @const string
+     */
     private const VIEW_USER = 'VIEW_USER';
+
+    /**
+     * View user list permission.
+     *
+     * @const string
+     */
     private const VIEW_USER_LIST = 'VIEW_USER_LIST';
+
+    /**
+     * Manage permission.
+     *
+     * @const string
+     */
     private const MANAGE = 'MANAGE';
 
     /**
@@ -72,12 +95,12 @@ class UserVoter extends Voter
     }
 
     /**
-     * Checks if user can view his own profile.
+     * Checks if user can view another user's profile.
      *
-     * @param UserInterface $user
-     * @param UserInterface $currentUser
+     * @param UserInterface $user        The user whose profile is being viewed
+     * @param UserInterface $currentUser The current user
      *
-     * @return bool
+     * @return bool Result
      */
     private function canViewUser(UserInterface $user, UserInterface $currentUser): bool
     {
@@ -89,11 +112,11 @@ class UserVoter extends Voter
     }
 
     /**
-     * Checks if user can view all users.
+     * Checks if user can view the user list.
      *
-     * @param UserInterface $currentUser
+     * @param UserInterface $currentUser The current user
      *
-     * @return bool
+     * @return bool Result
      */
     private function canViewUserList(UserInterface $currentUser): bool
     {
@@ -101,12 +124,12 @@ class UserVoter extends Voter
     }
 
     /**
-     * Checks if user can edit user details.
+     * Checks if user can edit another user's details.
      *
-     * @param UserInterface $user
-     * @param UserInterface $currentUser
+     * @param UserInterface $user        The user whose details are being edited
+     * @param UserInterface $currentUser The current user
      *
-     * @return bool
+     * @return bool Result
      */
     private function canEdit(UserInterface $user, UserInterface $currentUser): bool
     {
@@ -118,12 +141,12 @@ class UserVoter extends Voter
     }
 
     /**
-     * Checks if user can promote other user.
+     * Checks if user can promote another user.
      *
-     * @param UserInterface $user
-     * @param UserInterface $currentUser
+     * @param UserInterface $user        The user to be promoted
+     * @param UserInterface $currentUser The current user
      *
-     * @return bool
+     * @return bool Result
      */
     private function canPromote(UserInterface $user, UserInterface $currentUser): bool
     {

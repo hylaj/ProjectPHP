@@ -740,7 +740,10 @@
       <source>action.create_rental</source>
       <target>Wypożycz</target>
     </trans-unit>
-
+    <trans-unit id="message.blocked_account">
+      <source>message.blocked_account</source>
+      <target>Konto zablokowane</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

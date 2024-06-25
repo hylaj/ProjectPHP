@@ -39,26 +39,23 @@ class BookService implements BookServiceInterface
     /**
      * Constructor.
      *
-     * @param BookRepository             $bookRepository
-     * @param PaginatorInterface         $paginator
-     * @param CategoryServiceInterface   $categoryService
-     * @param TagServiceInterface        $tagService
-     * @param FileUploadServiceInterface $fileUploadService
-     * @param string                     $targetDirectory
-     * @param Filesystem                 $filesystem
+     * @param BookRepository             $bookRepository          Book repository
+     * @param PaginatorInterface         $paginator               Paginator service
+     * @param CategoryServiceInterface   $categoryService         Category service
+     * @param TagServiceInterface        $tagService              Tag service
+     * @param FileUploadServiceInterface $fileUploadService       File upload service
+     * @param string                     $targetDirectory         Target directory for file upload
+     * @param Filesystem                 $filesystem              Filesystem service
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem)
-    {
-    }// end __construct()
-
+    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem) {}
 
     /**
-     * Get Paginated List.
+     * Get Paginated List of Books.
      *
-     * @param int                     $page
-     * @param BookListInputFiltersDto $filters
+     * @param int                     $page    Page number
+     * @param BookListInputFiltersDto $filters Filters to apply
      *
-     * @return PaginationInterface
+     * @return PaginationInterface<string, mixed> Paginated list of books
      */
     public function getPaginatedList(int $page, BookListInputFiltersDto $filters): PaginationInterface
     {
@@ -74,9 +71,9 @@ class BookService implements BookServiceInterface
     /**
      * Get Books By Category.
      *
-     * @param Category $category
+     * @param Category $category Category entity
      *
-     * @return array
+     * @return array Array of books
      */
     public function getBooksByCategory(Category $category): array
     {
@@ -84,7 +81,7 @@ class BookService implements BookServiceInterface
     }
 
     /**
-     * Save entity.
+     * Save Book entity.
      *
      * @param Book $book Book entity
      *
@@ -94,13 +91,12 @@ class BookService implements BookServiceInterface
     public function save(Book $book): void
     {
         $this->bookRepository->save($book);
-    }// end save()
-
+    }
 
     /**
-     * Delete entity.
+     * Delete Book entity.
      *
-     * @param Book $book
+     * @param Book $book Book entity
      *
      * @return void
      *
@@ -115,8 +111,8 @@ class BookService implements BookServiceInterface
     /**
      * Sets availability of book.
      *
-     * @param Book $book
-     * @param bool $status
+     * @param Book $book   Book entity
+     * @param bool $status Availability status
      *
      * @return void
      */
@@ -126,10 +122,10 @@ class BookService implements BookServiceInterface
     }
 
     /**
-     * Create avatar.
+     * Create Book cover.
      *
-     * @param UploadedFile $uploadedFile
-     * @param Book         $book
+     * @param UploadedFile $uploadedFile Uploaded file representing cover
+     * @param Book         $book         Book entity to attach cover to
      *
      * @return void
      *
@@ -144,12 +140,11 @@ class BookService implements BookServiceInterface
         $this->bookRepository->save($book);
     }
 
-
     /**
-     * Update cover.
+     * Update Book cover.
      *
-     * @param UploadedFile $uploadedFile
-     * @param Book         $book
+     * @param UploadedFile $uploadedFile Uploaded file representing new cover
+     * @param Book         $book         Book entity to update cover for
      *
      * @return void
      *
@@ -168,13 +163,12 @@ class BookService implements BookServiceInterface
         $this->createCover($uploadedFile, $book);
     }
 
-
     /**
-     * Can Category be deleted?
+     * Check if Book can be deleted.
      *
-     * @param Book $book
+     * @param Book $book Book entity to check
      *
-     * @return bool
+     * @return bool True if book can be deleted, false otherwise
      */
     public function canBeDeleted(Book $book): bool
     {
@@ -188,11 +182,11 @@ class BookService implements BookServiceInterface
     }
 
     /**
-     *  Prepare filters for the tasks list.
+     * Prepare filters for book list.
      *
-     * @param BookListInputFiltersDto $filters
+     * @param BookListInputFiltersDto $filters Filters to prepare
      *
-     * @return BookListFiltersDto
+     * @return BookListFiltersDto Prepared filters
      *
      * @throws NonUniqueResultException
      */
@@ -205,4 +199,4 @@ class BookService implements BookServiceInterface
             $filters->authorSearch
         );
     }
-}// end class
+}

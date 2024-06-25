@@ -6,6 +6,8 @@
 namespace App\Service;
 
 use App\Entity\User;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -14,21 +16,20 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  */
 interface UserServiceInterface
 {
-
     /**
-     * Upgrade password.
+     * Upgrade user's password.
      *
-     * @param PasswordAuthenticatedUserInterface $user
-     * @param string                             $newHashedPassword
+     * @param PasswordAuthenticatedUserInterface $user              User entity implementing PasswordAuthenticatedUserInterface
+     * @param string                             $newHashedPassword New hashed password
      *
      * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void;
 
     /**
-     * Save entity.
+     * Save user entity.
      *
-     * @param User $user
+     * @param User $user User entity to save
      *
      * @return void
      *
@@ -38,20 +39,20 @@ interface UserServiceInterface
     public function save(User $user): void;
 
     /**
-     * Get paginated list.
+     * Get paginated list of users.
      *
-     * @param int $page
+     * @param int $page Page number
      *
-     * @return PaginationInterface
+     * @return PaginationInterface Paginated list of users
      */
     public function getPaginatedList(int $page): PaginationInterface;
 
     /**
-     * Can user be demoted?
+     * Check if user can be demoted.
      *
-     * @param string $role
+     * @param string $role Role of the user
      *
-     * @return bool
+     * @return bool True if user can be demoted, false otherwise
      */
     public function canBeDemoted(string $role): bool;
 }
