@@ -42,11 +42,7 @@ class UserPasswordType extends AbstractType
                 ->add('currentPassword', PasswordType::class, [
                     'mapped' => false,
                     'label' => 'label.current_password',
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'message.enter_current_password',
-                        ]),
-                    ],
+                    'required' => true,
                 ]);
         }
         $builder

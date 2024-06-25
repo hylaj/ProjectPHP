@@ -736,6 +736,11 @@
     <source>message.no_books</source>
     <target>Brak</target>
 </trans-unit>
+    <trans-unit id="action.create_rental">
+      <source>action.create_rental</source>
+      <target>Wypożycz</target>
+    </trans-unit>
+
     </body>
   </file>
 </xliff>

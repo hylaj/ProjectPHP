@@ -202,10 +202,7 @@
         <source>action.tags</source>
         <target>Tags</target>
       </trans-unit>
-      <trans-unit id="message.enter_current_password">
-        <source>message.enter_current_password</source>
-        <target>Enter your current password</target>
-      </trans-unit>
+
       <trans-unit id="message.already_logged_in">
         <source>message.already_logged_in</source>
         <target>You are already logged in</target>
@@ -743,6 +740,19 @@
     <source>message.no_books</source>
     <target>No books</target>
 </trans-unit>
+    <trans-unit id="message.enter_current_password">
+        <source>message.enter_current_password</source>
+        <target>Enter your current password</target>
+      </trans-unit>
+
+<trans-unit id="action.rentals">
+    <source>action.rentals</source>
+    <target>Rentals</target>
+  </trans-unit>
+    <trans-unit id="action.create_rental">
+      <source>action.create_rental</source>
+      <target>Rent</target>
+    </trans-unit>
 
     </body>
   </file>

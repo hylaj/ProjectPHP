@@ -38,7 +38,6 @@ class SearchType extends AbstractType
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^[A-Za-z0-9\s]*$/',
-                        'message' => 'message.invalid_characters',
                     ]),
                 ],
             ])
@@ -52,7 +51,6 @@ class SearchType extends AbstractType
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^[A-Za-z0-9\s]*$/',
-                        'message' => 'message.invalid_characters',
                     ]),
                 ],
             ]);
