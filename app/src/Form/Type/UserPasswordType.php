@@ -25,7 +25,9 @@ class UserPasswordType extends AbstractType
      *
      * @param Security $security
      */
-    public function __construct(private readonly Security $security){}
+    public function __construct(private readonly Security $security)
+    {
+    }
 
     /**
      * Build form.

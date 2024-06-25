@@ -84,8 +84,8 @@ class RatingRepository extends ServiceEntityRepository
                 'ratingCount' => $result[0]['ratingCount'],
             ];
         }
-            return null;
 
+            return null;
     }
 
     /**

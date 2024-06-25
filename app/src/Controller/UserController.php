@@ -29,36 +29,37 @@ class UserController extends AbstractController
     /**
      * Constructor.
      *
-     * @param UserServiceInterface        $userService
-     * @param TranslatorInterface         $translator
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param UserServiceInterface        $userService    User service interface
+     * @param TranslatorInterface         $translator     Translator interface
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher interface
      */
     public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
     {
-    }// end __construct()
+    }
 
     /**
-     * Show user profile.
+     * Show action.
      *
-     * @param User $user
+     * @param User|null $user User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
     #[IsGranted('VIEW_USER', subject: 'user')]
-    public function show(User $user): Response
+    public function show(?User $user): Response
     {
         return $this->render(
             'user/show.html.twig',
             ['user' => $user]
         );
-    }// end show()
+    }
 
     /**
-     * Show all users.
-     * @param int $page
+     * Index action.
      *
-     * @return Response
+     * @param int $page Page
+     *
+     * @return Response HTTP Response
      */
     #[Route('/list', name: 'user_index', methods: 'GET')]
     #[IsGranted('VIEW_USER_LIST')]
@@ -69,15 +70,15 @@ class UserController extends AbstractController
         );
 
         return $this->render('user/index.html.twig', ['pagination' => $pagination]);
-    }// end index()
+    }
 
     /**
      * Edit password.
      *
-     * @param Request $request
-     * @param User    $user
+     * @param Request $request HTTP Request
+     * @param User    $user    User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}/edit-password', name: 'password_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
@@ -118,7 +119,7 @@ class UserController extends AbstractController
             );
 
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
-        }// end if
+        }
 
         return $this->render(
             'user/edit-password.html.twig',
@@ -127,15 +128,15 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end editPassword()
+    }
 
     /**
      * Edit user's details.
      *
-     * @param Request $request
-     * @param User    $user
+     * @param Request $request HTTP Request
+     * @param User    $user    User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}/edit-details', name: 'details_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
@@ -168,16 +169,15 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end editDetails()
-
+    }
 
     /**
      * Promote the user.
      *
-     * @param Request $request
-     * @param User    $user
+     * @param Request $request HTTP Request
+     * @param User    $user    User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}/promote', name: 'promote_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -221,15 +221,15 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end promote()
+    }
 
     /**
      * Demote admin.
      *
-     * @param Request $request
-     * @param User    $user
+     * @param Request $request HTTP Request
+     * @param User    $user    User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}/demote', name: 'demote_admin', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -273,15 +273,15 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end demote()
+    }
 
     /**
      * Block user.
      *
-     * @param Request $request
-     * @param User    $user
+     * @param Request $request HTTP Request
+     * @param User    $user    User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}/block', name: 'block_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -324,15 +324,15 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end block()
+    }
 
     /**
      * Unblock user.
      *
-     * @param Request $request
-     * @param User    $user
+     * @param Request $request HTTP Request
+     * @param User    $user    User entity
      *
-     * @return Response
+     * @return Response HTTP Response
      */
     #[Route('/{id}/unblock', name: 'unblock_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('MANAGE', subject: 'user')]
@@ -375,5 +375,5 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end block()
-}// end class
+    }
+}

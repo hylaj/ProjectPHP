@@ -191,7 +191,9 @@ class BookService implements BookServiceInterface
      *  Prepare filters for the tasks list.
      *
      * @param BookListInputFiltersDto $filters
+     *
      * @return BookListFiltersDto
+     *
      * @throws NonUniqueResultException
      */
     private function prepareFilters(BookListInputFiltersDto $filters): BookListFiltersDto

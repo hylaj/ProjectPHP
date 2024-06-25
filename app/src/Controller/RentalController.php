@@ -103,10 +103,6 @@ class RentalController extends AbstractController
     #[IsGranted('RETURN', subject: 'rental')]
     public function return(Request $request, Rental $rental): Response
     {
-        /*if ($this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException();
-        }*/
-
         $form = $this->createForm(
             FormType::class,
             $rental,

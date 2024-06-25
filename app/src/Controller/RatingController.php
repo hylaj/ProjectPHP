@@ -27,8 +27,8 @@ class RatingController extends AbstractController
     /**
      * Constructor.
      *
-     * @param TranslatorInterface    $translator
-     * @param RatingServiceInterface $ratingService
+     * @param TranslatorInterface    $translator    Translator
+     * @param RatingServiceInterface $ratingService Rating service
      */
     public function __construct(private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService)
     {
@@ -37,10 +37,10 @@ class RatingController extends AbstractController
     /**
      * Rate a book.
      *
-     * @param Request $request
-     * @param Book    $book
+     * @param Request $request HTTP request
+     * @param Book    $book    Book entity
      *
-     * @return Response
+     * @return Response HTTP response
      */
     #[Route('/{id}/rate', name: 'book_rate', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
     #[IsGranted('RATE', subject: 'book')]
@@ -82,10 +82,10 @@ class RatingController extends AbstractController
     /**
      * Edit the rating.
      *
-     * @param Request $request
-     * @param Rating  $rating
+     * @param Request $request HTTP request
+     * @param Rating  $rating  Rating entity
      *
-     * @return Response
+     * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'rating_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
     #[IsGranted('EDIT', subject: 'rating')]
@@ -123,10 +123,10 @@ class RatingController extends AbstractController
     /**
      * Delete the rating.
      *
-     * @param Request $request
-     * @param Rating  $rating
+     * @param Request $request HTTP request
+     * @param Rating  $rating  Rating entity
      *
-     * @return Response
+     * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'rating_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]
     #[IsGranted('DELETE', subject: 'rating')]

@@ -40,15 +40,14 @@ class BookController extends AbstractController
     {
     }
 
-
     /**
      * Index action.
      *
-     * @param Request                 $request
-     * @param BookListInputFiltersDto $filters
-     * @param int                     $page
+     * @param Request                 $request HTTP request
+     * @param BookListInputFiltersDto $filters Input filters for book list
+     * @param int                     $page    Current page number
      *
-     * @return Response
+     * @return Response HTTP response
      */
     #[Route(name: 'book_index', methods: 'GET')]
     public function index(Request $request, #[MapQueryString(resolver: BookListInputFiltersDtoResolver::class)] BookListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
@@ -104,7 +103,6 @@ class BookController extends AbstractController
             ]
         );
     }
-
 
     /**
      * Create action.

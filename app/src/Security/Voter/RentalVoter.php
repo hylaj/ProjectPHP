@@ -148,6 +148,7 @@ class RentalVoter extends Voter
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
         }
+
         return in_array('ROLE_USER', $user->getRoles()) && $this->rentalService->canBeRented($book);
     }
 
@@ -201,8 +202,8 @@ class RentalVoter extends Voter
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
         }
-        return in_array('ROLE_USER', $user->getRoles());
 
+        return in_array('ROLE_USER', $user->getRoles());
     }
 
     /**

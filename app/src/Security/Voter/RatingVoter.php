@@ -117,7 +117,6 @@ class RatingVoter extends Voter
         }
 
         return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
-
     }
 
     /**
@@ -150,7 +149,7 @@ class RatingVoter extends Voter
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
         }
-        return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
 
+        return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
     }
 }

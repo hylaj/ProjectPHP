@@ -84,8 +84,8 @@ class UserVoter extends Voter
         if (in_array('ROLE_ADMIN', $currentUser->getRoles())) {
             return true;
         }
-        return $currentUser === $user;
 
+        return $currentUser === $user;
     }
 
     /**
