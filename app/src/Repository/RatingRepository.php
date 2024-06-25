@@ -34,7 +34,9 @@ class RatingRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Rating $rating
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -64,6 +66,7 @@ class RatingRepository extends ServiceEntityRepository
      * Find average rating and count ratings by book.
      *
      * @param int $bookId
+     *
      * @return array|null
      */
     public function findAverageRatingAndCountByBook(int $bookId): ?array
@@ -80,9 +83,9 @@ class RatingRepository extends ServiceEntityRepository
                 'avgRating' => $result[0]['avgRating'],
                 'ratingCount' => $result[0]['ratingCount'],
             ];
-        } else {
-            return null;
         }
+            return null;
+
     }
 
     /**
@@ -96,6 +99,4 @@ class RatingRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('rating');
     }
-
-
 }

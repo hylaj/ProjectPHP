@@ -37,7 +37,7 @@ class CategoryService implements CategoryServiceInterface
      *
      * @param CategoryRepository $categoryRepository
      * @param PaginatorInterface $paginator
-     * @param BookRepository $bookRepository
+     * @param BookRepository     $bookRepository
      */
     public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PaginatorInterface $paginator, private readonly BookRepository $bookRepository)
     {
@@ -74,7 +74,9 @@ class CategoryService implements CategoryServiceInterface
      * Delete entity.
      *
      * @param Category $category
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */

@@ -69,7 +69,7 @@ class RentalService implements RentalServiceInterface
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->rentalRepository->QueryAll(),
+            $this->rentalRepository->queryAll(),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE
         );
@@ -81,6 +81,7 @@ class RentalService implements RentalServiceInterface
      *
      * @param int $page
      * @param int $owner
+     *
      * @return PaginationInterface
      */
     public function getPaginatedListByOwner(int $page, int $owner): PaginationInterface
@@ -98,6 +99,7 @@ class RentalService implements RentalServiceInterface
      *
      * @param int $page
      * @param $date
+     *
      * @return PaginationInterface
      */
     public function getPaginatedListByDate(int $page, $date): PaginationInterface
@@ -113,8 +115,9 @@ class RentalService implements RentalServiceInterface
     /**
      * Find overdue rentals by user.
      *
-     * @param User $user
+     * @param User               $user
      * @param \DateTimeImmutable $date
+     *
      * @return array|null
      */
     public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array
@@ -139,7 +142,9 @@ class RentalService implements RentalServiceInterface
     /**
      * Delete entity.
      * @param Rental $rental
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -152,6 +157,7 @@ class RentalService implements RentalServiceInterface
      * Checks if Book can be rented.
      *
      * @param Book $book
+     *
      * @return bool
      */
     public function canBeRented(Book $book): bool
@@ -169,8 +175,9 @@ class RentalService implements RentalServiceInterface
     /**
      * Set Book status.
      *
-     * @param bool $status
+     * @param bool   $status
      * @param Rental $rental
+     *
      * @return void
      */
     public function setStatus(bool $status, Rental $rental): void
@@ -181,10 +188,11 @@ class RentalService implements RentalServiceInterface
     /**
      * Set Rental Details.
      *
-     * @param bool $status
-     * @param User $owner
-     * @param Book $book
+     * @param bool   $status
+     * @param User   $owner
+     * @param Book   $book
      * @param Rental $rental
+     *
      * @return void
      */
     public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void

@@ -37,7 +37,7 @@ class BookRepository extends ServiceEntityRepository
     /**
      * Constructor.
      *
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry     $registry
      * @param TagsDataTransformer $tagsDataTransformer
      */
     public function __construct(ManagerRegistry $registry, private readonly TagsDataTransformer $tagsDataTransformer)
@@ -50,6 +50,7 @@ class BookRepository extends ServiceEntityRepository
      * Query all records.
      *
      * @param BookListFiltersDto $filters
+     *
      * @return QueryBuilder
      */
     public function queryAll(BookListFiltersDto $filters): QueryBuilder
@@ -71,6 +72,7 @@ class BookRepository extends ServiceEntityRepository
      * Find Books By Category.
      *
      * @param Category $category
+     *
      * @return array
      */
     public function findBooksByCategory(Category $category): array

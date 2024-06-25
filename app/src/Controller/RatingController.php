@@ -27,17 +27,19 @@ class RatingController extends AbstractController
     /**
      * Constructor.
      *
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface    $translator
      * @param RatingServiceInterface $ratingService
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService) {
+    public function __construct(private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService)
+    {
     }
 
     /**
      * Rate a book.
      *
      * @param Request $request
-     * @param Book $book
+     * @param Book    $book
+     *
      * @return Response
      */
     #[Route('/{id}/rate', name: 'book_rate', requirements: ['id' => '[1-9]\d*'], methods: 'GET|POST')]
@@ -81,7 +83,8 @@ class RatingController extends AbstractController
      * Edit the rating.
      *
      * @param Request $request
-     * @param Rating $rating
+     * @param Rating  $rating
+     *
      * @return Response
      */
     #[Route('/{id}/edit', name: 'rating_edit', requirements: ['id' => '[1-9]\d*'], methods: 'GET|PUT')]
@@ -121,7 +124,8 @@ class RatingController extends AbstractController
      * Delete the rating.
      *
      * @param Request $request
-     * @param Rating $rating
+     * @param Rating  $rating
+     *
      * @return Response
      */
     #[Route('/{id}/delete', name: 'rating_delete', requirements: ['id' => '[1-9]\d*'], methods: 'GET|DELETE')]

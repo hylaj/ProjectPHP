@@ -52,6 +52,7 @@ class TagController extends AbstractController
      * Show action.
      *
      * @param Tag $tag
+     *
      * @return Response
      */
     #[Route(

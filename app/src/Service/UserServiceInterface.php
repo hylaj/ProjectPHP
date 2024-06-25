@@ -19,7 +19,8 @@ interface UserServiceInterface
      * Upgrade password.
      *
      * @param PasswordAuthenticatedUserInterface $user
-     * @param string $newHashedPassword
+     * @param string                             $newHashedPassword
+     *
      * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void;
@@ -28,7 +29,9 @@ interface UserServiceInterface
      * Save entity.
      *
      * @param User $user
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -38,6 +41,7 @@ interface UserServiceInterface
      * Get paginated list.
      *
      * @param int $page
+     *
      * @return PaginationInterface
      */
     public function getPaginatedList(int $page): PaginationInterface;
@@ -46,6 +50,7 @@ interface UserServiceInterface
      * Can user be demoted?
      *
      * @param string $role
+     *
      * @return bool
      */
     public function canBeDemoted(string $role): bool;

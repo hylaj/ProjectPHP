@@ -26,7 +26,7 @@ class UserService implements UserServiceInterface
     /**
      * Constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepository     $userRepository
      * @param PaginatorInterface $paginator
      */
     public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator)
@@ -38,7 +38,8 @@ class UserService implements UserServiceInterface
      * Upgrade password.
      *
      * @param PasswordAuthenticatedUserInterface $user
-     * @param string $newHashedPassword
+     * @param string                             $newHashedPassword
+     *
      * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
@@ -51,7 +52,9 @@ class UserService implements UserServiceInterface
      * Save entity.
      *
      * @param User $user
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -64,6 +67,7 @@ class UserService implements UserServiceInterface
      * Get paginated list.
      *
      * @param int $page
+     *
      * @return PaginationInterface
      */
     public function getPaginatedList(int $page): PaginationInterface
@@ -79,6 +83,7 @@ class UserService implements UserServiceInterface
      * Can user be demoted?
      *
      * @param string $role
+     *
      * @return bool
      */
     public function canBeDemoted(string $role): bool

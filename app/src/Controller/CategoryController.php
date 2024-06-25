@@ -54,8 +54,9 @@ class CategoryController extends AbstractController
     /**
      * Show action.
      *
-     * @param Category $category
+     * @param Category    $category
      * @param BookService $bookService
+     *
      * @return Response
      */
     #[Route(

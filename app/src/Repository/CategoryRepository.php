@@ -47,7 +47,9 @@ class CategoryRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Category $category
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -77,11 +79,11 @@ class CategoryRepository extends ServiceEntityRepository
      * Get Or Create Query Builder.
      *
      * @param QueryBuilder|null $queryBuilder
+     *
      * @return QueryBuilder
      */
     private function getOrCreateQueryBuilder(?QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('category');
     }// end getOrCreateQueryBuilder()
-
 }// end class

@@ -18,6 +18,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 /**
  * Class UserController.
  */
@@ -28,8 +29,8 @@ class UserController extends AbstractController
     /**
      * Constructor.
      *
-     * @param UserServiceInterface $userService
-     * @param TranslatorInterface $translator
+     * @param UserServiceInterface        $userService
+     * @param TranslatorInterface         $translator
      * @param UserPasswordHasherInterface $passwordHasher
      */
     public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
@@ -40,6 +41,7 @@ class UserController extends AbstractController
      * Show user profile.
      *
      * @param User $user
+     *
      * @return Response
      */
     #[Route('/{id}', name: 'user_show', requirements: ['id' => '[1-9]\d*'], methods: 'GET')]
@@ -55,6 +57,7 @@ class UserController extends AbstractController
     /**
      * Show all users.
      * @param int $page
+     *
      * @return Response
      */
     #[Route('/list', name: 'user_index', methods: 'GET')]
@@ -72,12 +75,13 @@ class UserController extends AbstractController
      * Edit password.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     #[Route('/{id}/edit-password', name: 'password_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
-    public function edit_password(Request $request, User $user): Response
+    public function editPassword(Request $request, User $user): Response
     {
         $form = $this->createForm(
             UserPasswordType::class,
@@ -123,18 +127,19 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end edit_password()
+    }// end editPassword()
 
     /**
      * Edit user's details.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     #[Route('/{id}/edit-details', name: 'details_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
     #[IsGranted('EDIT', subject: 'user')]
-    public function edit_details(Request $request, User $user): Response
+    public function editDetails(Request $request, User $user): Response
     {
         $form = $this->createForm(
             UserDetailsType::class,
@@ -163,14 +168,15 @@ class UserController extends AbstractController
                 'user' => $user,
             ]
         );
-    }// end edit_details()
+    }// end editDetails()
 
 
     /**
      * Promote the user.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     #[Route('/{id}/promote', name: 'promote_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
@@ -221,7 +227,8 @@ class UserController extends AbstractController
      * Demote admin.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     #[Route('/{id}/demote', name: 'demote_admin', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
@@ -272,7 +279,8 @@ class UserController extends AbstractController
      * Block user.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     #[Route('/{id}/block', name: 'block_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
@@ -322,7 +330,8 @@ class UserController extends AbstractController
      * Unblock user.
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     #[Route('/{id}/unblock', name: 'unblock_user', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]

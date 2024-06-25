@@ -205,6 +205,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Setter for firstName.
      *
      * @param string|null $firstName
+     *
      * @return void
      */
     public function setFirstName(?string $firstName): void
@@ -226,6 +227,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for user block.
      * @param bool $isBlocked
+     *
      * @return void
      */
     public function setBlocked(bool $isBlocked): void

@@ -50,13 +50,13 @@ class UserVoter extends Voter
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
-        $current_user = $token->getUser();
-        if (!$current_user instanceof UserInterface) {
+        $currentUser = $token->getUser();
+        if (!$currentUser instanceof UserInterface) {
             return false;
         }
 
         if (self::VIEW_USER_LIST === $attribute) {
-            return $this->canViewUserList($current_user);
+            return $this->canViewUserList($currentUser);
         }
 
         if (!$subject instanceof User) {
@@ -64,9 +64,9 @@ class UserVoter extends Voter
         }
 
         return match ($attribute) {
-            self::VIEW_USER => $this->canViewUser($subject, $current_user),
-            self::EDIT => $this->canEdit($subject, $current_user),
-            self::MANAGE => $this->canPromote($subject, $current_user),
+            self::VIEW_USER => $this->canViewUser($subject, $currentUser),
+            self::EDIT => $this->canEdit($subject, $currentUser),
+            self::MANAGE => $this->canPromote($subject, $currentUser),
             default => false,
         };
     }
@@ -75,54 +75,58 @@ class UserVoter extends Voter
      * Checks if user can view his own profile.
      *
      * @param UserInterface $user
-     * @param UserInterface $current_user
+     * @param UserInterface $currentUser
+     *
      * @return bool
      */
-    private function canViewUser(UserInterface $user, UserInterface $current_user): bool
+    private function canViewUser(UserInterface $user, UserInterface $currentUser): bool
     {
-        if (in_array('ROLE_ADMIN', $current_user->getRoles())) {
+        if (in_array('ROLE_ADMIN', $currentUser->getRoles())) {
             return true;
-        } else {
-            return $current_user === $user;
         }
+        return $currentUser === $user;
+
     }
 
     /**
      * Checks if user can view all users.
      *
-     * @param UserInterface $current_user
+     * @param UserInterface $currentUser
+     *
      * @return bool
      */
-    private function canViewUserList(UserInterface $current_user): bool
+    private function canViewUserList(UserInterface $currentUser): bool
     {
-        return in_array('ROLE_ADMIN', $current_user->getRoles());
+        return in_array('ROLE_ADMIN', $currentUser->getRoles());
     }
 
     /**
      * Checks if user can edit user details.
      *
      * @param UserInterface $user
-     * @param UserInterface $current_user
+     * @param UserInterface $currentUser
+     *
      * @return bool
      */
-    private function canEdit(UserInterface $user, UserInterface $current_user): bool
+    private function canEdit(UserInterface $user, UserInterface $currentUser): bool
     {
-        if (in_array('ROLE_ADMIN', $current_user->getRoles())) {
+        if (in_array('ROLE_ADMIN', $currentUser->getRoles())) {
             return true;
-        } else {
-            return in_array('ROLE_USER', $current_user->getRoles()) && ($user === $current_user);
         }
+
+        return in_array('ROLE_USER', $currentUser->getRoles()) && ($user === $currentUser);
     }
 
     /**
      * Checks if user can promote other user.
      *
      * @param UserInterface $user
-     * @param UserInterface $current_user
+     * @param UserInterface $currentUser
+     *
      * @return bool
      */
-    private function canPromote(UserInterface $user, UserInterface $current_user): bool
+    private function canPromote(UserInterface $user, UserInterface $currentUser): bool
     {
-        return in_array('ROLE_ADMIN', $current_user->getRoles()) && $current_user !== $user;
+        return in_array('ROLE_ADMIN', $currentUser->getRoles()) && $currentUser !== $user;
     }
 }

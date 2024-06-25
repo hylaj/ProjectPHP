@@ -32,6 +32,7 @@ interface RentalServiceInterface
      *
      * @param int $page
      * @param int $owner
+     *
      * @return PaginationInterface
      */
     public function getPaginatedListByOwner(int $page, int $owner): PaginationInterface;
@@ -51,6 +52,7 @@ interface RentalServiceInterface
      * Delete entity.
      *
      * @param Rental $rental
+     *
      * @return void
      */
     public function delete(Rental $rental): void;
@@ -58,10 +60,11 @@ interface RentalServiceInterface
     /**
      * Set Rental Details.
      *
-     * @param bool $status
-     * @param User $owner
-     * @param Book $book
+     * @param bool   $status
+     * @param User   $owner
+     * @param Book   $book
      * @param Rental $rental
+     *
      * @return void
      */
     public function setRentalDetails(bool $status, User $owner, Book $book, Rental $rental): void;
@@ -70,6 +73,7 @@ interface RentalServiceInterface
      * Checks if Book can be rented.
      *
      * @param Book $book
+     *
      * @return bool
      */
     public function canBeRented(Book $book): bool;
@@ -77,8 +81,9 @@ interface RentalServiceInterface
     /**
      * Sets the rental status.
      *
-     * @param bool $status
+     * @param bool   $status
      * @param Rental $rental
+     *
      * @return void
      */
     public function setStatus(bool $status, Rental $rental): void;
@@ -88,6 +93,7 @@ interface RentalServiceInterface
      *
      * @param int $page
      * @param $date
+     *
      * @return PaginationInterface
      */
     public function getPaginatedListByDate(int $page, $date): PaginationInterface;
@@ -95,8 +101,9 @@ interface RentalServiceInterface
     /**
      * Find overdue rentals bu user.
      *
-     * @param User $user
+     * @param User               $user
      * @param \DateTimeImmutable $date
+     *
      * @return array|null
      */
     public function findOverdueRentalsByUser(User $user, \DateTimeImmutable $date): ?array;

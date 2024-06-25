@@ -60,6 +60,7 @@ class Rating
      * Setter for BookRating.
      *
      * @param int $bookRating
+     *
      * @return void
      */
     public function setBookRating(int $bookRating): void
@@ -81,6 +82,7 @@ class Rating
      *  Setter for User.
      *
      * @param User|null $user
+     *
      * @return void
      */
     public function setUser(?User $user): void
@@ -102,6 +104,7 @@ class Rating
      *  Setter for Book.
      *
      * @param Book|null $book
+     *
      * @return void
      */
     public function setBook(?Book $book): void

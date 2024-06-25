@@ -154,10 +154,12 @@ class Category
         return $this->slug;
     }
 
+
     /**
      * Setter for slug.
-     *
-     * @return $this
+     *      *
+     * @param string|null $slug
+     * @return void
      */
     public function setSlug(?string $slug): void
     {
@@ -178,6 +180,7 @@ class Category
      * Setter for ItemAuthor.
      *
      * @param User|null $itemAuthor
+     *
      * @return void
      */
     public function setItemAuthor(?User $itemAuthor): void

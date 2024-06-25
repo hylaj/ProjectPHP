@@ -67,7 +67,7 @@ class RentalRepository extends ServiceEntityRepository
      *
      * @return QueryBuilder
      */
-    public function QueryAll(): QueryBuilder
+    public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
@@ -86,7 +86,7 @@ class RentalRepository extends ServiceEntityRepository
      */
     public function queryByStatus(): QueryBuilder
     {
-        return $this->QueryAll()
+        return $this->queryAll()
             ->where('rental.status= :status')
             ->setParameter('status', false);
     }// end queryByStatus()
@@ -95,11 +95,12 @@ class RentalRepository extends ServiceEntityRepository
      * Query Rentals By Owner.
      *
      * @param $owner
+     *
      * @return QueryBuilder
      */
     public function queryByOwner($owner): QueryBuilder
     {
-        return $this->QueryAll()
+        return $this->queryAll()
             ->where('rental.status= :status')
            /* ->setParameter('status', true) */
             ->Where('rental.owner= :owner')
@@ -111,11 +112,12 @@ class RentalRepository extends ServiceEntityRepository
      * Query Rentals By Date (overdue rentals).
      *
      * @param $date
+     *
      * @return QueryBuilder
      */
     public function queryByDate($date): QueryBuilder
     {
-        return $this->QueryAll()
+        return $this->queryAll()
             ->where('rental.returnDate <= :date')
             ->setParameter('date', $date)
             ->orderBy('rental.returnDate', 'ASC');
@@ -126,11 +128,12 @@ class RentalRepository extends ServiceEntityRepository
      *
      * @param $user
      * @param $date
+     *
      * @return array|null
      */
     public function queryByDateAndUser($user, $date): ?array
     {
-        return $this->QueryAll()
+        return $this->queryAll()
             ->where('rental.returnDate <= :date')
             ->andWhere('rental.owner = :user')
             ->setParameter('user', $user)
@@ -151,6 +154,4 @@ class RentalRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('rental');
     }// end getOrCreateQueryBuilder()
-
-
 }// end class

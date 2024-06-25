@@ -24,7 +24,7 @@ class TagService implements TagServiceInterface
     /**
      * Constructor.
      *
-     * @param TagRepository $tagRepository
+     * @param TagRepository      $tagRepository
      * @param PaginatorInterface $paginator
      */
     public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
@@ -36,7 +36,9 @@ class TagService implements TagServiceInterface
      * Find by title.
      *
      * @param string $title
+     *
      * @return Tag|null
+     *
      * @throws NonUniqueResultException
      */
     public function findOneByTitle(string $title): ?Tag
@@ -78,7 +80,9 @@ class TagService implements TagServiceInterface
      * Delete entity.
      *
      * @param Tag $tag
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */

@@ -35,8 +35,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }// end __construct()
 
+
     /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+     *  Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param PasswordAuthenticatedUserInterface $user
+     * @param string $newHashedPassword
+     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -54,7 +59,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * Save entity.
      *
      * @param User $user
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -82,7 +89,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * Count Users By Role.
      *
      * @param string $role
+     *
      * @return int
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

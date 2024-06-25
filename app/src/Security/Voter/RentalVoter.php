@@ -60,6 +60,11 @@ class RentalVoter extends Voter
      */
     private const DENY = 'DENY';
 
+    /**
+     * Constructor.
+     *
+     * @param RentalServiceInterface $rentalService
+     */
     public function __construct(private readonly RentalServiceInterface $rentalService)
     {
     }
@@ -133,24 +138,25 @@ class RentalVoter extends Voter
     /**
      * Checks if user can rent a book.
      *
-     * @param Book $book
+     * @param Book          $book
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canRent(Book $book, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
-        } else {
-            return in_array('ROLE_USER', $user->getRoles()) && $this->rentalService->canBeRented($book);
         }
+        return in_array('ROLE_USER', $user->getRoles()) && $this->rentalService->canBeRented($book);
     }
 
     /**
      *  Checks if user can return a book.
      *
-     * @param Rental $rental
+     * @param Rental        $rental
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canReturn(Rental $rental, UserInterface $user): bool
@@ -161,8 +167,9 @@ class RentalVoter extends Voter
     /**
      *  Checks if user can approve the rental request.
      *
-     * @param Rental $rental
+     * @param Rental        $rental
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canApprove(Rental $rental, UserInterface $user): bool
@@ -172,8 +179,9 @@ class RentalVoter extends Voter
 
     /**
      * Checks if user can deny the rental request.
-     * @param Rental $rental
+     * @param Rental        $rental
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canDeny(Rental $rental, UserInterface $user): bool
@@ -185,21 +193,23 @@ class RentalVoter extends Voter
      * Checks if user can view own rentals list.
      *
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canView(UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
-        } else {
-            return in_array('ROLE_USER', $user->getRoles());
         }
+        return in_array('ROLE_USER', $user->getRoles());
+
     }
 
     /**
      *  Checks if user can view all rentals list.
      *
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canViewAllRentals(UserInterface $user): bool

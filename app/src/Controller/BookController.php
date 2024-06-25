@@ -31,21 +31,22 @@ class BookController extends AbstractController
     /**
      * Constructor.
      *
-     * @param BookServiceInterface $bookService Book service
-     * @param TranslatorInterface $translator Translator
+     * @param BookServiceInterface   $bookService   Book service
+     * @param TranslatorInterface    $translator    Translator
      * @param RatingServiceInterface $ratingService Rating service
      *
      */
-    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService) {
+    public function __construct(private readonly BookServiceInterface $bookService, private readonly TranslatorInterface $translator, private readonly RatingServiceInterface $ratingService)
+    {
     }
 
 
     /**
      * Index action.
      *
-     * @param Request $request
+     * @param Request                 $request
      * @param BookListInputFiltersDto $filters
-     * @param int $page
+     * @param int                     $page
      *
      * @return Response
      */

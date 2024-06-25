@@ -25,14 +25,14 @@ class UserPasswordType extends AbstractType
      *
      * @param Security $security
      */
-    public function __construct(private readonly Security $security,) {
-    }
+    public function __construct(private readonly Security $security){}
 
     /**
      * Build form.
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
+     *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void

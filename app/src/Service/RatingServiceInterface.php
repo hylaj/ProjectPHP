@@ -30,7 +30,9 @@ interface RatingServiceInterface
      * Delete entity.
      *
      * @param Rating $rating
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -40,6 +42,7 @@ interface RatingServiceInterface
      * Find Average Rating and count ratings by book.
      *
      * @param int $bookId
+     *
      * @return array|null
      */
     public function findAverageRatingAndCountByBook(int $bookId): ?array;
@@ -49,6 +52,7 @@ interface RatingServiceInterface
      *
      * @param User $user
      * @param Book $book
+     *
      * @return Rating|null
      */
     public function getRatingByUserAndBook(User $user, Book $book): ?Rating;

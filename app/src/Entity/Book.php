@@ -131,6 +131,7 @@ class Book
      *  Setter for release date.
      *
      * @param \DateTime|null $releaseDate
+     *
      * @return void
      */
     public function setReleaseDate(?\DateTime $releaseDate): void
@@ -192,6 +193,7 @@ class Book
      * Setter for category.
      *
      * @param Category|null $category
+     *
      * @return void
      */
     public function setCategory(?Category $category): void
@@ -213,6 +215,7 @@ class Book
      *  Setter for slug.
      *
      * @param string $slug
+     *
      * @return void
      */
     public function setSlug(string $slug): void
@@ -266,6 +269,7 @@ class Book
      * Setter for book availability.
      *
      * @param bool $available
+     *
      * @return void
      */
     public function setAvailable(bool $available): void
@@ -287,6 +291,7 @@ class Book
      *  Setter for description.
      *
      * @param string|null $description
+     *
      * @return void
      */
     public function setDescription(?string $description): void
@@ -308,6 +313,7 @@ class Book
      * Setter for coverFilename.
      *
      * @param string|null $coverFilename
+     *
      * @return void
      */
     public function setCoverFilename(?string $coverFilename): void

@@ -34,7 +34,8 @@ class RentalController extends AbstractController
      * @param TranslatorInterface    $translator    Translator
      * @param BookServiceInterface   $bookService   Book service
      */
-    public function __construct(private readonly RentalServiceInterface $rentalService, private readonly TranslatorInterface $translator, private readonly BookServiceInterface $bookService) {
+    public function __construct(private readonly RentalServiceInterface $rentalService, private readonly TranslatorInterface $translator, private readonly BookServiceInterface $bookService)
+    {
     }
 
     /**

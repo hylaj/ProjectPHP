@@ -105,48 +105,52 @@ class RatingVoter extends Voter
     /**
      * Checks if user can rate a book.
      *
-     * @param Rating $rating
+     * @param Rating        $rating
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canDelete(Rating $rating, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
-        } else {
-            return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
         }
+
+        return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
+
     }
 
     /**
      * Checks if user can edit the rating.
      *
-     * @param Rating $rating
+     * @param Rating        $rating
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canEdit(Rating $rating, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
-        } else {
-            return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
         }
+
+        return in_array('ROLE_USER', $user->getRoles()) && ($rating->getUser() === $user);
     }
 
     /**
      * Checks if user can rate a book.
      *
-     * @param Book $book
+     * @param Book          $book
      * @param UserInterface $user
+     *
      * @return bool
      */
     private function canRate(Book $book, UserInterface $user): bool
     {
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             return false;
-        } else {
-            return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
         }
+        return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
+
     }
 }

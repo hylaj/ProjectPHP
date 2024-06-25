@@ -39,22 +39,23 @@ class BookService implements BookServiceInterface
     /**
      * Constructor.
      *
-     * @param BookRepository $bookRepository
-     * @param PaginatorInterface $paginator
-     * @param CategoryServiceInterface $categoryService
-     * @param TagServiceInterface $tagService
+     * @param BookRepository             $bookRepository
+     * @param PaginatorInterface         $paginator
+     * @param CategoryServiceInterface   $categoryService
+     * @param TagServiceInterface        $tagService
      * @param FileUploadServiceInterface $fileUploadService
-     * @param string $targetDirectory
-     * @param Filesystem $filesystem
+     * @param string                     $targetDirectory
+     * @param Filesystem                 $filesystem
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem) {
+    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem)
+    {
     }// end __construct()
 
 
     /**
      * Get Paginated List.
      *
-     * @param int $page
+     * @param int                     $page
      * @param BookListInputFiltersDto $filters
      *
      * @return PaginationInterface
@@ -74,6 +75,7 @@ class BookService implements BookServiceInterface
      * Get Books By Category.
      *
      * @param Category $category
+     *
      * @return array
      */
     public function getBooksByCategory(Category $category): array
@@ -127,8 +129,10 @@ class BookService implements BookServiceInterface
      * Create avatar.
      *
      * @param UploadedFile $uploadedFile
-     * @param Book $book
+     * @param Book         $book
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -145,8 +149,10 @@ class BookService implements BookServiceInterface
      * Update cover.
      *
      * @param UploadedFile $uploadedFile
-     * @param Book $book
+     * @param Book         $book
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -167,6 +173,7 @@ class BookService implements BookServiceInterface
      * Can Category be deleted?
      *
      * @param Book $book
+     *
      * @return bool
      */
     public function canBeDeleted(Book $book): bool
@@ -179,12 +186,12 @@ class BookService implements BookServiceInterface
             return false;
         }
     }
+
     /**
      *  Prepare filters for the tasks list.
      *
-     * @return BookListFiltersDto Result filters
+     * @param BookListInputFiltersDto $filters
      * @return BookListFiltersDto
-     *
      * @throws NonUniqueResultException
      */
     private function prepareFilters(BookListInputFiltersDto $filters): BookListFiltersDto
@@ -196,5 +203,4 @@ class BookService implements BookServiceInterface
             $filters->authorSearch
         );
     }
-
 }// end class

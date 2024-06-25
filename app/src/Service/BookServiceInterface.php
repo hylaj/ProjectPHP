@@ -23,6 +23,7 @@ interface BookServiceInterface
      * Get Books By Category.
      *
      * @param Category $category
+     *
      * @return array
      */
     public function getBooksByCategory(Category $category): array;
@@ -53,7 +54,7 @@ interface BookServiceInterface
     /**
      * Get Paginated List.
      *
-     * @param int $page
+     * @param int                     $page
      * @param BookListInputFiltersDto $filters
      *
      * @return PaginationInterface
@@ -74,8 +75,10 @@ interface BookServiceInterface
      * Create avatar.
      *
      * @param UploadedFile $uploadedFile
-     * @param Book $book
+     * @param Book         $book
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -85,8 +88,10 @@ interface BookServiceInterface
      * Update cover.
      *
      * @param UploadedFile $uploadedFile
-     * @param Book $book
+     * @param Book         $book
+     *
      * @return void
+     *
      * @throws ORMException
      * @throws OptimisticLockException
      */
@@ -96,6 +101,7 @@ interface BookServiceInterface
      * Can Category be deleted?
      *
      * @param Book $book
+     *
      * @return bool
      */
     public function canBeDeleted(Book $book): bool;
