@@ -23,19 +23,22 @@ class UserPasswordType extends AbstractType
     /**
      * Constructor,
      *
-     * @param Security $security
+     * @param Security $security Security
      */
     public function __construct(private readonly Security $security)
     {
     }
 
     /**
-     * Build form.
+     * Builds the form.
      *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * This method is called for each type in the hierarchy starting from the
+     * top most type. Type extensions can further modify the form.
      *
-     * @return void
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string, mixed> $options Form options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -47,8 +47,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
      * Constructor.
      *
      * @param UrlGeneratorInterface $urlGenerator URL generator
-     * * @param UserRepository $userRepository User repository
-     * @param TranslatorInterface   $translator Translator
+     *                                            * @param UserRepository $userRepository User repository
+     * @param TranslatorInterface   $translator   Translator
      */
     public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private readonly UserRepository $userRepository, private readonly TranslatorInterface $translator)
     {
@@ -94,7 +94,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $user = $this->userRepository->findOneBy(['email' => $email]);
         if ($user && $user->isBlocked()) {
-            $message= $this->translator->trans('message.blocked_account');
+            $message = $this->translator->trans('message.blocked_account');
             throw new CustomUserMessageAuthenticationException($message);
         }
 

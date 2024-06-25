@@ -54,8 +54,8 @@ interface BookServiceInterface
     /**
      * Get Paginated List.
      *
-     * @param int                     $page
-     * @param BookListInputFiltersDto $filters
+     * @param int                     $page    page
+     * @param BookListInputFiltersDto $filters filters
      *
      * @return PaginationInterface
      */

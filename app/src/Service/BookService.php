@@ -39,15 +39,17 @@ class BookService implements BookServiceInterface
     /**
      * Constructor.
      *
-     * @param BookRepository             $bookRepository          Book repository
-     * @param PaginatorInterface         $paginator               Paginator service
-     * @param CategoryServiceInterface   $categoryService         Category service
-     * @param TagServiceInterface        $tagService              Tag service
-     * @param FileUploadServiceInterface $fileUploadService       File upload service
-     * @param string                     $targetDirectory         Target directory for file upload
-     * @param Filesystem                 $filesystem              Filesystem service
+     * @param BookRepository             $bookRepository    Book repository
+     * @param PaginatorInterface         $paginator         Paginator service
+     * @param CategoryServiceInterface   $categoryService   Category service
+     * @param TagServiceInterface        $tagService        Tag service
+     * @param FileUploadServiceInterface $fileUploadService File upload service
+     * @param string                     $targetDirectory   Target directory for file upload
+     * @param Filesystem                 $filesystem        Filesystem service
      */
-    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem) {}
+    public function __construct(private readonly BookRepository $bookRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly FileUploadServiceInterface $fileUploadService, private readonly string $targetDirectory, private readonly Filesystem $filesystem)
+    {
+    }
 
     /**
      * Get Paginated List of Books.

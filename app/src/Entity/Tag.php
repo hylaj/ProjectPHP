@@ -116,7 +116,7 @@ class Tag
     /**
      * Getter for slug.
      *
-     * @return string|null
+     * @return string|null Slug
      */
     public function getSlug(): ?string
     {
@@ -127,7 +127,7 @@ class Tag
     /**
      * Setter for slug.
      *
-     * @param string|null $slug
+     * @param string|null $slug Slug
      *
      * @return void
      */

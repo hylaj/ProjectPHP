@@ -24,6 +24,8 @@ class Category
 {
     /**
      * Primary key.
+     *
+     * @var int|null
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,6 +34,8 @@ class Category
 
     /**
      * Created at.
+     *
+     * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(\DateTimeImmutable::class)]
@@ -40,6 +44,8 @@ class Category
 
     /**
      * Title.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Type('string')]
@@ -49,6 +55,8 @@ class Category
 
     /**
      * Updated at.
+     *
+     * @var \DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(\DateTimeImmutable::class)]
@@ -57,6 +65,8 @@ class Category
 
     /**
      * Slug.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -66,6 +76,8 @@ class Category
 
     /**
      * Item Author.
+     *
+     * @var User|null
      */
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -143,7 +155,6 @@ class Category
         $this->updatedAt = $updatedAt;
     }
 
-
     /**
      * Getter for slug.
      *
@@ -154,13 +165,10 @@ class Category
         return $this->slug;
     }
 
-
     /**
      * Setter for slug.
-     *      *
-     * @param string|null $slug
      *
-     * @return void
+     * @param string|null $slug Slug
      */
     public function setSlug(?string $slug): void
     {
@@ -180,9 +188,7 @@ class Category
     /**
      * Setter for ItemAuthor.
      *
-     * @param User|null $itemAuthor
-     *
-     * @return void
+     * @param User|null $itemAuthor Item author
      */
     public function setItemAuthor(?User $itemAuthor): void
     {

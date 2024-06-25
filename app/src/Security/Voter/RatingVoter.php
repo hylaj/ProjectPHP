@@ -154,4 +154,3 @@ class RatingVoter extends Voter
         return in_array('ROLE_USER', $user->getRoles()) && null === $this->ratingRepository->findOneBy(['book' => $book, 'user' => $user]);
     }
 }
-

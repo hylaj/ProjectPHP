@@ -53,7 +53,7 @@ class Rental
     /**
      * Getter for ID.
      *
-     * @return int|null
+     * @return int|null ID
      */
     public function getId(): ?int
     {
@@ -63,7 +63,7 @@ class Rental
     /**
      * Getter for RentalDate.
      *
-     * @return \DateTimeImmutable|null
+     * @return \DateTimeImmutable|null rentalDate
      */
     public function getRentalDate(): ?\DateTimeImmutable
     {
@@ -73,7 +73,7 @@ class Rental
     /**
      * Setter for RentalDate.
      *
-     * @param \DateTimeImmutable $rentalDate
+     * @param \DateTimeImmutable $rentalDate rentalDate
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class Rental
     /**
      * Getter for owner.
      *
-     * @return User|null
+     * @return User|null Owner
      */
     public function getOwner(): ?User
     {
@@ -95,7 +95,7 @@ class Rental
     /**
      * Setter for Owner.
      *
-     * @param User $owner
+     * @param User $owner Owner
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class Rental
     /**
      *  Getter for book.
      *
-     * @return Book|null
+     * @return Book|null Book
      */
     public function getBook(): ?Book
     {
@@ -117,7 +117,7 @@ class Rental
     /**
      * Setter for Book.
      *
-     * @param Book $book
+     * @param Book $book Book
      *
      * @return void
      */
@@ -129,7 +129,7 @@ class Rental
     /**
      *  Getter for Status.
      *
-     * @return bool|null
+     * @return bool|null status
      */
     public function getStatus(): ?bool
     {
@@ -139,7 +139,7 @@ class Rental
     /**
      *  Setter for Status.
      *
-     * @param bool $status
+     * @param bool $status status+
      *
      * @return void
      */
@@ -154,7 +154,7 @@ class Rental
     /**
      * Getter for Comment.
      *
-     * @return string|null
+     * @return string|null comment
      */
     public function getComment(): ?string
     {
@@ -164,7 +164,7 @@ class Rental
     /**
      *  Setter for Comment.
      *
-     * @param string|null $comment
+     * @param string|null $comment comment
      *
      * @return void
      */
@@ -176,7 +176,7 @@ class Rental
     /**
      *  Getter for ReturnDate.
      *
-     * @return \DateTimeImmutable|null
+     * @return \DateTimeImmutable|null returnDate
      */
     public function getReturnDate(): ?\DateTimeImmutable
     {
@@ -186,7 +186,7 @@ class Rental
     /**
      * Setter for ReturnDate.
      *
-     * @param \DateTimeImmutable $returnDate
+     * @param \DateTimeImmutable $returnDate returnDate
      *
      * @return void
      */

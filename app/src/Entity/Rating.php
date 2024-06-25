@@ -10,27 +10,47 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- *Class Rating.
+ * Class Rating.
  */
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
 #[ORM\Table(name: 'ratings')]
 class Rating
 {
+    /**
+     * Primary key.
+     *
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
+    /**
+     * Book rating.
+     *
+     * @var int|null
+     */
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank]
     private ?int $bookRating = null;
 
+    /**
+     * User.
+     *
+     * @var User|null
+     */
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Type(User::class)]
     private ?User $user = null;
 
+    /**
+     * Book.
+     *
+     * @var Book|null
+     */
     #[ORM\ManyToOne(targetEntity: Book::class, fetch: 'EXTRA_LAZY')]
     #[Assert\NotBlank]
     #[Assert\Type(Book::class)]
@@ -39,7 +59,7 @@ class Rating
     /**
      * Getter for Id.
      *
-     * @return int|null
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -47,9 +67,9 @@ class Rating
     }
 
     /**
-     * Getter for BookRating..
+     * Getter for book rating.
      *
-     * @return int|null
+     * @return int|null Book rating
      */
     public function getBookRating(): ?int
     {
@@ -57,11 +77,9 @@ class Rating
     }
 
     /**
-     * Setter for BookRating.
+     * Setter for book rating.
      *
-     * @param int $bookRating
-     *
-     * @return void
+     * @param int $bookRating Book rating
      */
     public function setBookRating(int $bookRating): void
     {
@@ -69,9 +87,9 @@ class Rating
     }
 
     /**
-     *  Getter for User.
+     * Getter for user.
      *
-     * @return User|null
+     * @return User|null User
      */
     public function getUser(): ?User
     {
@@ -79,11 +97,9 @@ class Rating
     }
 
     /**
-     *  Setter for User.
+     * Setter for user.
      *
-     * @param User|null $user
-     *
-     * @return void
+     * @param User|null $user User
      */
     public function setUser(?User $user): void
     {
@@ -91,9 +107,9 @@ class Rating
     }
 
     /**
-     *  Getter for Book.
+     * Getter for book.
      *
-     * @return Book|null
+     * @return Book|null Book
      */
     public function getBook(): ?Book
     {
@@ -101,11 +117,9 @@ class Rating
     }
 
     /**
-     *  Setter for Book.
+     * Setter for book.
      *
-     * @param Book|null $book
-     *
-     * @return void
+     * @param Book|null $book Book
      */
     public function setBook(?Book $book): void
     {

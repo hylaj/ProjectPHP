@@ -30,7 +30,7 @@ interface RentalServiceInterface
     /**
      *  Get paginated list by user.
      *
-     * @param int $page Page number
+     * @param int $page  Page number
      * @param int $owner User ID
      *
      * @return PaginationInterface<string, mixed> Paginated list
@@ -63,8 +63,8 @@ interface RentalServiceInterface
      * Set Rental Details.
      *
      * @param bool   $status Status of the rental
-     * @param User   $owner User who owns the rental
-     * @param Book   $book Book rented
+     * @param User   $owner  User who owns the rental
+     * @param Book   $book   Book rented
      * @param Rental $rental Rental entity to set details
      *
      * @return void
@@ -93,7 +93,7 @@ interface RentalServiceInterface
     /**
      * Get paginated list by date.
      *
-     * @param int             $page Page number
+     * @param int                $page Page number
      * @param \DateTimeImmutable $date Rental date
      *
      * @return PaginationInterface<string, mixed> Paginated list

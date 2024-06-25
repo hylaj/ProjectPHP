@@ -18,11 +18,15 @@ use Symfony\Component\Validator\Constraints\Regex;
 class SearchType extends AbstractType
 {
     /**
-     * Build form.
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * Builds the form.
      *
-     * @return void
+     * This method is called for each type in the hierarchy starting from the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string, mixed> $options Form options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

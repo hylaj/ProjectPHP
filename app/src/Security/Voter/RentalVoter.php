@@ -219,4 +219,3 @@ class RentalVoter extends Voter
         return in_array('ROLE_ADMIN', $user->getRoles());
     }
 }
-

@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 3, max: 255)]
     private ?string $firstName = null;
 
+    /**
+     * Is Blocked.
+     */
     #[ORM\Column(nullable: false)]
     #[Assert\NotNull]
     private ?bool $isBlocked = false;
@@ -193,7 +196,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Getter for firstName.
      *
-     * @return string|null
+     * @return string|null First Name
      */
     public function getFirstName(): ?string
     {
@@ -204,7 +207,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for firstName.
      *
-     * @param string|null $firstName
+     * @param string|null $firstName first Name
      *
      * @return void
      */
@@ -216,7 +219,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Is User blocked?
      *
-     * @return bool|null
+     * @return bool|null isBlocked
      */
     public function isBlocked(): ?bool
     {
@@ -226,7 +229,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Setter for user block.
-     * @param bool $isBlocked
+     * @param bool $isBlocked is Blocked
      *
      * @return void
      */

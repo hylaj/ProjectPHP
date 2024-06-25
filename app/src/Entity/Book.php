@@ -1,6 +1,6 @@
 <?php
 /**
- *Book entity.
+ * Book entity.
  */
 
 namespace App\Entity;
@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- *Class Book.
+ * Class Book.
  */
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ORM\Table(name: 'books')]
@@ -30,6 +30,8 @@ class Book
 
     /**
      * Release Date.
+     *
+     * @var \DateTime|null
      */
     #[ORM\Column(type: 'date')]
     #[Assert\Type(\DateTime::class)]
@@ -37,6 +39,8 @@ class Book
 
     /**
      * Title.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -46,6 +50,8 @@ class Book
 
     /**
      * Author.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
@@ -55,6 +61,8 @@ class Book
 
     /**
      * Category.
+     *
+     * @var Category|null
      */
     #[ORM\ManyToOne(targetEntity: Category::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
@@ -64,6 +72,8 @@ class Book
 
     /**
      * Slug.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Gedmo\Slug(fields: ['title'])]
@@ -74,7 +84,7 @@ class Book
     /**
      * Tags.
      *
-     * @var ArrayCollection<int, Tag>
+     * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     #[ORM\JoinTable(name: 'books_tags')]
@@ -82,6 +92,8 @@ class Book
 
     /**
      * Available.
+     *
+     * @var bool|null
      */
     #[ORM\Column]
     #[Assert\NotNull]
@@ -89,11 +101,18 @@ class Book
 
     /**
      * Description.
+     *
+     * @var string|null
      */
     #[ORM\Column(type: Types::TEXT, length: 1000, nullable: true)]
     #[Assert\Length(max: 1000)]
     private ?string $description = null;
 
+    /**
+     * Cover Filename.
+     *
+     * @var string|null
+     */
     #[ORM\Column(length: 191, nullable: true)]
     #[Assert\Type('string')]
     private ?string $coverFilename = null;
@@ -119,20 +138,17 @@ class Book
     /**
      * Getter for release date.
      *
-     * @return \DateTimeImmutable|null Release date
+     * @return \DateTime|null Release date
      */
     public function getReleaseDate(): ?\DateTime
     {
         return $this->releaseDate;
     }
 
-
     /**
-     *  Setter for release date.
+     * Setter for release date.
      *
-     * @param \DateTime|null $releaseDate
-     *
-     * @return void
+     * @param \DateTime|null $releaseDate Release date
      */
     public function setReleaseDate(?\DateTime $releaseDate): void
     {
@@ -160,7 +176,7 @@ class Book
     }
 
     /**
-     * Getter fot author.
+     * Getter for author.
      *
      * @return string|null Author
      */
@@ -170,7 +186,7 @@ class Book
     }
 
     /**
-     * setter for Author.
+     * Setter for author.
      *
      * @param string|null $author Author
      */
@@ -180,9 +196,9 @@ class Book
     }
 
     /**
-     * Getter fot category.
+     * Getter for category.
      *
-     * @return Category|null
+     * @return Category|null Category
      */
     public function getCategory(): ?Category
     {
@@ -192,9 +208,7 @@ class Book
     /**
      * Setter for category.
      *
-     * @param Category|null $category
-     *
-     * @return void
+     * @param Category|null $category Category
      */
     public function setCategory(?Category $category): void
     {
@@ -204,7 +218,7 @@ class Book
     /**
      * Getter for slug.
      *
-     * @return string|null
+     * @return string|null Slug
      */
     public function getSlug(): ?string
     {
@@ -212,11 +226,9 @@ class Book
     }
 
     /**
-     *  Setter for slug.
+     * Setter for slug.
      *
-     * @param string $slug
-     *
-     * @return void
+     * @param string $slug Slug
      */
     public function setSlug(string $slug): void
     {
@@ -234,7 +246,7 @@ class Book
     }
 
     /**
-     * Add tag.
+     * Add tag to the book.
      *
      * @param Tag $tag Tag entity
      */
@@ -246,7 +258,7 @@ class Book
     }
 
     /**
-     * Remove tag.
+     * Remove tag from the book.
      *
      * @param Tag $tag Tag entity
      */
@@ -256,9 +268,9 @@ class Book
     }
 
     /**
-     * Is Book available?
+     * Check if the book is available.
      *
-     * @return bool|null
+     * @return bool|null Availability status
      */
     public function isAvailable(): ?bool
     {
@@ -266,11 +278,9 @@ class Book
     }
 
     /**
-     * Setter for book availability.
+     * Setter for availability of the book.
      *
-     * @param bool $available
-     *
-     * @return void
+     * @param bool $available Availability status
      */
     public function setAvailable(bool $available): void
     {
@@ -280,7 +290,7 @@ class Book
     /**
      * Getter for description.
      *
-     * @return string|null
+     * @return string|null Description
      */
     public function getDescription(): ?string
     {
@@ -288,11 +298,9 @@ class Book
     }
 
     /**
-     *  Setter for description.
+     * Setter for description.
      *
-     * @param string|null $description
-     *
-     * @return void
+     * @param string|null $description Description
      */
     public function setDescription(?string $description): void
     {
@@ -300,9 +308,9 @@ class Book
     }
 
     /**
-     * Getter for cover fileName.
+     * Getter for cover filename.
      *
-     * @return string|null
+     * @return string|null Cover filename
      */
     public function getCoverFilename(): ?string
     {
@@ -310,11 +318,9 @@ class Book
     }
 
     /**
-     * Setter for coverFilename.
+     * Setter for cover filename.
      *
-     * @param string|null $coverFilename
-     *
-     * @return void
+     * @param string|null $coverFilename Cover filename
      */
     public function setCoverFilename(?string $coverFilename): void
     {

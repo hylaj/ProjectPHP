@@ -24,9 +24,9 @@ class RegistrationController extends AbstractController
     /**
      * Constructor.
      *
-     * @param UserServiceInterface        $userService     User service
-     * @param TranslatorInterface         $translator      Translator
-     * @param UserPasswordHasherInterface $passwordHasher  Password hasher
+     * @param UserServiceInterface        $userService    User service
+     * @param TranslatorInterface         $translator     Translator
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher
      */
     public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
     {
