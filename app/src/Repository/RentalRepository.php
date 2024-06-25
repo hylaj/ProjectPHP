@@ -102,7 +102,6 @@ class RentalRepository extends ServiceEntityRepository
     {
         return $this->queryAll()
             ->where('rental.status= :status')
-            ->setParameter('status', true)
             ->where('rental.owner= :owner')
             ->setParameter('owner', $owner)
             ->orderBy('rental.status', 'DESC');
