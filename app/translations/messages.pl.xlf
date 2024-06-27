@@ -585,12 +585,6 @@
           <target>Oczekuje na zatwierdzenie</target>
         </trans-unit>
 
-      <trans-unit id="message.overdue">
-        <source>You have overdue rental with ID %id%. Return date was %date%.</source>
-        <target>Masz zaległe wypożyczenie o ID %id%. Data zwrotu była %date%.</target>
-      </trans-unit>
-
-
 <trans-unit id="message.invalid_characters">
     <source>message.invalid_characters</source>
     <target>Nieprawidłowe znaki</target>
@@ -744,6 +738,11 @@
       <source>message.blocked_account</source>
       <target>Konto zablokowane</target>
     </trans-unit>
+
+        <trans-unit id="message.overdue">
+          <source>message.overdue</source>
+          <target>Masz zaległe wypożyczenie o ID %id%. Data zwrotu była %date%.</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>

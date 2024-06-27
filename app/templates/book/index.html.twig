@@ -91,7 +91,9 @@
             </div>
 
             <div class="navigation text-center">
-                {{ knp_pagination_render(pagination) }}
+                    <div class="pagination pagination-sm justify-content-center">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
             </div>
         {% else %}
             <p>

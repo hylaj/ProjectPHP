@@ -147,12 +147,13 @@ class RentalController extends AbstractController
         $today = new \DateTimeImmutable();
         $overdueRentals = $this->rentalService->findOverdueRentalsByUser($this->getUser(), $today);
         if ($overdueRentals) {
+            $formatter = new \IntlDateFormatter(\Locale::getDefault(), \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
             foreach ($overdueRentals as $rental) {
                 $message = $this->translator->trans(
-                    'You have overdue rental with ID %id%. Return date was %date%.',
+                    'message.overdue',
                     [
                         '%id%' => $rental->getId(),
-                        '%date%' => $rental->getReturnDate()->format('Y-m-d'),
+                        '%date%' => $formatter->format($rental->getReturnDate()),
                     ],
                     'messages'
                 );
